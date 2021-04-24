@@ -19,35 +19,49 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 
 public class ProjectSteps {
-    private Application app;
-    private Employee employee;
+	
     private MainHolder holder;
 
-    public ProjectSteps(Application app, MainHolder holder) {
-        this.app = app;
+    public ProjectSteps(MainHolder holder) {
         this.holder = holder;
     }
 
     @Given("an employee with id {string} exists in the application")
     public void an_employee_with_id_exists_in_the_application(String id) {
-        employee = new Employee(id);
-        app.addEmployee(employee);
+        holder.employee = new Employee(id);
+        holder.app.addEmployee(holder.employee);
     }
 
     @Given("the employee is signed in")
     public void the_employee_is_signed_in() {
-        app.signIn(employee.getId());
+        holder.app.signIn(holder.employee.getId());
+    }
+    
+    @Given("the employee is a project leader")
+    public void the_employee_is_a_project_leader() {
+        holder.project.assignProjectLeader(holder.employee);
     }
 
     @When("The employee creates a new project with title {string}")
     public void the_employee_creates_a_new_project_with_title(String title) {
-        app.createProject(title);
+        holder.app.createProject(title);
+        holder.project = holder.app.getProject(title);
     }
 
     @Then("project with title {string} is created")
     public void project_with_title_is_created(String title) {
-        Project project = app.getProject(title);
+        Project project = holder.app.getProject(title);
         assertNotNull(project);
         assertThat(project.getTitle(),is(equalTo(title)));
+    }
+    
+    @When("The project leader creates a task with title {string}, description {string}, start date {int} and end date {int}")
+    public void the_project_leader_creates_a_task_with_title_description_start_date_and_end_date(String title, String description, Integer startDateUnix, Integer endDateUnix) {
+        holder.project.createTask(new TaskConstructorInfo(title, description, startDateUnix, endDateUnix));
+    }
+    
+    @Then("A task exists with title {string}, description {string}, start date {int} and end date {int}")
+    public void a_task_exists_with_title_description_start_date_and_end_date(String title, String description, Integer startDateUnix, Integer endDateUnix) {
+        assertThat(holder.project.containsTask(title, description, startDateUnix, endDateUnix), is(equalTo(true)));
     }
 }
