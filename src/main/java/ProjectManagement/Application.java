@@ -1,11 +1,9 @@
 package ProjectManagement;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Application {
-    private Map<String, Project> projects;
+    private Map<Integer, Project> projects;
     private Map<String, Employee> employees;
     private Employee signedInEmployee;
 
@@ -25,12 +23,17 @@ public class Application {
 
     public void createProject(String title) {
         if (isSignedIn()) {
-            projects.put(title, new Project(title));
+            Project newProject = new Project(projects.size(), title);
+            projects.put(newProject.getId(), newProject);
         }
     }
 
-    public Project getProject(String title) {
-        return projects.get(title);
+    public Map<Integer, Project> getProjectTitles() {
+        return projects;
+    }
+
+    public Project getProject(int id) {
+        return projects.get(id);
     }
 
     public void addEmployee(Employee employee) {
