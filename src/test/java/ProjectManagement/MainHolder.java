@@ -16,4 +16,5 @@ public class MainHolder {
 	public Application app;
     public Employee employee;
     public Project project;
+    public String errorMessage;
 }
