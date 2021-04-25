@@ -11,10 +11,14 @@ public class Duration {
 	}
 	
 	public void AddMinutes(int minutes) {
+		assert minutes > 0;
+		
 		MinutesPassed += minutes;
 	}
 	
 	public void AddHours(int hours) {
+		assert hours > 0;
+		
 		MinutesPassed += hours * 60;
 	}
 	
@@ -27,10 +31,14 @@ public class Duration {
 	}
 	
 	public boolean HaveHoursPassed(int hours) {
+		assert hours > 0;
+		
 		return MinutesPassed >= hours * 60;
 	}
 	
 	public boolean HaveMinutesPassed(long minutes) {
+		assert minutes > 0;
+		
 		return MinutesPassed >= minutes;
 	}
 }
