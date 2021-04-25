@@ -1,42 +1,65 @@
 package ProjectManagement;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Project {
-	private ArrayList<Task> tasks;
-	private Employee projectLead;
-	private int projectNumber;
-	private String title;
+    // The number of digits in the stringified id of projects
+    private static final int serialDigits = 4;
 
-	public Project(String title) {
-		this.title = title;
-		tasks = new ArrayList<Task>();
-	}
+    private int year;
+    private int id;
+    private String title;
+    private ArrayList<Task> tasks;
+    private Employee projectLead;
 
-	public String getTitle() {
-		return title;
-	}
+    public Project(int id, String title) {
+        year = Calendar.getInstance().get(Calendar.YEAR);
+        this.id = id;
+        this.title = title;
+        tasks = new ArrayList<Task>();
+    }
 
-	public void assignProjectLeader(Employee newProjectLeader) {
-		projectLead = newProjectLeader;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void createTask(TaskConstructorInfo info) {
-		tasks.add(new Task(info));
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public boolean containsTask(String title, String description, Integer startDateUnix, Integer endDateUnix) {
-		for (Task task : getTasks()) {
-			if (task.getTitle().equals(title) && task.getDescription().equals(description)
-					&& task.getStartDate() == startDateUnix && task.getEndDate() == endDateUnix) {
-				return true;
-			}
-		}
+    public String getFullTitle() {
+        return year + "|" + idToString() + "|" + title;
+    }
 
-		return false;
-	}
+    private String idToString() {
+        return String.format("%0" + serialDigits + "d", id);
+    }
 
-	public void assignTaskToEmployee(Employee employee, Task task) {
+    public void assignProjectLeader(Employee newProjectLeader) {
+    	projectLead = newProjectLeader;
+    }
+
+    public void createTask(TaskConstructorInfo info) {
+    	tasks.add(new Task(info));
+    }
+
+    public boolean containsTask(String title, String description, Integer startDateUnix, Integer endDateUnix) {
+    	for(Task task : tasks)
+    	{
+    		if(task.getTitle().equals(title) &&
+				task.getDescription().equals(description) &&
+				task.getStartDate() == startDateUnix &&
+				task.getEndDate() == endDateUnix)
+    		{
+    			return true;
+    		}
+    	}
+
+    	return false;
+    }
+    
+    public void assignTaskToEmployee(Employee employee, Task task) {
 		employee.assignToTask(task);
 	}
 
@@ -50,8 +73,10 @@ public class Project {
 
 	public Task findTask(String title, String description, Integer startDateUnix, Integer endDateUnix) {
 		for (Task task : tasks) {
-			if (task.getTitle().equals(title) && task.getDescription().equals(description)
-					&& task.getStartDate() == startDateUnix && task.getEndDate() == endDateUnix) {
+			if(task.getTitle().equals(title) &&
+					task.getDescription().equals(description) &&
+					task.getStartDate() == startDateUnix &&
+					task.getEndDate() == endDateUnix) {
 				return task;
 			}
 		}
