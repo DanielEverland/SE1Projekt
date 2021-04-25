@@ -1,13 +1,13 @@
 package ProjectManagement;
 
 public class ActivityConstructorInfo {
-	public int StartDate;
-	public int EndDate;
-	public String Title;
+	public int startDate;
+	public int endDate;
+	public String title;
 	
 	public ActivityConstructorInfo(String title, int startDate, int endDate) {
-		StartDate = startDate;
-		EndDate = endDate;
-		Title = title;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.title = title;
 	}
 }

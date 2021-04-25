@@ -12,6 +12,7 @@ public class MainHolder {
 		app.signIn("default_test_employee");
 		app.createProject("default_test_project");
 		project = app.getProject("default_test_project");
+		
 	}
 	
 	public Application app;
