@@ -6,8 +6,8 @@ Scenario: Employee register worked time to task
 Given an employee with id "test" exists in the application
 And the employee has an existing task with title "Task title", description "Task description", start date 01 and end date 02 
 And the employee is signed in
-When the employee inputs 5 hours worked on the task
-Then 5 hours is registered as worked on the task by the employee
+When the employee inputs 5.0 hours worked on the task with title "Task title", description "Task description", start date 01 and end date 02
+Then 5.0 hours is registered as worked on the task with title "Task title", description "Task description", start date 01 and end date 02  by the employee
 
 #Scenario: Invalid input
 #Given an employee has an existing task with title "Task title", start date "01" and end date "02"
