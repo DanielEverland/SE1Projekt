@@ -6,11 +6,11 @@ import java.util.Map;
 public class Task extends Activity {
 
 	private String Description;
-	private Map<Employee, Double> minutesWorked;
+	private Map<Employee, Duration> minutesWorked;
 	
 	public Task(TaskConstructorInfo info) {
 		super(new ActivityConstructorInfo(info.title, info.startDate, info.endDate));
-		minutesWorked = new HashMap<Employee, Double>();
+		minutesWorked = new HashMap<Employee, Duration>();
 		Description = info.Description;
 	}
 
@@ -18,13 +18,15 @@ public class Task extends Activity {
 		return Description;
 	}
 
-	public Map<Employee, Double> getMinutesWorked() {
+	public Map<Employee, Duration> getMinutesWorked() {
 		return minutesWorked;
 	}
 	
 	public void logWorkHours(Employee employee, double hoursWorked) {
-		minutesWorked.put(employee, hoursWorked*60);
+		if (!minutesWorked.containsKey(employee)) {
+			minutesWorked.put(employee, new Duration());
+		}
+		minutesWorked.get(employee).AddHours(hoursWorked);
 	}
 	
-
 }
