@@ -13,3 +13,8 @@ Given an employee with id "test" exists in the application
 And the employee is signed in
 When the employee creates a new project with title "Invalid|Project|Name"
 Then the error message "Title cannot be empty or contain '|'" is given
+
+Scenario: Missing sign in
+Given an employee with id "test" exists in the application
+When the employee creates a new project with title "ProjectName"
+Then the error message "Employee must be signed in to create project" is given
