@@ -5,7 +5,7 @@ Actor: Employee.
 Scenario: Employee successfully creates a new project
 Given an employee with id "test" exists in the application
 And the employee is signed in
-When The employee creates a new project with title "ProjectName"
+When the employee creates a new project with title "ProjectName"
 Then project with title "ProjectName" is created
 
 #Scenario: Invalid project name
