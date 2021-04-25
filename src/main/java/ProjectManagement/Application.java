@@ -7,6 +7,8 @@ public class Application {
     private Map<String, Employee> employees;
     private Employee signedInEmployee;
 
+    private int newProjectId = 0;
+
     // Predefined list of employee ids
     private ArrayList<String> employeeIds = new ArrayList<String>(){{
         add("abcd");
@@ -23,7 +25,7 @@ public class Application {
 
     public int createProject(String title) throws AuthException {
         if (isSignedIn()) {
-            Project newProject = new Project(projects.size(), title);
+            Project newProject = new Project(newProjectId++, title);
             projects.put(newProject.getId(), newProject);
             return newProject.getId();
         }
