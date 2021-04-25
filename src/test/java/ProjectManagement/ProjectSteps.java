@@ -43,15 +43,24 @@ public class ProjectSteps {
     }
 
     @When("the employee creates a new project with title {string}")
-    public void the_employee_creates_a_new_project_with_title(String title) throws AuthException {
-        int id = holder.app.createProject(title);
-        holder.project = holder.app.getProject(id);
+    public void the_employee_creates_a_new_project_with_title(String title) {
+        try {
+            int id = holder.app.createProject(title);
+            holder.project = holder.app.getProject(id);
+        } catch (Throwable e) {
+            holder.errorMessage = e.getMessage();
+        }
     }
 
     @Then("project with title {string} is created")
     public void project_with_title_is_created(String title) {
         assertNotNull(holder.project);
         assertThat(holder.project.getTitle(), is(equalTo(title)));
+    }
+
+    @Then("the error message {string} is given")
+    public void the_error_message_is_given(String errorMessage) {
+        assertEquals(errorMessage, holder.errorMessage);
     }
 
     @When("The project leader creates a task with title {string}, description {string}, start date {int} and end date {int}")

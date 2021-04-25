@@ -11,10 +11,12 @@ public class MainHolder {
 		app.signIn("default_test_employee");
 
 		int id = app.createProject("default_test_project");
+		app.signOut();
 		project = app.getProject(id);
 	}
 	
 	public Application app;
     public Employee employee;
     public Project project;
+    public String errorMessage;
 }

@@ -1,5 +1,7 @@
 package ProjectManagement;
 
+import org.junit.Assert;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -14,6 +16,9 @@ public class Project {
     private Employee projectLead;
 
     public Project(int id, String title) {
+        Assert.assertFalse("Id must be a non-negative integer", id < 0);
+        Assert.assertFalse("Title cannot be empty or contain '|'", title.length() == 0 || title.contains("|"));
+
         year = Calendar.getInstance().get(Calendar.YEAR);
         this.id = id;
         this.title = title;
