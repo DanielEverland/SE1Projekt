@@ -1,32 +1,30 @@
 package ProjectManagement;
 
-public class Task {
-	
-	private String Title;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Task extends Activity {
+
 	private String Description;
-	private int StartDate;
-	private int EndDate;
+	private Map<Employee, Double> minutesWorked;
 	
-	public String getTile() {
-		return Title;
+	public Task(TaskConstructorInfo info) {
+		super(new ActivityConstructorInfo(info.title, info.startDate, info.endDate));
+		minutesWorked = new HashMap<Employee, Double>();
+		Description = info.Description;
 	}
-	
+
 	public String getDescription() {
 		return Description;
 	}
-	
-	public int getStartDate() {
-		return StartDate;
+
+	public Map<Employee, Double> getMinutesWorked() {
+		return minutesWorked;
 	}
 	
-	public int getEndDate() {
-		return EndDate;
+	public void logWorkHours(Employee employee, double hoursWorked) {
+		minutesWorked.put(employee, hoursWorked*60);
 	}
 	
-	public Task(TaskConstructorInfo info) {
-		Title = info.Title;
-		Description = info.Description;
-		StartDate = info.StartDate;
-		EndDate = info.EndDate;
-	}
+
 }

@@ -1,6 +1,6 @@
 Feature: Create Project
 Description: The employee creates a project.
-Actor: Employee.
+Actor: Employee
 
 Scenario: Employee successfully creates a new project
 Given an employee with id "test" exists in the application

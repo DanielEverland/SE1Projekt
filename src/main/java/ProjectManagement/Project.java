@@ -47,7 +47,7 @@ public class Project {
     public boolean containsTask(String title, String description, Integer startDateUnix, Integer endDateUnix) {
     	for(Task task : tasks)
     	{
-    		if(task.getTile().equals(title) &&
+    		if(task.getTitle().equals(title) &&
 				task.getDescription().equals(description) &&
 				task.getStartDate() == startDateUnix &&
 				task.getEndDate() == endDateUnix)
@@ -58,4 +58,28 @@ public class Project {
 
     	return false;
     }
+    
+    public void assignTaskToEmployee(Employee employee, Task task) {
+		employee.assignToTask(task);
+	}
+
+	public boolean isProjectLeader(Employee employee) {
+		return employee == projectLead ? true : false;
+	}
+
+	public ArrayList<Task> getTasks() {
+		return tasks;
+	}
+
+	public Task findTask(String title, String description, Integer startDateUnix, Integer endDateUnix) {
+		for (Task task : tasks) {
+			if(task.getTitle().equals(title) &&
+					task.getDescription().equals(description) &&
+					task.getStartDate() == startDateUnix &&
+					task.getEndDate() == endDateUnix) {
+				return task;
+			}
+		}
+		return null;
+	}
 }
