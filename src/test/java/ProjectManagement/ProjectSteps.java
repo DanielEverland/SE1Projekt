@@ -42,22 +42,16 @@ public class ProjectSteps {
         holder.project.assignProjectLeader(holder.employee);
     }
 
-    @Given("there are no other projects in the application")
-    public void there_are_no_other_projects_in_the_application() {
-        assertThat(holder.app.getProjectTitles().size(), is(equalTo(0)));
-    }
-
     @When("the employee creates a new project with title {string}")
-    public void the_employee_creates_a_new_project_with_title(String title) {
-        holder.app.createProject(title);
-        holder.project = holder.app.getProject(title);
+    public void the_employee_creates_a_new_project_with_title(String title) throws AuthException {
+        int id = holder.app.createProject(title);
+        holder.project = holder.app.getProject(id);
     }
 
     @Then("project with title {string} is created")
     public void project_with_title_is_created(String title) {
-        Project project = holder.app.getProject(title);
-        assertNotNull(project);
-        assertThat(project.getTitle(), is(equalTo(title)));
+        assertNotNull(holder.project);
+        assertThat(holder.project.getTitle(), is(equalTo(title)));
     }
 
     @When("The project leader creates a task with title {string}, description {string}, start date {int} and end date {int}")

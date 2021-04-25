@@ -21,11 +21,14 @@ public class Application {
         }
     }
 
-    public void createProject(String title) {
+    public int createProject(String title) throws AuthException {
         if (isSignedIn()) {
             Project newProject = new Project(projects.size(), title);
             projects.put(newProject.getId(), newProject);
+            return newProject.getId();
         }
+
+        throw new AuthException("Employee must be signed in to create project");
     }
 
     public Map<Integer, Project> getProjectTitles() {
