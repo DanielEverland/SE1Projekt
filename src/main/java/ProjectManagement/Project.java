@@ -22,12 +22,12 @@ public class Project {
 	}
 
 	public void createTask(TaskConstructorInfo info) {
-		getTasks().add(new Task(info));
+		tasks.add(new Task(info));
 	}
 
 	public boolean containsTask(String title, String description, Integer startDateUnix, Integer endDateUnix) {
 		for (Task task : getTasks()) {
-			if (task.getTile().equals(title) && task.getDescription().equals(description)
+			if (task.getTitle().equals(title) && task.getDescription().equals(description)
 					&& task.getStartDate() == startDateUnix && task.getEndDate() == endDateUnix) {
 				return true;
 			}
@@ -37,7 +37,7 @@ public class Project {
 	}
 
 	public void assignTaskToEmployee(Employee employee, Task task) {
-		employee.getTasks().add(task);
+		employee.assignToTask(task);
 	}
 
 	public boolean isProjectLeader(Employee employee) {
@@ -49,8 +49,8 @@ public class Project {
 	}
 
 	public Task findTask(String title, String description, Integer startDateUnix, Integer endDateUnix) {
-		for (Task task : getTasks()) {
-			if (task.getTile().equals(title) && task.getDescription().equals(description)
+		for (Task task : tasks) {
+			if (task.getTitle().equals(title) && task.getDescription().equals(description)
 					&& task.getStartDate() == startDateUnix && task.getEndDate() == endDateUnix) {
 				return task;
 			}

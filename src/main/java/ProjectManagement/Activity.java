@@ -1,9 +1,9 @@
 package ProjectManagement;
 
 public class Activity {
-	private String title;
-	private int startDate;
-	private int endDate;
+	protected String title;
+	protected int startDate;
+	protected int endDate;
 
 	public Activity(ActivityConstructorInfo info) {
 		title = info.title;
