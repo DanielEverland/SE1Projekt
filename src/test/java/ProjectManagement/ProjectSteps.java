@@ -4,6 +4,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 
+import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import ProjectManagement.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -49,18 +54,18 @@ public class ProjectSteps {
         assertThat(holder.project.getTitle(), is(equalTo(title)));
     }
 
+    @When("The project leader creates a task with title {string}, description {string}, start date {string} and end date {string}")
+    public void the_project_leader_creates_a_task_with_title_description_start_date_and_end_date(String title, String description, String startDate, String endDate) {
+        holder.project.createTask(new TaskConstructorInfo(title, description, Date.FromString(startDate), Date.FromString(endDate)));
+    }
+
     @Then("the error message {string} is given")
     public void the_error_message_is_given(String errorMessage) {
         assertEquals(errorMessage, holder.errorMessage);
     }
 
-    @When("The project leader creates a task with title {string}, description {string}, start date {int} and end date {int}")
-    public void the_project_leader_creates_a_task_with_title_description_start_date_and_end_date(String title, String description, Integer startDateUnix, Integer endDateUnix) {
-        holder.project.createTask(new TaskConstructorInfo(title, description, startDateUnix, endDateUnix));
-    }
-
-    @Then("A task exists with title {string}, description {string}, start date {int} and end date {int}")
-    public void a_task_exists_with_title_description_start_date_and_end_date(String title, String description, Integer startDateUnix, Integer endDateUnix) {
-        assertThat(holder.project.containsTask(title, description, startDateUnix, endDateUnix), is(equalTo(true)));
+    @Then("A task exists with title {string}, description {string}, start date {string} and end date {string}")
+    public void a_task_exists_with_title_description_start_date_and_end_date(String title, String description, String startDate, String endDate) {
+        assertThat(holder.project.containsTask(title, description, Date.FromString(startDate), Date.FromString(endDate)), is(equalTo(true)));
     }
 }

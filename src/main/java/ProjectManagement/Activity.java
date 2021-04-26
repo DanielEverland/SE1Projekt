@@ -2,9 +2,9 @@ package ProjectManagement;
 
 public class Activity {
 	protected String title;
-	protected int startDate;
-	protected int endDate;
 	protected boolean isBlocking;
+	protected Date startDate;
+	protected Date endDate;
 
 	public Activity(ActivityConstructorInfo info) {
 		title = info.title;
@@ -13,19 +13,19 @@ public class Activity {
 		isBlocking = info.isBlocking;
 	}
 
-	public int getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(int startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public int getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(int endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
