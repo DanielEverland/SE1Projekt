@@ -19,7 +19,7 @@ public class Application {
         projects = new HashMap<>();
         employees = new HashMap<>();
         for (String id : employeeIds) {
-            employees.put(id, new Employee(id));
+            getEmployees().put(id, new Employee(id));
         }
     }
 
@@ -42,11 +42,11 @@ public class Application {
     }
 
     public void addEmployee(Employee employee) {
-        employees.put(employee.getId(), employee);
+        getEmployees().put(employee.getId(), employee);
     }
 
     public void signIn(String id) {
-        signedInEmployee = employees.get(id);
+        signedInEmployee = getEmployees().get(id);
     }
 
     public void signOut() {
@@ -57,11 +57,12 @@ public class Application {
         return signedInEmployee != null;
     }
 
-	public void searchAssignedTasksForEmployee(String id) {
-		Employee employeeToSearch = employees.get(id);
-		List<Task> tasks = employeeToSearch.getTasks();
-		for (Task task : tasks) {
-			System.out.println(task.toString());
-		}
+	public List<Task> searchAssignedTasksForEmployee(String id) {
+		Employee employeeToSearch = getEmployees().get(id);
+		return employeeToSearch.getTasks();
+	}
+
+	public Map<String, Employee> getEmployees() {
+		return employees;
 	}
 }
