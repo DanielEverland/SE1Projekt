@@ -56,4 +56,12 @@ public class Application {
     public boolean isSignedIn() {
         return signedInEmployee != null;
     }
+
+	public void searchAssignedTasksForEmployee(String id) {
+		Employee employeeToSearch = employees.get(id);
+		List<Task> tasks = employeeToSearch.getTasks();
+		for (Task task : tasks) {
+			System.out.println(task.toString());
+		}
+	}
 }
