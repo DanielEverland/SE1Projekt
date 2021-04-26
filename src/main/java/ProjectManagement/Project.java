@@ -57,7 +57,7 @@ public class Project {
     	if (employee.isAvailable()) {
     		employee.assignToTask(task);
     	} else {
-        	throw new Exception("Employee is unavailable");
+    		ErrorMessageHandler.addErrorMessage("Employee is unavailable");
     	}
 	}
 

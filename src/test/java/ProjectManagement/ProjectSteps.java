@@ -49,7 +49,7 @@ public class ProjectSteps {
             int id = holder.app.createProject(title);
             holder.project = holder.app.getProject(id);
         } catch (Throwable e) {
-            holder.errorMessage = e.getMessage();
+        	ErrorMessageHandler.addErrorMessage(e.getMessage());
         }
     }
 
@@ -66,7 +66,7 @@ public class ProjectSteps {
 
     @Then("the error message {string} is given")
     public void the_error_message_is_given(String errorMessage) {
-        assertEquals(errorMessage, holder.errorMessage);
+        assertEquals(errorMessage, ErrorMessageHandler.getPreviousErrorMessage());
     }
 
     @Then("A task exists with title {string}, description {string}, start date {string} and end date {string}")
