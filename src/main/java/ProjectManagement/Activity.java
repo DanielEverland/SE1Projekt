@@ -4,11 +4,13 @@ public class Activity {
 	protected String title;
 	protected int startDate;
 	protected int endDate;
+	protected boolean isBlocking;
 
 	public Activity(ActivityConstructorInfo info) {
 		title = info.title;
 		startDate = info.startDate;
 		endDate = info.endDate;
+		isBlocking = info.isBlocking;
 	}
 
 	public int getStartDate() {
@@ -31,4 +33,13 @@ public class Activity {
 		return title;
 	}
 
+	public boolean getIsBlocking() {
+		return isBlocking;
+	}
+
+	public boolean isInDateInterval(int intervalStart, int intervalEnd) {
+		return (startDate >= intervalStart && startDate < intervalEnd)
+				|| (endDate > intervalStart && endDate <= intervalEnd)
+				|| (startDate <= intervalStart && endDate >= intervalEnd);
+	}
 }

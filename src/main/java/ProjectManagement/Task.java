@@ -9,7 +9,7 @@ public class Task extends Activity {
 	private Map<Employee, Duration> minutesWorked;
 	
 	public Task(TaskConstructorInfo info) {
-		super(new ActivityConstructorInfo(info.title, info.startDate, info.endDate));
+		super(new ActivityConstructorInfo(info.title, info.startDate, info.endDate, false));
 		minutesWorked = new HashMap<Employee, Duration>();
 		Description = info.Description;
 	}

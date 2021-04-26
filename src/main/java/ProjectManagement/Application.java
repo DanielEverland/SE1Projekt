@@ -56,4 +56,19 @@ public class Application {
     public boolean isSignedIn() {
         return signedInEmployee != null;
     }
+
+    public ArrayList<Employee> getAvailableEmployees(int startDate, int endDate) {
+        if (startDate > endDate) {
+            throw new IllegalArgumentException("Start date cannot be greater than end date");
+        }
+
+        ArrayList<Employee> availableEmployees = new ArrayList<>();
+        for (Employee employee : employees.values()) {
+            if (employee.isAvailable(startDate, endDate)) {
+                availableEmployees.add(employee);
+            }
+        }
+
+        return availableEmployees;
+    }
 }
