@@ -44,9 +44,13 @@ public class ProjectSteps {
     }
 
     @When("the employee creates a new project with title {string}")
-    public void the_employee_creates_a_new_project_with_title(String title) throws AuthException {
-        int id = holder.app.createProject(title);
-        holder.project = holder.app.getProject(id);
+    public void the_employee_creates_a_new_project_with_title(String title) {
+        try {
+            int id = holder.app.createProject(title);
+            holder.project = holder.app.getProject(id);
+        } catch (Throwable e) {
+            holder.errorMessage = e.getMessage();
+        }
     }
 
     @Then("project with title {string} is created")
@@ -57,21 +61,16 @@ public class ProjectSteps {
 
     @When("The project leader creates a task with title {string}, description {string}, start date {string} and end date {string}")
     public void the_project_leader_creates_a_task_with_title_description_start_date_and_end_date(String title, String description, String startDate, String endDate) {
-        holder.project.createTask(new TaskConstructorInfo(title, description, StringToDate(startDate), StringToDate(endDate)));
+        holder.project.createTask(new TaskConstructorInfo(title, description, Date.FromString(startDate), Date.FromString(endDate)));
+    }
+
+    @Then("the error message {string} is given")
+    public void the_error_message_is_given(String errorMessage) {
+        assertEquals(errorMessage, holder.errorMessage);
     }
 
     @Then("A task exists with title {string}, description {string}, start date {string} and end date {string}")
     public void a_task_exists_with_title_description_start_date_and_end_date(String title, String description, String startDate, String endDate) {
-        assertThat(holder.project.containsTask(title, description, StringToDate(startDate), StringToDate(endDate)), is(equalTo(true)));
-    }
-    
-    private Date StringToDate(String dateString) {
-    	try {
-			return new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	return new Date();
+        assertThat(holder.project.containsTask(title, description, Date.FromString(startDate), Date.FromString(endDate)), is(equalTo(true)));
     }
 }

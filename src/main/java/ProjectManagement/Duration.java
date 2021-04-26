@@ -2,7 +2,7 @@ package ProjectManagement;
 
 // Abstraction layer to simplify dealing with durations
 public class Duration {
-	
+	private static final double EPSILON = 0.00001; 
 	private long MinutesPassed;
 	
 	public void AddTime(int hours, int minutes) {
@@ -22,12 +22,21 @@ public class Duration {
 		MinutesPassed += hours * 60;
 	}
 	
+	public void AddHours(double hours) {
+		assert isAtleastOneMinute(hours);
+		MinutesPassed += (int) (hours*60);
+	}
+
+	private boolean isAtleastOneMinute(double hours) {
+		return hours-1/60.0 >= getEpsilon();
+	}
+	
 	public long GetMinutesPassed() {
 		return MinutesPassed;
 	}
 	
-	public long GetHoursPassed() {
-		return MinutesPassed / 60;
+	public double GetHoursPassed() {
+		return MinutesPassed / 60.0;
 	}
 	
 	public boolean HaveHoursPassed(int hours) {
@@ -41,4 +50,9 @@ public class Duration {
 		
 		return MinutesPassed >= minutes;
 	}
+
+	public static double getEpsilon() {
+		return EPSILON;
+	}
+	
 }

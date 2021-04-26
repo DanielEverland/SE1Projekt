@@ -1,7 +1,5 @@
 package ProjectManagement;
 
-import java.util.Date;
-
 public class TaskConstructorInfo extends ActivityConstructorInfo {
 	public String Description;
 	

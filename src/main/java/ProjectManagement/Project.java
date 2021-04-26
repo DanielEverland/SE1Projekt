@@ -1,8 +1,9 @@
 package ProjectManagement;
 
+import org.junit.Assert;
+
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class Project {
     // The number of digits in the stringified id of projects
@@ -15,6 +16,9 @@ public class Project {
     private Employee projectLead;
 
     public Project(int id, String title) {
+        Assert.assertFalse("Id must be a non-negative integer", id < 0);
+        Assert.assertFalse("Title cannot be empty or contain '|'", title.length() == 0 || title.contains("|"));
+
         year = Calendar.getInstance().get(Calendar.YEAR);
         this.id = id;
         this.title = title;
@@ -46,17 +50,30 @@ public class Project {
     }
 
     public boolean containsTask(String title, String description, Date startDate, Date endDate) {
-    	for(Task task : tasks)
-    	{
-    		if(task.getTile().equals(title) &&
-				task.getDescription().equals(description) &&
-				task.getStartDate().equals(startDate) &&
-				task.getEndDate().equals(endDate))
-    		{
-    			return true;
-    		}
-    	}
-
-    	return false;
+    	return findTask(title, description, startDate, endDate) != null;
     }
+    
+    public void assignTaskToEmployee(Employee employee, Task task) {
+		employee.assignToTask(task);
+	}
+
+	public boolean isProjectLeader(Employee employee) {
+		return employee == projectLead ? true : false;
+	}
+
+	public ArrayList<Task> getTasks() {
+		return tasks;
+	}
+
+	public Task findTask(String title, String description, Date startDate, Date endDate) {
+		for (Task task : tasks) {
+			if(task.getTitle().equals(title) &&
+					task.getDescription().equals(description) &&
+					task.getStartDate().equals(startDate) &&
+					task.getEndDate().equals(endDate)) {
+				return task;
+			}
+		}
+		return null;
+	}
 }
