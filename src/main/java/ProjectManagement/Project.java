@@ -8,6 +8,7 @@ import java.util.Calendar;
 public class Project {
     // The number of digits in the stringified id of projects
     private static final int serialDigits = 4;
+    private static final int minTitleLength = 3;
 
     private int year;
     private int id;
@@ -46,6 +47,12 @@ public class Project {
     }
 
     public void createTask(TaskConstructorInfo info) {
+    	if(!isValidActivityInfo(info))
+    	{
+    		ErrorMessageHandler.addErrorMessage("Constructor info contains invalid information");
+    		return;
+    	}
+    	
     	tasks.add(new Task(info));
     }
 
@@ -75,5 +82,13 @@ public class Project {
 			}
 		}
 		return null;
+	}
+	
+	private boolean isValidActivityInfo(ActivityConstructorInfo info) {
+		return isASCIIString(info.title) && info.title.length() > minTitleLength;
+	}
+	
+	private boolean isASCIIString(String input) {
+		return input.chars().allMatch(c -> c < 128);
 	}
 }

@@ -73,4 +73,9 @@ public class ProjectSteps {
     public void a_task_exists_with_title_description_start_date_and_end_date(String title, String description, String startDate, String endDate) {
         assertThat(holder.project.containsTask(title, description, Date.FromString(startDate), Date.FromString(endDate)), is(equalTo(true)));
     }
+    
+    @Then("No task with title {string}, description {string}, start date {string} and end date {string} exists")
+    public void no_task_with_title_description_start_date_and_end_date_exists(String title, String description, String startDate, String endDate) {
+    	assertThat(holder.project.containsTask(title, description, Date.FromString(startDate), Date.FromString(endDate)), is(equalTo(false)));
+    }
 }
