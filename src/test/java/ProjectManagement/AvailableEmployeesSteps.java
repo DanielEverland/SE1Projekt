@@ -36,6 +36,18 @@ public class AvailableEmployeesSteps {
         }
 
         assertThat(matchingEmployee != null, is(equalTo(true)));
-        availableEmployees.remove(matchingEmployee);
+    }
+
+    @Then("the application returns a list that does not contain employee with id {string}")
+    public void the_application_returns_a_list_that_does_not_contain_employee_with_id(String id) {
+        Employee matchingEmployee = null;
+        for (Employee employee : availableEmployees) {
+            if (employee.getId().equals(id)) {
+                matchingEmployee = employee;
+                break;
+            }
+        }
+
+        assertThat(matchingEmployee, is(equalTo(null)));
     }
 }

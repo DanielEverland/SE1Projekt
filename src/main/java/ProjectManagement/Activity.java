@@ -38,8 +38,8 @@ public class Activity {
 	}
 
 	public boolean isInDateInterval(Date intervalStart, Date intervalEnd) {
-		return (startDate.after(intervalStart) && startDate.before(intervalEnd))
-				|| (endDate.after(intervalStart) && endDate.before(intervalEnd))
+		return ((startDate.equals(intervalStart) || startDate.after(intervalStart)) && startDate.before(intervalEnd))
+				|| (endDate.after(intervalStart) && (endDate.equals(intervalEnd) || endDate.before(intervalEnd)))
 				|| (startDate.before(intervalStart) && endDate.after(intervalEnd));
 	}
 }

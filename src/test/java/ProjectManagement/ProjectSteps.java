@@ -28,6 +28,12 @@ public class ProjectSteps {
         holder.app.addEmployee(holder.employee);
     }
 
+    @Given("an employee with id {string} and maxTasks {int} exists in the application")
+    public void an_employee_with_id_and_max_tasks_exists_in_the_application(String id, Integer maxTasks) {
+        holder.employee = new Employee(id, maxTasks);
+        holder.app.addEmployee(holder.employee);
+    }
+
     @Given("the employee is signed in")
     public void the_employee_is_signed_in() {
         holder.app.signIn(holder.employee.getId());
