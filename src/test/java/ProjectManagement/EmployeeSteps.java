@@ -1,10 +1,12 @@
 package ProjectManagement;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.equalTo;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import io.cucumber.java.en.Given;
@@ -14,7 +16,9 @@ import io.cucumber.java.en.When;
 public class EmployeeSteps {
 
 	private MainHolder holder;
-
+	private ErrorMessageHandler errorMessageHandler;
+	private List<Task> assignedTasksForEmployee;
+	
 	public EmployeeSteps(MainHolder holder) {
 		this.holder = holder;
 	}
@@ -72,21 +76,20 @@ public class EmployeeSteps {
 		assertTrue(workedHours > expectedHours);
 	}
 
-	@Then("the employee get the error message {string}")
-	public void the_employee_get_the_error_message(String errorMessage) {
-		// Write code here that turns the phrase above into concrete actions
-		throw new io.cucumber.java.PendingException();
-	}
-
 	@When("the employee enters the ID {string}")
 	public void the_employee_enters_the_id(String id) {
-		holder.app.searchAssignedTasksForEmployee(id);
+		assignedTasksForEmployee = holder.app.searchAssignedTasksForEmployee(id);
 	}
 
-	@Then("all tasks that are assigend to the ID {string} is presented")
-	public void all_tasks_that_are_assigend_to_the_id_is_presented(String ID) {
-		// Write code here that turns the phrase above into concrete actions
-		throw new io.cucumber.java.PendingException();
+	@Then("all tasks that are assigned to the ID are found")
+	public void all_tasks_that_are_assigend_to_the_id_are_found() {
+		List<Task> tasks = holder.employee.getTasks();
+		assertThat(assignedTasksForEmployee, containsInAnyOrder(tasks.toArray()));
 	}
-
+	
+	@Then("the employee with id {string} has no assigned tasks")
+	public void the_employee_with_id_has_no_assigned_tasks(String id) {
+		Employee employee = holder.app.getEmployees().get(id);
+		assertTrue(employee.getTasks().isEmpty());
+	}
 }
