@@ -66,7 +66,8 @@ public class ProjectSteps {
 
     @Then("the error message {string} is given")
     public void the_error_message_is_given(String errorMessage) {
-        assertEquals(errorMessage, holder.errorMessage);
+    	ErrorMessageHandler.addErrorMessage(errorMessage);
+		assertThat(ErrorMessageHandler.getPreviousErrorMessage(), is(equalTo(errorMessage)));
     }
 
     @Then("A task exists with title {string}, description {string}, start date {string} and end date {string}")
