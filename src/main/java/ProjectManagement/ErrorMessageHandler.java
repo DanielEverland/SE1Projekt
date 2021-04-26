@@ -2,13 +2,13 @@ package ProjectManagement;
 
 public class ErrorMessageHandler {
 
-	private String PreviousErrorMessage;
+	private static String PreviousErrorMessage;
 	
-	public String getPreviousErrorMessage() {
+	public static String getPreviousErrorMessage() {
 		return PreviousErrorMessage;
 	}
 	
-	public void addErrorMessage(String errorMessage) {
+	public static void addErrorMessage(String errorMessage) {
 		System.out.println("Error: " + errorMessage);
 		PreviousErrorMessage = errorMessage;
 	}
