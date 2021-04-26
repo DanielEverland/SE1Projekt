@@ -30,7 +30,8 @@ public class Application {
             return newProject.getId();
         }
 
-        throw new AuthException("Employee must be signed in to create project");
+		ErrorMessageHandler.addErrorMessage("Employee must be signed in to create project");
+		return -1;
     }
 
     public Map<Integer, Project> getProjectTitles() {
@@ -43,6 +44,10 @@ public class Application {
 
     public void addEmployee(Employee employee) {
         employees.put(employee.getId(), employee);
+    }
+    
+    public Employee getEmployee(String id) {
+    	return employees.get(id);
     }
 
     public void signIn(String id) {
