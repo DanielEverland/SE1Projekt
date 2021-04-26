@@ -49,19 +49,8 @@ public class Project {
     	tasks.add(new Task(info));
     }
 
-    public boolean containsTask(String title, String description, Integer startDateUnix, Integer endDateUnix) {
-    	for(Task task : tasks)
-    	{
-    		if(task.getTitle().equals(title) &&
-				task.getDescription().equals(description) &&
-				task.getStartDate() == startDateUnix &&
-				task.getEndDate() == endDateUnix)
-    		{
-    			return true;
-    		}
-    	}
-
-    	return false;
+    public boolean containsTask(String title, String description, Date startDate, Date endDate) {
+    	return findTask(title, description, startDate, endDate) != null;
     }
     
     public void assignTaskToEmployee(Employee employee, Task task) {
@@ -76,12 +65,12 @@ public class Project {
 		return tasks;
 	}
 
-	public Task findTask(String title, String description, Integer startDateUnix, Integer endDateUnix) {
+	public Task findTask(String title, String description, Date startDate, Date endDate) {
 		for (Task task : tasks) {
 			if(task.getTitle().equals(title) &&
 					task.getDescription().equals(description) &&
-					task.getStartDate() == startDateUnix &&
-					task.getEndDate() == endDateUnix) {
+					task.getStartDate().equals(startDate) &&
+					task.getEndDate().equals(endDate)) {
 				return task;
 			}
 		}
