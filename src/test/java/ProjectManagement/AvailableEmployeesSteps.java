@@ -20,9 +20,9 @@ public class AvailableEmployeesSteps {
         this.holder = holder;
     }
 
-    @When("a list of available employees is requested from date {int} to date {int}")
-    public void a_list_of_available_employees_is_requested_from_date_to_date(Integer date1, Integer date2) {
-        availableEmployees = holder.app.getAvailableEmployees(date1, date2);
+    @When("a list of available employees is requested from date {string} to date {string}")
+    public void a_list_of_available_employees_is_requested_from_date_to_date(String startDate, String endDate) {
+        availableEmployees = holder.app.getAvailableEmployees(Date.FromString(startDate), Date.FromString(endDate));
     }
 
     @Then("the application returns a list containing employee with id {string}")

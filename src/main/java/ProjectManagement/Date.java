@@ -50,5 +50,12 @@ public class Date {
 			return false;
 		return true;
 	}
-	
+
+	public boolean before(Date date) {
+		return InternalDate.before(date.InternalDate);
+	}
+
+	public boolean after(Date date) {
+		return InternalDate.after(date.InternalDate);
+	}
 }

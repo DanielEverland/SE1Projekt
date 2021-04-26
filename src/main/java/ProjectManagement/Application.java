@@ -57,8 +57,8 @@ public class Application {
         return signedInEmployee != null;
     }
 
-    public ArrayList<Employee> getAvailableEmployees(int startDate, int endDate) {
-        if (startDate > endDate) {
+    public ArrayList<Employee> getAvailableEmployees(Date startDate, Date endDate) {
+        if (startDate.after(endDate)) {
             throw new IllegalArgumentException("Start date cannot be greater than end date");
         }
 

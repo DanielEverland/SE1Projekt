@@ -37,9 +37,9 @@ public class Activity {
 		return isBlocking;
 	}
 
-	public boolean isInDateInterval(int intervalStart, int intervalEnd) {
-		return (startDate >= intervalStart && startDate < intervalEnd)
-				|| (endDate > intervalStart && endDate <= intervalEnd)
-				|| (startDate <= intervalStart && endDate >= intervalEnd);
+	public boolean isInDateInterval(Date intervalStart, Date intervalEnd) {
+		return (startDate.after(intervalStart) && startDate.before(intervalEnd))
+				|| (endDate.after(intervalStart) && endDate.before(intervalEnd))
+				|| (startDate.before(intervalStart) && endDate.after(intervalEnd));
 	}
 }

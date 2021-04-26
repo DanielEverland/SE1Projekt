@@ -41,7 +41,7 @@ public class Employee {
 		assignedActivites.add(task);
 	}
 
-	public boolean isAvailable(int startDate, int endDate) {
+	public boolean isAvailable(Date startDate, Date endDate) {
 		int tasksInPeriod = 0;
 		for (Activity activity : assignedActivites) {
 			if (activity.isInDateInterval(startDate, endDate)) {
