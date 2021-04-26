@@ -1,5 +1,6 @@
 package ProjectManagement;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -21,7 +22,8 @@ public class Date {
 	
 	@Override
 	public String toString() {
-		return InternalDate.toString();
+		 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+         return dateFormat.format(InternalDate);
 	}
 
 	@Override
