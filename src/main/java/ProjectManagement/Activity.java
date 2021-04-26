@@ -31,4 +31,10 @@ public class Activity {
 		return title;
 	}
 
+	@Override
+	public String toString() {
+
+		return "Title: " + title + "\nStart date: " + startDate.toString() + "\nEnd date: " + endDate.toString();
+	}
+
 }

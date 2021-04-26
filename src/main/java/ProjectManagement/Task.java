@@ -45,4 +45,9 @@ public class Task extends Activity {
 		
 		this.expectedTime += hours;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "\nDescription: " + Description + "\n";
+	}
 }
