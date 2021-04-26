@@ -2,6 +2,7 @@ package ProjectManagement;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Project {
     // The number of digits in the stringified id of projects
@@ -44,13 +45,13 @@ public class Project {
     	tasks.add(new Task(info));
     }
 
-    public boolean containsTask(String title, String description, Integer startDateUnix, Integer endDateUnix) {
+    public boolean containsTask(String title, String description, Date startDate, Date endDate) {
     	for(Task task : tasks)
     	{
     		if(task.getTile().equals(title) &&
 				task.getDescription().equals(description) &&
-				task.getStartDate() == startDateUnix &&
-				task.getEndDate() == endDateUnix)
+				task.getStartDate().equals(startDate) &&
+				task.getEndDate().equals(endDate))
     		{
     			return true;
     		}

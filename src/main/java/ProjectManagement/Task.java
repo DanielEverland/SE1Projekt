@@ -1,11 +1,13 @@
 package ProjectManagement;
 
+import java.util.Date;
+
 public class Task {
 	
 	private String Title;
 	private String Description;
-	private int StartDate;
-	private int EndDate;
+	private Date StartDate;
+	private Date EndDate;
 	
 	public String getTile() {
 		return Title;
@@ -15,11 +17,11 @@ public class Task {
 		return Description;
 	}
 	
-	public int getStartDate() {
+	public Date getStartDate() {
 		return StartDate;
 	}
 	
-	public int getEndDate() {
+	public Date getEndDate() {
 		return EndDate;
 	}
 	
