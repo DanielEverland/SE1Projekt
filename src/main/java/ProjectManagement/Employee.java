@@ -17,7 +17,7 @@ public class Employee {
 		return id;
 	}
 
-	public List<Activity> getAassignedActivites() {
+	public List<Activity> getAssignedActivites() {
 		return assignedActivites;
 	}
 	
