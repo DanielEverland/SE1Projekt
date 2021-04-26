@@ -1,5 +1,6 @@
 package ProjectManagement;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
@@ -20,7 +21,7 @@ public class EmployeeSteps {
 	}
 
 	@Given("the employee has an existing task with title {string}, description {string}, start date {string} and end date {string}")
-	public void theEmployeeHasAnExistingTaskWithTitleDescriptionStartDateAndEndDate(String title, String description, String startDateString, String endDateString) {		
+	public void theEmployeeHasAnExistingTaskWithTitleDescriptionStartDateAndEndDate(String title, String description, String startDateString, String endDateString) throws Exception {		
 		Date startDate = Date.FromString(startDateString);
 		Date endDate = Date.FromString(endDateString);
 		
@@ -62,9 +63,11 @@ public class EmployeeSteps {
 
 	@Then("the employee get the error message {string}")
 	public void the_employee_get_the_error_message(String errorMessage) throws AuthException {
-		
-		assertThat(1, is(equalTo(2)));
-		// how 2 mak
+		assertEquals(errorMessage, holder.errorMessage);
 	}
 	
+	@Given("the employee with id {string} is unavailable")
+	public void the_employee_with_id_is_unavailable(String id) {
+		holder.app.getEmployee(id).setAvailability(false);
+	}
 }

@@ -73,4 +73,18 @@ public class ProjectSteps {
     public void a_task_exists_with_title_description_start_date_and_end_date(String title, String description, String startDate, String endDate) {
         assertThat(holder.project.containsTask(title, description, Date.FromString(startDate), Date.FromString(endDate)), is(equalTo(true)));
     }
+
+    @When("the project leader assigns the task with title {string}, description {string}, start date {string} and end date {string} to employee with id {string}")
+    public void the_project_leader_assigns_the_task_with_title_description_start_date_and_end_date_to_employee_with_id(String title, String description, String startDate, String endDate, String empID) {
+        try {
+        	holder.project.assignTaskToEmployee(holder.app.getEmployee(empID), holder.project.findTask(title, description, Date.FromString(startDate), Date.FromString(endDate)));
+        } catch (Throwable e) {
+            holder.errorMessage = e.getMessage();
+        }
+    }
+
+    @Then("the employee with id {string} is assigned to the task with title {string}, description {string}, start date {string} and end date {string}")
+    public void the_employee_with_id_is_assigned_to_the_task_with_title_description_start_date_and_end_date(String empID, String title, String description, String startDate, String endDate) {
+    	assertTrue(holder.app.getEmployee(empID).getTasks().stream().anyMatch(m -> m.getTitle().contentEquals(title) && m.getDescription().contentEquals(description) && m.getStartDate().toString().equals(startDate) && m.getEndDate().toString().equals(endDate)));
+    }
 }

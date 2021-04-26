@@ -53,8 +53,12 @@ public class Project {
     	return findTask(title, description, startDate, endDate) != null;
     }
     
-    public void assignTaskToEmployee(Employee employee, Task task) {
-		employee.assignToTask(task);
+    public void assignTaskToEmployee(Employee employee, Task task) throws Exception {    	
+    	if (employee.isAvailable()) {
+    		employee.assignToTask(task);
+    	} else {
+        	throw new Exception("Employee is unavailable");
+    	}
 	}
 
 	public boolean isProjectLeader(Employee employee) {
