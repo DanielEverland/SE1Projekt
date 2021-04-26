@@ -35,4 +35,5 @@ public class Employee {
 	public void assignToTask(Task task) {
 		assignedActivites.add(task);
 	}
+
 }
