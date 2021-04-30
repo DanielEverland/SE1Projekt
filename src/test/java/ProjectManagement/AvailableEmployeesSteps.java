@@ -22,7 +22,11 @@ public class AvailableEmployeesSteps {
 
     @When("a list of available employees is requested from date {string} to date {string}")
     public void a_list_of_available_employees_is_requested_from_date_to_date(String startDate, String endDate) {
-        availableEmployees = holder.app.getAvailableEmployees(Date.FromString(startDate), Date.FromString(endDate));
+        try {
+            availableEmployees = holder.app.getAvailableEmployees(Date.FromString(startDate), Date.FromString(endDate));
+        } catch (Exception e) {
+            holder.errorMessage = e.getMessage();
+        }
     }
 
     @Then("the application returns a list containing employee with id {string}")
