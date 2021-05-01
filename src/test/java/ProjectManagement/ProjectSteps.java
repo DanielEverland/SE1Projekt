@@ -77,6 +77,7 @@ public class ProjectSteps {
     @Then("No task with title {string}, description {string}, start date {string} and end date {string} exists")
     public void no_task_with_title_description_start_date_and_end_date_exists(String title, String description, String startDate, String endDate) {
     	assertThat(holder.project.containsTask(title, description, Date.FromString(startDate), Date.FromString(endDate)), is(equalTo(false)));
+    }
 
     @When("the project leader assigns the task with title {string}, description {string}, start date {string} and end date {string} to employee with id {string}")
     public void the_project_leader_assigns_the_task_with_title_description_start_date_and_end_date_to_employee_with_id(String title, String description, String startDate, String endDate, String empID) {
