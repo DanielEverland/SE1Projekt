@@ -7,29 +7,37 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 
 public class DurationSteps {
 
 	Duration duration = new Duration();
-	Double hours;
+	Double timePassedInHours;
+	boolean assertionTriggered;
 
-	@Given("Employee enters {double} hours worked")
-	public void employee_enters_hours_worked(Double hours) {
-		this.hours = hours;
+	@Given("time passed is {double} hours")
+	public void time_passed_is_hours(Double hoursPassed) {
+	    timePassedInHours = hoursPassed;
 	}
 
+	@When("duration is set to time passed")
+	public void duration_is_set_to_time_passed() {
+	    try {
+	    	duration.AddHours(timePassedInHours);
+	    }
+	    catch(java.lang.AssertionError e) {
+	    	assertionTriggered = true;
+	    }
+	}
+
+	@Then("duration is equal to {double} hours")
+	public void duration_is_equal_to_hours(Double hoursPassed) {
+		assertThat(duration.GetHoursPassed(), is(equalTo(hoursPassed)));
+	}
+	
 	@Then("an assertion error is triggered")
 	public void an_assertion_error_is_triggered() {
-		assertThrows(java.lang.AssertionError.class, () -> {
-			duration.AddHours(hours);
-		});
+	    assertTrue(assertionTriggered);
 	}
-
-	@Then("the hours worked can be logged")
-	public void the_hours_worked_can_be_logged() {
-		duration.AddHours(hours);
-		assertThat(duration.GetHoursPassed(), is(equalTo(hours)));
-	}
-
 }
