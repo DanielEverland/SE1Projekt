@@ -46,6 +46,12 @@ public class Project {
     }
 
     public void createTask(TaskConstructorInfo info) {
+    	if(!info.isValid())
+    	{
+    		ErrorMessageHandler.addErrorMessage("Constructor info contains invalid information");
+    		return;
+    	}
+    	
     	tasks.add(new Task(info));
     }
 
