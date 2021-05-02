@@ -46,6 +46,12 @@ public class Project {
     }
 
     public void createTask(TaskConstructorInfo info) {
+    	if(!info.isValid())
+    	{
+    		ErrorMessageHandler.addErrorMessage("Constructor info contains invalid information");
+    		return;
+    	}
+    	
     	tasks.add(new Task(info));
     }
 
@@ -53,8 +59,12 @@ public class Project {
     	return findTask(title, description, startDate, endDate) != null;
     }
     
-    public void assignTaskToEmployee(Employee employee, Task task) {
-		employee.assignToTask(task);
+    public void assignTaskToEmployee(Employee employee, Task task) throws Exception {    	
+    	if (employee.isAvailable()) {
+    		employee.assignToTask(task);
+    	} else {
+    		ErrorMessageHandler.addErrorMessage("Employee is unavailable");
+    	}
 	}
 
 	public boolean isProjectLeader(Employee employee) {

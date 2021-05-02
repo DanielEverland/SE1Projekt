@@ -2,24 +2,22 @@ Feature: Duration
 Description: Employee enters duration of hours worked
 Actor: Employee
 
-Scenario:
-Given Employee enters 1.5 hours worked
-Then the hours worked can be logged
+Scenario: Valid time passed is logged
+Given time passed is 1.5 hours
+When duration is set to time passed
+Then duration is equal to 1.5 hours
 
 Scenario:
-Given Employee enters 0.0 hours worked
+Given time passed is 0.0 hours
+When duration is set to time passed
 Then an assertion error is triggered
 
 Scenario:
-Given Employee enters -1.0 hours worked
+Given time passed is -1.0 hours
+When duration is set to time passed
 Then an assertion error is triggered
 
 Scenario:
-Given Employee enters 0.0001 hours worked
-Then an assertion error is triggered
-
-Scenario:
-Given Employee enters 0.000001 hours worked
-Then an assertion error is triggered
-
-#De 3 sidste scenarios giver assertionError. 
+Given time passed is 0.0001 hours
+When duration is set to time passed
+Then an assertion error is triggered 
