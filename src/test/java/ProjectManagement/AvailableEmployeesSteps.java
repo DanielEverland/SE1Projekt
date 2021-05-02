@@ -25,7 +25,7 @@ public class AvailableEmployeesSteps {
         try {
             availableEmployees = holder.app.getAvailableEmployees(Date.FromString(startDate), Date.FromString(endDate));
         } catch (Exception e) {
-            holder.errorMessage = e.getMessage();
+            ErrorMessageHandler.addErrorMessage(e.getMessage());
         }
     }
 

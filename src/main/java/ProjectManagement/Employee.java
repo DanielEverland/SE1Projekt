@@ -56,4 +56,8 @@ public class Employee {
 
 		return tasksInPeriod < maxTasks;
 	}
+
+	public boolean isAvailable(Task task) {
+		return isAvailable(task.startDate, task.endDate);
+	}
 }

@@ -60,7 +60,7 @@ public class Project {
     }
     
     public void assignTaskToEmployee(Employee employee, Task task) throws Exception {    	
-    	if (employee.isAvailable()) {
+    	if (employee.isAvailable(task)) {
     		employee.assignToTask(task);
     	} else {
     		ErrorMessageHandler.addErrorMessage("Employee is unavailable");

@@ -65,9 +65,4 @@ public class EmployeeSteps {
 	public void the_employee_get_the_error_message(String errorMessage) throws AuthException {
 		assertEquals(errorMessage, holder.errorMessage);
 	}
-	
-	@Given("the employee with id {string} is unavailable")
-	public void the_employee_with_id_is_unavailable(String id) {
-		holder.app.getEmployee(id).setAvailability(false);
-	}
 }
