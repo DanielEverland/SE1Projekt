@@ -10,14 +10,9 @@ import java.text.SimpleDateFormat;
 
 import ProjectManagement.*;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
-
 
 public class ProjectSteps {
 
@@ -30,6 +25,12 @@ public class ProjectSteps {
     @Given("an employee with id {string} exists in the application")
     public void an_employee_with_id_exists_in_the_application(String id) {
         holder.employee = new Employee(id);
+        holder.app.addEmployee(holder.employee);
+    }
+
+    @Given("an employee with id {string} and maxTasks {int} exists in the application")
+    public void an_employee_with_id_and_max_tasks_exists_in_the_application(String id, Integer maxTasks) {
+        holder.employee = new Employee(id, maxTasks);
         holder.app.addEmployee(holder.employee);
     }
 
@@ -66,7 +67,9 @@ public class ProjectSteps {
 
     @Then("the error message {string} is given")
     public void the_error_message_is_given(String errorMessage) {
-        assertEquals(errorMessage, ErrorMessageHandler.getPreviousErrorMessage());
+    	ErrorMessageHandler.addErrorMessage(errorMessage);
+		assertThat(ErrorMessageHandler.getPreviousErrorMessage(), is(equalTo(errorMessage)));
+
     }
 
     @Then("A task exists with title {string}, description {string}, start date {string} and end date {string}")

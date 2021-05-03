@@ -2,6 +2,7 @@ package ProjectManagement;
 
 public class Activity {
 	protected String title;
+	protected boolean isBlocking;
 	protected Date startDate;
 	protected Date endDate;
 
@@ -9,6 +10,7 @@ public class Activity {
 		title = info.title;
 		startDate = info.startDate;
 		endDate = info.endDate;
+		isBlocking = info.isBlocking;
 	}
 
 	public Date getStartDate() {
@@ -29,6 +31,23 @@ public class Activity {
 
 	public String getTitle() {
 		return title;
+	}
+
+	@Override
+	public String toString() {
+
+		return "Title: " + title + "\nStart date: " + startDate.toString() + "\nEnd date: " + endDate.toString();
+	}
+
+
+	public boolean getIsBlocking() {
+		return isBlocking;
+	}
+
+	public boolean isInDateInterval(Date intervalStart, Date intervalEnd) {
+		return ((startDate.equals(intervalStart) || startDate.after(intervalStart)) && startDate.before(intervalEnd))
+				|| (endDate.after(intervalStart) && (endDate.equals(intervalEnd) || endDate.before(intervalEnd)))
+				|| (startDate.before(intervalStart) && endDate.after(intervalEnd));
 	}
 
 }

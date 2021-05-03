@@ -10,7 +10,7 @@ public class Task extends Activity {
 	private Map<Employee, Duration> minutesWorked;
 	
 	public Task(TaskConstructorInfo info) {
-		super(new ActivityConstructorInfo(info.title, info.startDate, info.endDate));
+		super(new ActivityConstructorInfo(info.title, info.startDate, info.endDate, false));
 		minutesWorked = new HashMap<Employee, Duration>();
 		Description = info.Description;
 	}
@@ -44,5 +44,10 @@ public class Task extends Activity {
 		assert hours > 0.0;
 		
 		this.expectedTime += hours;
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "\nDescription: " + Description + "\n";
 	}
 }
