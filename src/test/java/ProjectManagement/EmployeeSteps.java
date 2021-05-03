@@ -35,7 +35,7 @@ public class EmployeeSteps {
 		holder.project.createTask(new TaskConstructorInfo(title, description, startDate, endDate));
 		holder.project.assignTaskToEmployee(holder.employee,
 				holder.project.findTask(title, description, startDate, endDate));
-		ArrayList<Task> projectTasks = holder.project.getTasks();
+		holder.project.getTasks();
 	}
 
 	@When("the employee inputs {double} hours worked on the task with title {string}, description {string}, start date {string} and end date {string}")
@@ -94,9 +94,5 @@ public class EmployeeSteps {
 	public void the_employee_with_id_has_no_assigned_tasks(String id) {
 		Employee employee = holder.app.getEmployees().get(id);
 		assertTrue(employee.getTasks().isEmpty());
-	}
-	@Then("the employee get the error message {string}")
-	public void the_employee_get_the_error_message(String errorMessage) throws AuthException {
-		assertEquals(errorMessage, holder.errorMessage);
 	}
 }

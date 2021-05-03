@@ -5,18 +5,18 @@ import java.util.Map;
 
 public class Task extends Activity {
 
-	private String Description;
+	private String description;
 	private double expectedTime;
 	private Map<Employee, Duration> minutesWorked;
 	
 	public Task(TaskConstructorInfo info) {
 		super(new ActivityConstructorInfo(info.title, info.startDate, info.endDate, false));
 		minutesWorked = new HashMap<Employee, Duration>();
-		Description = info.Description;
+		description = info.Description;
 	}
 
 	public String getDescription() {
-		return Description;
+		return description;
 	}
 
 	public Map<Employee, Duration> getMinutesWorked() {
@@ -48,6 +48,10 @@ public class Task extends Activity {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "\nDescription: " + Description + "\n";
+		return super.toString() + "\nDescription: " + description + "\n";
+	}
+
+	public void editTitle(String newTitle) {
+		this.title = newTitle;
 	}
 }
