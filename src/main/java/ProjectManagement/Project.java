@@ -61,7 +61,7 @@ public class Project {
     
     public void assignTaskToEmployee(Employee employee, Task task) {    	
     	if (employee.isAvailable(task)) {
-    		employee.assignToTask(task);
+    		employee.assignToActivity(task);
     	} else {
     		ErrorMessageHandler.addErrorMessage("Employee is unavailable");
     	}
