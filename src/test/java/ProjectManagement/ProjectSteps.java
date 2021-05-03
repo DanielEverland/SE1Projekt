@@ -4,19 +4,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import ProjectManagement.*;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
 
 public class ProjectSteps {
 
@@ -32,6 +28,12 @@ public class ProjectSteps {
         holder.app.addEmployee(holder.employee);
     }
 
+    @Given("an employee with id {string} and maxTasks {int} exists in the application")
+    public void an_employee_with_id_and_max_tasks_exists_in_the_application(String id, Integer maxTasks) {
+        holder.employee = new Employee(id, maxTasks);
+        holder.app.addEmployee(holder.employee);
+    }
+
     @Given("the employee is signed in")
     public void the_employee_is_signed_in() {
         holder.app.signIn(holder.employee.getId());
@@ -43,9 +45,13 @@ public class ProjectSteps {
     }
 
     @When("the employee creates a new project with title {string}")
-    public void the_employee_creates_a_new_project_with_title(String title) throws AuthException {
-        int id = holder.app.createProject(title);
-        holder.project = holder.app.getProject(id);
+    public void the_employee_creates_a_new_project_with_title(String title) {
+        try {
+            int id = holder.app.createProject(title);
+            holder.project = holder.app.getProject(id);
+        } catch (Throwable e) {
+        	ErrorMessageHandler.addErrorMessage(e.getMessage());
+        }
     }
 
     @Then("project with title {string} is created")
@@ -54,13 +60,39 @@ public class ProjectSteps {
         assertThat(holder.project.getTitle(), is(equalTo(title)));
     }
 
-    @When("The project leader creates a task with title {string}, description {string}, start date {int} and end date {int}")
-    public void the_project_leader_creates_a_task_with_title_description_start_date_and_end_date(String title, String description, Integer startDateUnix, Integer endDateUnix) {
-        holder.project.createTask(new TaskConstructorInfo(title, description, startDateUnix, endDateUnix));
+    @When("The project leader creates a task with title {string}, description {string}, start date {string} and end date {string}")
+    public void the_project_leader_creates_a_task_with_title_description_start_date_and_end_date(String title, String description, String startDate, String endDate) {
+        holder.project.createTask(new TaskConstructorInfo(title, description, Date.FromString(startDate), Date.FromString(endDate)));
     }
 
-    @Then("A task exists with title {string}, description {string}, start date {int} and end date {int}")
-    public void a_task_exists_with_title_description_start_date_and_end_date(String title, String description, Integer startDateUnix, Integer endDateUnix) {
-        assertThat(holder.project.containsTask(title, description, startDateUnix, endDateUnix), is(equalTo(true)));
+    @Then("the error message {string} is given")
+    public void the_error_message_is_given(String errorMessage) {
+    	ErrorMessageHandler.addErrorMessage(errorMessage);
+		assertThat(ErrorMessageHandler.getPreviousErrorMessage(), is(equalTo(errorMessage)));
+
+    }
+
+    @Then("A task exists with title {string}, description {string}, start date {string} and end date {string}")
+    public void a_task_exists_with_title_description_start_date_and_end_date(String title, String description, String startDate, String endDate) {
+        assertThat(holder.project.containsTask(title, description, Date.FromString(startDate), Date.FromString(endDate)), is(equalTo(true)));
+    }
+    
+    @Then("No task with title {string}, description {string}, start date {string} and end date {string} exists")
+    public void no_task_with_title_description_start_date_and_end_date_exists(String title, String description, String startDate, String endDate) {
+    	assertThat(holder.project.containsTask(title, description, Date.FromString(startDate), Date.FromString(endDate)), is(equalTo(false)));
+    }
+
+    @When("the project leader assigns the task with title {string}, description {string}, start date {string} and end date {string} to employee with id {string}")
+    public void the_project_leader_assigns_the_task_with_title_description_start_date_and_end_date_to_employee_with_id(String title, String description, String startDate, String endDate, String empID) {
+        try {
+        	holder.project.assignTaskToEmployee(holder.app.getEmployee(empID), holder.project.findTask(title, description, Date.FromString(startDate), Date.FromString(endDate)));
+        } catch (Throwable e) {
+            holder.errorMessage = e.getMessage();
+        }
+    }
+
+    @Then("the employee with id {string} is assigned to the task with title {string}, description {string}, start date {string} and end date {string}")
+    public void the_employee_with_id_is_assigned_to_the_task_with_title_description_start_date_and_end_date(String empID, String title, String description, String startDate, String endDate) {
+    	assertTrue(holder.app.getEmployee(empID).getTasks().stream().anyMatch(m -> m.getTitle().contentEquals(title) && m.getDescription().contentEquals(description) && m.getStartDate().toString().equals(startDate) && m.getEndDate().toString().equals(endDate)));
     }
 }

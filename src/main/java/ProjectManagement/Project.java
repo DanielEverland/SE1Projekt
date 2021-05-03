@@ -1,5 +1,7 @@
 package ProjectManagement;
 
+import org.junit.Assert;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -14,6 +16,9 @@ public class Project {
     private Employee projectLead;
 
     public Project(int id, String title) {
+        Assert.assertFalse("Id must be a non-negative integer", id < 0);
+        Assert.assertFalse("Title cannot be empty or contain '|'", title.length() == 0 || title.contains("|"));
+
         year = Calendar.getInstance().get(Calendar.YEAR);
         this.id = id;
         this.title = title;
@@ -41,26 +46,25 @@ public class Project {
     }
 
     public void createTask(TaskConstructorInfo info) {
+    	if(!info.isValid())
+    	{
+    		ErrorMessageHandler.addErrorMessage("Constructor info contains invalid information");
+    		return;
+    	}
+    	
     	tasks.add(new Task(info));
     }
 
-    public boolean containsTask(String title, String description, Integer startDateUnix, Integer endDateUnix) {
-    	for(Task task : tasks)
-    	{
-    		if(task.getTitle().equals(title) &&
-				task.getDescription().equals(description) &&
-				task.getStartDate() == startDateUnix &&
-				task.getEndDate() == endDateUnix)
-    		{
-    			return true;
-    		}
-    	}
-
-    	return false;
+    public boolean containsTask(String title, String description, Date startDate, Date endDate) {
+    	return findTask(title, description, startDate, endDate) != null;
     }
     
-    public void assignTaskToEmployee(Employee employee, Task task) {
-		employee.assignToTask(task);
+    public void assignTaskToEmployee(Employee employee, Task task) {    	
+    	if (employee.isAvailable(task)) {
+    		employee.assignToTask(task);
+    	} else {
+    		ErrorMessageHandler.addErrorMessage("Employee is unavailable");
+    	}
 	}
 
 	public boolean isProjectLeader(Employee employee) {
@@ -71,12 +75,12 @@ public class Project {
 		return tasks;
 	}
 
-	public Task findTask(String title, String description, Integer startDateUnix, Integer endDateUnix) {
+	public Task findTask(String title, String description, Date startDate, Date endDate) {
 		for (Task task : tasks) {
 			if(task.getTitle().equals(title) &&
 					task.getDescription().equals(description) &&
-					task.getStartDate() == startDateUnix &&
-					task.getEndDate() == endDateUnix) {
+					task.getStartDate().equals(startDate) &&
+					task.getEndDate().equals(endDate)) {
 				return task;
 			}
 		}
