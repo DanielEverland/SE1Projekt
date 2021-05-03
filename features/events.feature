@@ -36,18 +36,18 @@ When sick leave from "01/05/2020" to "01/05/2020" is assigned to the employee
 Then the employee is unavailable from "01/05/2020" to "01/05/2020"
 And the employee is unavailable from "20/03/2020" to "20/05/2020"
 
-  Scenario: Assign course to an employee
-    Given an employee with id "emp1" exists in the application
-    When course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020" is assigned to the employee
-    Then the employee has a course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020"
+Scenario: Assign course to an employee
+Given an employee with id "emp1" exists in the application
+When course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020" is assigned to the employee
+Then the employee has a course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020"
 
-  Scenario: Employee with tasks is assigned a course
-    Given an employee with id "emp1" exists in the application
-    And the employee has an existing task with title "task", description "description", start date "01/01/2020" and end date "01/01/2021"
-    When course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020" is assigned to the employee
-    Then the employee has a course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020"
+Scenario: Employee with tasks is assigned a course
+Given an employee with id "emp1" exists in the application
+And the employee has an existing task with title "task", description "description", start date "01/01/2020" and end date "01/01/2021"
+When course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020" is assigned to the employee
+Then the employee has a course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020"
 
-  Scenario: Employee on course is not unavailable
-    Given an employee with id "emp1" exists in the application
-    When course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020" is assigned to the employee
-    Then the employee is not unavailable from "01/01/2020" to "01/05/2020"
+Scenario: Employee on course is not unavailable
+Given an employee with id "emp1" exists in the application
+When course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020" is assigned to the employee
+Then the employee is not unavailable from "01/01/2020" to "01/05/2020"
