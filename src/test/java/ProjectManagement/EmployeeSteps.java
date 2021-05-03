@@ -20,7 +20,7 @@ public class EmployeeSteps {
 	private MainHolder holder;
 	private ErrorMessageHandler errorMessageHandler;
 	private List<Task> assignedTasksForEmployee;
-	
+
 	public EmployeeSteps(MainHolder holder) {
 		this.holder = holder;
 	}
@@ -46,23 +46,20 @@ public class EmployeeSteps {
 
 	}
 
-	
 	@Then("{double} hours is registered as worked on the task with title {string}, description {string}, start date {string} and end date {string} by the employee")
 	public void hours_is_registered_as_worked_on_the_task_with_title_description_start_date_and_end_date_by_the_employee(
 			Double hoursWorked, String title, String description, String startDateString, String endDateString) {
-		
+
 		Date startDate = Date.FromString(startDateString);
 		Date endDate = Date.FromString(endDateString);
-		
-				
+
 		Task task = holder.project.findTask(title, description, startDate, endDate);
 		assertThat(task.getTitle(), is(equalTo(title)));
 		assertThat(task.getDescription(), is(equalTo(description)));
 		assertThat(task.getStartDate(), is(equalTo(startDate)));
-		assertThat(task.getEndDate(), is(equalTo(endDate)));		
-		
-		Map<Employee, Duration> minutesWorked = task
-				.getMinutesWorked();
+		assertThat(task.getEndDate(), is(equalTo(endDate)));
+
+		Map<Employee, Duration> minutesWorked = task.getMinutesWorked();
 		Duration duration = minutesWorked.get(holder.employee);
 		assertThat(duration.GetHoursPassed(), is(equalTo(hoursWorked)));
 	}
@@ -89,7 +86,7 @@ public class EmployeeSteps {
 		List<Task> tasks = holder.employee.getTasks();
 		assertThat(assignedTasksForEmployee, containsInAnyOrder(tasks.toArray()));
 	}
-	
+
 	@Then("the employee with id {string} has no assigned tasks")
 	public void the_employee_with_id_has_no_assigned_tasks(String id) {
 		Employee employee = holder.app.getEmployees().get(id);
