@@ -93,4 +93,29 @@ public class Project {
 		}
 		
 	}
+
+	public void editTaskDescription(Task task, String newDescription, Employee employee) {
+		if(isProjectLeader(employee)) {
+			task.editDescription(newDescription);
+		}
+	}
+
+	public void editTaskStartDate(Task task, Date newStartDate, Employee employee) {
+		if(isProjectLeader(employee)) {
+			task.setStartDate(newStartDate);
+		}		
+	}
+
+	public void editTaskEndDate(Task task, Date newEndDate, Employee employee) {
+		if(isProjectLeader(employee)) {
+			task.setEndDate(newEndDate);
+		}			
+	}
+
+	public void editExpectedTimeForTask(Task task, Double newExpectedTime, Employee employee) {
+		if(isProjectLeader(employee)) {
+			task.setExpectedTime(newExpectedTime);
+		}
+		
+	}
 }
