@@ -7,6 +7,7 @@ public class Employee {
 	private String id;
 	private int maxTasks;
 	private List<Activity> assignedActivites;
+	private boolean available = true;
 
 	public Employee(String id) {
 		this.id = id;
@@ -34,6 +35,14 @@ public class Employee {
 	
 	public void assignToTask(Task task) {
 		assignedActivites.add(task);
+	}
+
+	public void setAvailability(boolean isAvailable) {
+		available = isAvailable;
+	}
+	
+	public boolean isAvailable() { 
+		return available;
 	}
 
 }
