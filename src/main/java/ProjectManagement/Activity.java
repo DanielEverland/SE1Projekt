@@ -39,7 +39,6 @@ public class Activity {
 		return "Title: " + title + "\nStart date: " + startDate.toString() + "\nEnd date: " + endDate.toString();
 	}
 
-
 	public boolean getIsBlocking() {
 		return isBlocking;
 	}

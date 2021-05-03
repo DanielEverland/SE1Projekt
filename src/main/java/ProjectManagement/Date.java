@@ -7,23 +7,23 @@ import java.text.SimpleDateFormat;
 public class Date {
 
 	private java.util.Date InternalDate;
-	
+
 	public static Date FromString(String dateString) {
 		Date newDate = new Date();
-		
+
 		try {
 			newDate.InternalDate = new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
 		} catch (ParseException e) {
 			ErrorMessageHandler.addErrorMessage("Couldn't parse date " + dateString);
 		}
-		
-    	return newDate;
+
+		return newDate;
 	}
-	
+
 	@Override
 	public String toString() {
-		 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
-         return dateFormat.format(InternalDate);
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		return dateFormat.format(InternalDate);
 	}
 
 	@Override

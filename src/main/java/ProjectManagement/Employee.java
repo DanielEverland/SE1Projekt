@@ -25,7 +25,7 @@ public class Employee {
 	public List<Activity> getAssignedActivites() {
 		return assignedActivites;
 	}
-	
+
 	public List<Task> getTasks() {
 		ArrayList<Task> tasks = new ArrayList<Task>();
 		for (Activity assignedActivity : assignedActivites) {
@@ -34,9 +34,9 @@ public class Employee {
 			}
 		}
 		return tasks;
-		
+
 	}
-	
+
 	public void assignToTask(Task task) {
 		assignedActivites.add(task);
 	}
