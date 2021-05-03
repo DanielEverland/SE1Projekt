@@ -86,4 +86,11 @@ public class Project {
 		}
 		return null;
 	}
+
+	public void editTaskTitle(Task task, String newTitle, Employee employee) {
+		if (isProjectLeader(employee)) {
+			task.editTitle(newTitle);			
+		}
+		
+	}
 }
