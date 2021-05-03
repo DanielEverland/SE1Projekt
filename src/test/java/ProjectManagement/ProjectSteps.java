@@ -67,9 +67,7 @@ public class ProjectSteps {
 
     @Then("the error message {string} is given")
     public void the_error_message_is_given(String errorMessage) {
-    	ErrorMessageHandler.addErrorMessage(errorMessage);
 		assertThat(ErrorMessageHandler.getPreviousErrorMessage(), is(equalTo(errorMessage)));
-
     }
 
     @Then("A task exists with title {string}, description {string}, start date {string} and end date {string}")
@@ -94,5 +92,15 @@ public class ProjectSteps {
     @Then("the employee with id {string} is assigned to the task with title {string}, description {string}, start date {string} and end date {string}")
     public void the_employee_with_id_is_assigned_to_the_task_with_title_description_start_date_and_end_date(String empID, String title, String description, String startDate, String endDate) {
     	assertTrue(holder.app.getEmployee(empID).getTasks().stream().anyMatch(m -> m.getTitle().contentEquals(title) && m.getDescription().contentEquals(description) && m.getStartDate().toString().equals(startDate) && m.getEndDate().toString().equals(endDate)));
+    }
+    
+    @When("the employee marks the project as complete")
+    public void the_employee_marks_the_project_as_complete() {
+    	holder.project.markAsCompleted();
+    }
+
+    @Then("the project is marked as completed")
+    public void the_project_is_marked_as_completed() {
+        assertTrue(holder.project.isCompleted());
     }
 }
