@@ -7,7 +7,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.equalTo;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +17,6 @@ import io.cucumber.java.en.When;
 public class EmployeeSteps {
 
 	private MainHolder holder;
-	private ErrorMessageHandler errorMessageHandler;
 	private List<Task> assignedTasksForEmployee;
 	
 	public EmployeeSteps(MainHolder holder) {
@@ -35,7 +33,6 @@ public class EmployeeSteps {
 		holder.project.createTask(new TaskConstructorInfo(title, description, startDate, endDate));
 		holder.project.assignTaskToEmployee(holder.employee,
 				holder.project.findTask(title, description, startDate, endDate));
-		ArrayList<Task> projectTasks = holder.project.getTasks();
 	}
 
 	@When("the employee inputs {double} hours worked on the task with title {string}, description {string}, start date {string} and end date {string}")
