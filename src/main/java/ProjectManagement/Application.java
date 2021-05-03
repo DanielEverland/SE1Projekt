@@ -68,6 +68,11 @@ public class Application {
     public Employee getEmployee(String id) {
     	return employees.get(id);
     }
+    
+    public Employee getEmployee(String id) {
+        return employees.get(id);
+    }
+    
 
     public void signIn(String id) {
         signedInEmployee = getEmployees().get(id);

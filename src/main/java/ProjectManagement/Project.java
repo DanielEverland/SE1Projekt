@@ -44,6 +44,10 @@ public class Project {
     public void assignProjectLeader(Employee newProjectLeader) {
     	projectLead = newProjectLeader;
     }
+    
+    public Employee getProjectLeader() {
+    	return projectLead;
+    }
 
     public void createTask(TaskConstructorInfo info) {
     	if(!info.isValid())
