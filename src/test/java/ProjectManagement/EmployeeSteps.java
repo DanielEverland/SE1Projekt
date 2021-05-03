@@ -99,4 +99,14 @@ public class EmployeeSteps {
 	public void the_employee_get_the_error_message(String errorMessage) throws AuthException {
 		assertEquals(errorMessage, holder.errorMessage);
 	}
+	
+	@When("the employee marks the task with title {string}, description {string}, start date {string} and end date {string} as complete")
+	public void the_employee_marks_the_task_with_title_description_start_date_and_end_date_as_complete(String title, String description, String startDate, String endDate) {
+		holder.project.findTask(title, description, Date.FromString(startDate), Date.FromString(endDate)).markAsCompleted();
+	}
+	
+	@Then("the task with title {string}, description {string}, start date {string} and end date {string} is marked as completed")
+	public void the_task_with_title_description_start_date_and_end_date_is_marked_as_completed(String title, String description, String startDate, String endDate) {
+		assertTrue(holder.project.findTask(title, description, Date.FromString(startDate), Date.FromString(endDate)).isCompleted());
+	}
 }
