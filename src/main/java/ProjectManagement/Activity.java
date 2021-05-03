@@ -33,6 +33,13 @@ public class Activity {
 		return title;
 	}
 
+	@Override
+	public String toString() {
+
+		return "Title: " + title + "\nStart date: " + startDate.toString() + "\nEnd date: " + endDate.toString();
+	}
+
+
 	public boolean getIsBlocking() {
 		return isBlocking;
 	}
@@ -42,4 +49,5 @@ public class Activity {
 				|| (endDate.after(intervalStart) && (endDate.equals(intervalEnd) || endDate.before(intervalEnd)))
 				|| (startDate.before(intervalStart) && endDate.after(intervalEnd));
 	}
+
 }

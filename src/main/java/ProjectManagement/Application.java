@@ -19,7 +19,7 @@ public class Application {
         projects = new HashMap<>();
         employees = new HashMap<>();
         for (String id : employeeIds) {
-            employees.put(id, new Employee(id));
+            getEmployees().put(id, new Employee(id));
         }
     }
 
@@ -43,7 +43,7 @@ public class Application {
     }
 
     public void addEmployee(Employee employee) {
-        employees.put(employee.getId(), employee);
+        getEmployees().put(employee.getId(), employee);
     }
     
     public Employee getEmployee(String id) {
@@ -51,7 +51,7 @@ public class Application {
     }
 
     public void signIn(String id) {
-        signedInEmployee = employees.get(id);
+        signedInEmployee = getEmployees().get(id);
     }
 
     public void signOut() {
@@ -61,6 +61,15 @@ public class Application {
     public boolean isSignedIn() {
         return signedInEmployee != null;
     }
+
+	public List<Task> searchAssignedTasksForEmployee(String id) {
+		Employee employeeToSearch = getEmployees().get(id);
+		return employeeToSearch.getTasks();
+	}
+
+	public Map<String, Employee> getEmployees() {
+		return employees;
+	}
 
     public ArrayList<Employee> getAvailableEmployees(Date startDate, Date endDate) {
         if (startDate.after(endDate)) {
@@ -76,4 +85,5 @@ public class Application {
 
         return availableEmployees;
     }
+
 }

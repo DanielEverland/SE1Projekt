@@ -24,4 +24,4 @@ And the task with title "Task title", description "Task description", start date
 And worked time of 5.0 hours is larger than expected time of 3.0 hours
 When the employee inputs 5.0 hours worked on the task with title "Task title", description "Task description", start date "31/12/1998" and end date "31/12/2000"
 Then 5.0 hours is registered as worked on the task with title "Task title", description "Task description", start date "31/12/1998" and end date "31/12/2000" by the employee
-And the employee get the error message "Too much time spent on task" 
+And the error message "Too much time spent on task" is given

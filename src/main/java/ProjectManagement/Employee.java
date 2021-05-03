@@ -22,7 +22,7 @@ public class Employee {
 		return id;
 	}
 
-	public List<Activity> getAassignedActivites() {
+	public List<Activity> getAssignedActivites() {
 		return assignedActivites;
 	}
 	
@@ -60,4 +60,5 @@ public class Employee {
 	public boolean isAvailable(Task task) {
 		return isAvailable(task.startDate, task.endDate);
 	}
+
 }
