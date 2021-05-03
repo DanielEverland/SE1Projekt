@@ -3,11 +3,22 @@ package ProjectManagement;
 import java.util.*;
 
 public class Application {
+	
+	public static Application Get() {
+		if(instance == null) {
+			instance = new Application();
+		}
+		
+		return instance;
+	}
+	private static Application instance;
+	
     private Map<Integer, Project> projects;
     private Map<String, Employee> employees;
     private Employee signedInEmployee;
 
     private int newProjectId = 0;
+    private boolean isQuitting;
 
     // Predefined list of employee ids
     private ArrayList<String> employeeIds = new ArrayList<String>(){{
@@ -23,6 +34,18 @@ public class Application {
         }
     }
 
+    public void quit() {
+    	isQuitting = true;
+    }
+    
+    public boolean getIsQuitting() {
+    	return isQuitting;
+    }
+    
+    public Employee getSignedInEmployee() {
+    	return signedInEmployee;
+    }
+    
     public int createProject(String title) throws AuthException {
         if (isSignedIn()) {
             Project newProject = new Project(newProjectId++, title);
@@ -51,7 +74,13 @@ public class Application {
     }
 
     public void signIn(String id) {
+    	if(!employees.containsKey(id)) {
+    		System.out.println("No employee exists with the ID \"" + id + "\"");
+    		return;
+    	}
+    	
         signedInEmployee = getEmployees().get(id);
+        System.out.println("Successfully signed in as \"" + id + "\"");
     }
 
     public void signOut() {

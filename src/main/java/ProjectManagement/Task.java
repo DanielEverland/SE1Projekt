@@ -9,6 +9,8 @@ public class Task extends Activity {
 	private double expectedTime;
 	private Map<Employee, Duration> minutesWorked;
 
+	private boolean completed;
+	
 	public Task(TaskConstructorInfo info) {
 		super(new ActivityConstructorInfo(info.title, info.startDate, info.endDate, false));
 		minutesWorked = new HashMap<Employee, Duration>();
@@ -28,6 +30,10 @@ public class Task extends Activity {
 			minutesWorked.put(employee, new Duration());
 		}
 		minutesWorked.get(employee).AddHours(hoursWorked);
+		
+		if (minutesWorked.get(employee).GetMinutesPassed() > expectedTime && expectedTime != 0) {
+    		ErrorMessageHandler.addErrorMessage("Too much time spent on task");
+		}
 	}
 
 	public double getExpectedTime() {
@@ -57,5 +63,17 @@ public class Task extends Activity {
 
 	public void editDescription(String newDescription) {
 		this.description = newDescription;
+	}
+
+	public void markAsCompleted() {
+		if (!completed) {
+			completed = true;
+		} else {
+    		ErrorMessageHandler.addErrorMessage("Task already marked as complete");
+		}
+	}
+
+	public boolean isCompleted() {
+		return completed;
 	}
 }

@@ -14,6 +14,7 @@ public class Project {
     private String title;
     private ArrayList<Task> tasks;
     private Employee projectLead;
+	private boolean completed;
 
     public Project(int id, String title) {
         Assert.assertFalse("Id must be a non-negative integer", id < 0);
@@ -117,5 +118,15 @@ public class Project {
 			task.setExpectedTime(newExpectedTime);
 		}
 		
+
+	public void markAsCompleted() {
+		if (!completed) {
+			completed = true;
+		} else {
+    		ErrorMessageHandler.addErrorMessage("Project already marked as complete");
+		}
+	}
+	public boolean isCompleted() {
+		return completed;
 	}
 }

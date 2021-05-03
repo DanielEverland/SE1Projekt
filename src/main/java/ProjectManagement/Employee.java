@@ -33,6 +33,11 @@ public class Employee {
 				tasks.add((Task) assignedActivity);
 			}
 		}
+		
+		if (tasks.isEmpty()) {
+			ErrorMessageHandler.addErrorMessage("No assigned tasks for this identification code");
+		}
+		
 		return tasks;
 		
 	}
