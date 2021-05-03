@@ -5,20 +5,31 @@ import java.util.*;
 import ProjectManagement.UserInterface.*;
 
 public class Main {
-		
+
 	private static UserInterface currentUserInterface;
 	private static Scanner inputScanner;
 	
 	public static void main (String[] arguments) {
 		inputScanner = new Scanner(System.in);
-		currentUserInterface = new DefaultUserInterface();
+		setDefaultUserInterface();
         while(mainLoop()){}
     }
+	
+	public static void setUserInterface(UserInterface newUserInterface) {
+		assert newUserInterface != null;
+		
+		currentUserInterface = newUserInterface;
+	}
+	
+	public static void setDefaultUserInterface() {
+		currentUserInterface = new DefaultUserInterface();
+	}
 	
 	private static boolean mainLoop() {
 		if(Application.Get().getIsQuitting())
 			return false;
 		
+		printLoggedInUser();
 		printAllCommands();
 		
 		String userInput = inputScanner.nextLine();
@@ -42,6 +53,16 @@ public class Main {
 		executeCommand(selectedCommand, arguments);
 		
 		return true;
+	}
+	
+	private static void printLoggedInUser() {
+		Employee signedInEmployee = Application.Get().getSignedInEmployee();
+		if(signedInEmployee == null) {
+			System.out.println("Currently not signed in");
+		}
+		else {
+			System.out.println("Currently signed in as \"" + signedInEmployee.getId() + "\"");
+		}
 	}
 	
 	private static void printAllCommands() {
@@ -72,9 +93,14 @@ public class Main {
 			return;
 		}
 		
-		args = removeCommandIndexFromArguments(args); 
+		args = removeCommandIndexFromArguments(args);
+		
+		// By setting this before executing, we ensure the default behaviour is to return to the default user interface
+		// If the command manually sets another user interface, then that will be used instead.
+		setDefaultUserInterface();
 		
 		allCurrentCommands.get(idx).execute(args);
+		System.out.println();
 	}
 	
 	private static List<String> removeCommandIndexFromArguments(List<String> args) {

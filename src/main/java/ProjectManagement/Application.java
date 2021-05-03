@@ -42,6 +42,10 @@ public class Application {
     	return isQuitting;
     }
     
+    public Employee getSignedInEmployee() {
+    	return signedInEmployee;
+    }
+    
     public int createProject(String title) throws AuthException {
         if (isSignedIn()) {
             Project newProject = new Project(newProjectId++, title);
@@ -70,7 +74,13 @@ public class Application {
     }
 
     public void signIn(String id) {
+    	if(!employees.containsKey(id)) {
+    		System.out.println("No employee exists with the ID \"" + id + "\"");
+    		return;
+    	}
+    	
         signedInEmployee = getEmployees().get(id);
+        System.out.println("Successfully signed in as \"" + id + "\"");
     }
 
     public void signOut() {
