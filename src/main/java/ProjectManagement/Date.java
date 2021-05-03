@@ -14,7 +14,7 @@ public class Date {
 		try {
 			newDate.InternalDate = new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			ErrorMessageHandler.addErrorMessage("Couldn't parse date " + dateString);
 		}
 		
     	return newDate;
