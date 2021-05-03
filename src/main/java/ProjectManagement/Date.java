@@ -14,7 +14,7 @@ public class Date {
 		try {
 			newDate.InternalDate = new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			ErrorMessageHandler.addErrorMessage("Couldn't parse date " + dateString);
 		}
 		
     	return newDate;
@@ -50,5 +50,12 @@ public class Date {
 			return false;
 		return true;
 	}
-	
+
+	public boolean before(Date date) {
+		return InternalDate.before(date.InternalDate);
+	}
+
+	public boolean after(Date date) {
+		return InternalDate.after(date.InternalDate);
+	}
 }

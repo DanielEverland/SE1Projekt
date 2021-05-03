@@ -70,4 +70,20 @@ public class Application {
 	public Map<String, Employee> getEmployees() {
 		return employees;
 	}
+
+    public ArrayList<Employee> getAvailableEmployees(Date startDate, Date endDate) {
+        if (startDate.after(endDate)) {
+            throw new IllegalArgumentException("Start date cannot be greater than end date");
+        }
+
+        ArrayList<Employee> availableEmployees = new ArrayList<>();
+        for (Employee employee : employees.values()) {
+            if (employee.isAvailable(startDate, endDate)) {
+                availableEmployees.add(employee);
+            }
+        }
+
+        return availableEmployees;
+    }
+
 }
