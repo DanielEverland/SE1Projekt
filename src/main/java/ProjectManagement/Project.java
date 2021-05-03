@@ -48,6 +48,10 @@ public class Project {
     public Employee getProjectLeader() {
     	return projectLead;
     }
+    
+    public boolean hasProjectLeader() {
+    	return projectLead != null;
+    }
 
     public void createTask(TaskConstructorInfo info) {
     	if(!info.isValid())
