@@ -9,7 +9,10 @@ public class MainHolder {
 		Employee testEmployee = new Employee("default_test_employee");
 		app.addEmployee(testEmployee);
 		app.signIn("default_test_employee");
-
+		Employee testEmployee2 = new Employee("default_test_employee2");
+		app.addEmployee(testEmployee2);
+		app.signIn("default_test_employee2");
+		
 		int id = app.createProject("default_test_project");
 		project = app.getProject(id);
 	}
