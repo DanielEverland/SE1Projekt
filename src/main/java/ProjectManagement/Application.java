@@ -42,6 +42,10 @@ public class Application {
     	return isQuitting;
     }
     
+    public Employee getSignedInEmployee() {
+    	return signedInEmployee;
+    }
+    
     public int createProject(String title) throws AuthException {
         if (isSignedIn()) {
             Project newProject = new Project(newProjectId++, title);

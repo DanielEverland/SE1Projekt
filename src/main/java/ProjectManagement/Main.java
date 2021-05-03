@@ -29,6 +29,7 @@ public class Main {
 		if(Application.Get().getIsQuitting())
 			return false;
 		
+		printLoggedInUser();
 		printAllCommands();
 		
 		String userInput = inputScanner.nextLine();
@@ -52,6 +53,16 @@ public class Main {
 		executeCommand(selectedCommand, arguments);
 		
 		return true;
+	}
+	
+	private static void printLoggedInUser() {
+		Employee signedInEmployee = Application.Get().getSignedInEmployee();
+		if(signedInEmployee == null) {
+			System.out.println("Currently not signed in");
+		}
+		else {
+			System.out.println("Currently signed in as \"" + signedInEmployee.getId() + "\"");
+		}
 	}
 	
 	private static void printAllCommands() {
