@@ -3,7 +3,6 @@ package ProjectManagement;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
@@ -95,7 +94,7 @@ public class EmployeeSteps {
 	public void the_employee_with_id_has_no_assigned_tasks(String id) {
 		Employee employee = holder.app.getEmployees().get(id);
 		assertTrue(employee.getTasks().isEmpty());
-
+	}
 	@Then("the employee get the error message {string}")
 	public void the_employee_get_the_error_message(String errorMessage) throws AuthException {
 		assertEquals(errorMessage, holder.errorMessage);
