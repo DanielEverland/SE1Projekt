@@ -115,4 +115,7 @@ public class Application {
         return availableEmployees;
     }
 
+    public void assignVacation(Employee employee, Date startDate, Date endDate) {
+        employee.assignToActivity(new Vacation(startDate, endDate));
+    }
 }
