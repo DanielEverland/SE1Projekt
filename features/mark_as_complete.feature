@@ -5,8 +5,8 @@ Actor: Employee
 Scenario: Mark task as complete
 Given an employee with id "test" exists in the application
 And the employee has an existing task with title "Task title", description "Task description", start date "31/12/1998" and end date "31/12/2000" 
-When the employee marks the task with title "Task title", description "Task description", start date "31/12/1998" and end date "31/12/2000" as complete
-Then the task with title "Task title", description "Task description", start date "31/12/1998" and end date "31/12/2000" is marked as completed
+When the employee marks the task as complete
+Then the task is marked as completed
 
 Scenario: Mark project as complete
 Given an employee with id "test" exists in the application
@@ -17,8 +17,8 @@ Then the project is marked as completed
 Scenario: Mark completed task as complete
 Given an employee with id "test" exists in the application
 And the employee has an existing task with title "Task title", description "Task description", start date "31/12/1998" and end date "31/12/2000"
-And the employee marks the task with title "Task title", description "Task description", start date "31/12/1998" and end date "31/12/2000" as complete
-When the employee marks the task with title "Task title", description "Task description", start date "31/12/1998" and end date "31/12/2000" as complete
+And the employee marks the task as complete
+When the employee marks the task as complete
 Then the error message "Task already marked as complete" is given
 
 Scenario: Mark completed project as complete
