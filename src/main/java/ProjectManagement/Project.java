@@ -59,7 +59,7 @@ public class Project {
     	return findTask(title, description, startDate, endDate) != null;
     }
     
-    public void assignTaskToEmployee(Employee employee, Task task) throws Exception {    	
+    public void assignTaskToEmployee(Employee employee, Task task) {    	
     	if (employee.isAvailable(task)) {
     		employee.assignToTask(task);
     	} else {
