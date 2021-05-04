@@ -51,8 +51,12 @@ public class Employee {
 		return events;
 	}
 	
+
 	public void assignToActivity(Activity activity) {
+  assert !assignedActivites.contains(activity);
+  
 		assignedActivites.add(activity);
+
 	}
 
 	public boolean isAvailable(Date startDate, Date endDate) {

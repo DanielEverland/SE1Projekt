@@ -10,13 +10,12 @@ And the employee is signed in
 When the employee enters the ID "test"
 Then all tasks that are assigned to the ID are found
 
-
 #Scenario: Invalid input
 #Given an employee with ID 123 exists
 #And the employee is signed in
 #When the employee enters the ID 123
 #Then the error message "Invalid identification code" is given
-#
+
 Scenario: No assigned tasks for input
 Given an employee with id "abcd" exists in the application
 And the employee is signed in
