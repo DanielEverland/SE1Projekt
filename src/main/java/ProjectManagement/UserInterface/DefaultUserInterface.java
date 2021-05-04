@@ -13,6 +13,7 @@ public class DefaultUserInterface implements UserInterface {
 	public void PopulateCommands(List<UserCommand> commands) {
 		if (Application.Get().isSignedIn()) {
 			commands.add(new GenericCommand("Project Management", () -> Main.setUserInterface(new ProjectManagementUserInterface(this))));
+			commands.add(new GenericCommand("Activity Management", () -> Main.setUserInterface(new ActivityManagementUserInterface(this))));
 			commands.add(new LogoutCommand());
 		} else {
 			commands.add(new LoginCommand());
