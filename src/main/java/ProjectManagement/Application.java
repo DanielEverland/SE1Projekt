@@ -122,6 +122,9 @@ public class Application {
 	}
 
 	public ArrayList<Project> findProjectsContainingTitle(String title) {
+		assertNotNull(projects);
+		assert !projects.isEmpty();
+		
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
 
 		if (isSignedIn()) {
@@ -152,11 +155,11 @@ public class Application {
 
 	}
 
-	private boolean multipleProjectsWithSameTitle(Collection<Project> collection, String title) {
-		assert collection.size() > 0;
+	private boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
+		assert projects.size() > 0;
 
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
-		for (Project project : collection) {
+		for (Project project : projects) {
 			if (project.getTitle().equals(title)) {
 				foundProjects.add(project);
 			}
