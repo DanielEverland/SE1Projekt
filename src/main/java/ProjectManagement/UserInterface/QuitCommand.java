@@ -1,5 +1,6 @@
 package ProjectManagement.UserInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ProjectManagement.Application;
@@ -14,5 +15,10 @@ public class QuitCommand implements UserCommand {
 	@Override
 	public String getDisplayName() {
 		return "Quit";
+	}
+	
+	@Override
+	public List<String> getParameterNames() {
+		return null;
 	}
 }

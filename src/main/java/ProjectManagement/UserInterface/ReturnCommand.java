@@ -1,21 +1,22 @@
 package ProjectManagement.UserInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import ProjectManagement.Application;
+import ProjectManagement.Main;
 
-public class LogoutCommand implements UserCommand {
+public class ReturnCommand implements UserCommand {
 
 	@Override
 	public String getDisplayName() {
-		return "Logout";
+		return "Return";
 	}
 
 	@Override
 	public void execute(List<String> args) {
-		Application.Get().signOut();
+		Main.setPreviousUserInterface();
 	}
-
+	
 	@Override
 	public List<String> getParameterNames() {
 		return null;

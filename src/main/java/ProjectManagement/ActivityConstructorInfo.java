@@ -8,6 +8,12 @@ public class ActivityConstructorInfo {
 
 	private static final int minTitleLength = 3;
 
+	public ActivityConstructorInfo() {
+		title = "N/A";
+		startDate = new Date();
+		endDate = new Date();
+	}
+	
 	public ActivityConstructorInfo(String title, Date startDate, Date endDate, boolean isBlocking) {
 		this.startDate = startDate;
 		this.endDate = endDate;

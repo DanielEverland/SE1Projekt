@@ -8,6 +8,7 @@ public class Main {
 
 	private static UserInterface currentUserInterface;
 	private static Scanner inputScanner;
+	private static Project selectedProject;
 
 	public static void main(String[] arguments) {
 		inputScanner = new Scanner(System.in);
@@ -15,22 +16,36 @@ public class Main {
 		while (mainLoop()) {
 		}
 	}
-
+	
 	public static void setUserInterface(UserInterface newUserInterface) {
 		assert newUserInterface != null;
 
 		currentUserInterface = newUserInterface;
 	}
 
+	public static void setPreviousUserInterface() {
+		setUserInterface(currentUserInterface.getParent());		
+	}
+	
 	public static void setDefaultUserInterface() {
 		currentUserInterface = new DefaultUserInterface();
+	}
+	
+	public static void selectProject(Project toSelect) {
+		assert toSelect != null;
+		
+		selectedProject = toSelect;
+	}
+	
+	public static Project getSelectedProject() {
+		return selectedProject;
 	}
 
 	private static boolean mainLoop() {
 		if (Application.Get().getIsQuitting())
 			return false;
-
-		printLoggedInUser();
+		
+		System.out.println(currentUserInterface.getDescription());
 		printAllCommands();
 
 		String userInput = inputScanner.nextLine();
@@ -54,20 +69,30 @@ public class Main {
 		return true;
 	}
 
-	private static void printLoggedInUser() {
-		Employee signedInEmployee = Application.Get().getSignedInEmployee();
-		if (signedInEmployee == null) {
-			System.out.println("Currently not signed in");
-		} else {
-			System.out.println("Currently signed in as \"" + signedInEmployee.getId() + "\"");
+	private static void printAllCommands() {
+		List<UserCommand> allCurrentCommands = new ArrayList<UserCommand>();
+		currentUserInterface.PopulateCommands(allCurrentCommands);
+		for (int i = 0; i < allCurrentCommands.size(); i++) {
+			System.out.println(String.format("[%d] %s %s", i + 1, allCurrentCommands.get(i).getDisplayName(), getArgumentsString(allCurrentCommands.get(i))));
 		}
 	}
-
-	private static void printAllCommands() {
-		List<UserCommand> allCurrentCommands = currentUserInterface.GetCommands();
-		for (int i = 0; i < allCurrentCommands.size(); i++) {
-			System.out.println(String.format("%d: %s", i + 1, allCurrentCommands.get(i).getDisplayName()));
+	
+	private static String getArgumentsString(UserCommand command) {
+		String argumentsString = new String();
+		List<String> allArguments = command.getParameterNames();
+		
+		if(allArguments == null)
+			return "";
+		
+		for(int i = 0; i < allArguments.size(); i++) {
+			argumentsString += String.format("[%s]", allArguments.get(i));
+			
+			if(i < allArguments.size() - 1) {
+				argumentsString += " ";
+			}
 		}
+		
+		return argumentsString;
 	}
 
 	private static List<String> stringToArguments(String inputString) {
@@ -83,7 +108,8 @@ public class Main {
 	}
 
 	private static void executeCommand(int commandIndex, List<String> args) {
-		List<UserCommand> allCurrentCommands = currentUserInterface.GetCommands();
+		List<UserCommand> allCurrentCommands = new ArrayList<UserCommand>();
+		currentUserInterface.PopulateCommands(allCurrentCommands);
 		int idx = commandIndex - 1;
 
 		if (allCurrentCommands.size() <= idx) {
@@ -92,12 +118,6 @@ public class Main {
 		}
 
 		args = removeCommandIndexFromArguments(args);
-
-		// By setting this before executing, we ensure the default behaviour is to
-		// return to the default user interface
-		// If the command manually sets another user interface, then that will be used
-		// instead.
-		setDefaultUserInterface();
 
 		allCurrentCommands.get(idx).execute(args);
 		System.out.println();
