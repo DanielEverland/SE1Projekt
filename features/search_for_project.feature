@@ -1,4 +1,5 @@
 Feature: Search for project 
+
 	Description: An employee searches for projects with by title
 Actor: Employee
 
