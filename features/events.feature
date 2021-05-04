@@ -47,7 +47,7 @@ And the employee has an existing task with title "task", description "descriptio
 When course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020" is assigned to the employee
 Then the employee has a course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020"
 
-Scenario: Employee on course is not unavailable
+Scenario: Employee on course is still available
 Given an employee with id "emp1" exists in the application
 When course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020" is assigned to the employee
-Then the employee is not unavailable from "01/01/2020" to "01/05/2020"
+Then the employee is available from "01/01/2020" to "01/05/2020"
