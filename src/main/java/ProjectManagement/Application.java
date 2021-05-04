@@ -148,7 +148,6 @@ public class Application {
 		}
 		return multipleProjectsFound;
 
-	}
 
 	public boolean isNoProjectsFound(String title) {
 		ArrayList<Project> foundProjects = findProjectsByTitle(title);
@@ -159,4 +158,17 @@ public class Application {
 		return noProjectsFound;
 
 	}
+
+    public void assignVacation(Employee employee, Date startDate, Date endDate) {
+        employee.assignToActivity(new Vacation(startDate, endDate));
+    }
+
+    public void assignSickLeave(Employee employee, Date startDate, Date endDate) {
+        employee.assignToActivity(new SickLeave(startDate, endDate));
+    }
+
+    public void assignCourse(Employee employee, String description, Date startDate, Date endDate) {
+        employee.assignToActivity(new Course(description, startDate, endDate));
+    }
+
 }

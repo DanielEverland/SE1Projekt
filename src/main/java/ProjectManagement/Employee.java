@@ -41,10 +41,26 @@ public class Employee {
 		
 		return tasks;
 
+
 	}
 
-	public void assignToTask(Task task) {
-		assignedActivites.add(task);
+
+	public List<Activity> getEvents() {
+		ArrayList<Activity> events = new ArrayList<>();
+		for (Activity assignedActivity : assignedActivites) {
+			if (!(assignedActivity instanceof Task)) {
+				events.add(assignedActivity);
+			}
+		}
+		return events;
+	}
+	
+
+	public void assignToActivity(Activity activity) {
+  assert !assignedActivites.contains(activity);
+  
+		assignedActivites.add(activity);
+
 	}
 
 
