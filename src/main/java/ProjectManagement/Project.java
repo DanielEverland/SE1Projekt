@@ -43,7 +43,13 @@ public class Project {
 	}
 
 	public void assignProjectLeader(Employee newProjectLeader) {
-		projectLead = newProjectLeader;
+		if (this.hasProjectLeader()) {
+			ErrorMessageHandler.addErrorMessage("The project already has an assigned project leader");
+		}
+		else {
+			projectLead = newProjectLeader;
+		}
+						
 	}
 
 	public Employee getProjectLeader() {
