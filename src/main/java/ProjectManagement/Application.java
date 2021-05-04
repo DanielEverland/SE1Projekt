@@ -196,7 +196,7 @@ public class Application {
 	public ArrayList<Task> seeAllTasks() {
 		ArrayList<Task> allTasks = new ArrayList<Task>();
 		if (isSignedIn()) {
-			for (Project project : projectList) {
+			for (Project project : projects.values()) {
 				for (Task task : project.getTasks()) {
 					allTasks.add(task);
 				}
