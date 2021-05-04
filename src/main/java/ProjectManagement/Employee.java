@@ -39,14 +39,24 @@ public class Employee {
 		}
 		
 		return tasks;
-		
+	}
+
+	public List<Activity> getEvents() {
+		ArrayList<Activity> events = new ArrayList<>();
+		for (Activity assignedActivity : assignedActivites) {
+			if (!(assignedActivity instanceof Task)) {
+				events.add(assignedActivity);
+			}
+		}
+		return events;
 	}
 	
-	public void assignToTask(Task task) {
-		assert !assignedActivites.contains(task);
-		
-		assignedActivites.add(task);			
-		
+
+	public void assignToActivity(Activity activity) {
+  assert !assignedActivites.contains(activity);
+  
+		assignedActivites.add(activity);
+
 	}
 
 	public boolean isAvailable(Date startDate, Date endDate) {
