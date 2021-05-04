@@ -13,46 +13,48 @@ public class Application {
 	}
 
 	private static Application instance;
+  
+  private Map<Integer, Project> projects;
+  private Map<String, Employee> employees;
+  private Employee signedInEmployee;
 
-	private Map<Integer, Project> projects;
-	private Map<String, Employee> employees;
-	private Employee signedInEmployee;
+  private int newProjectId = 0;
+  private boolean isQuitting;
 
-	private int newProjectId = 0;
-	private boolean isQuitting;
+  // Predefined list of employee ids
+  private ArrayList<String> employeeIds = new ArrayList<String>(){{
+      add("abcd");
+      add("efgh");
+  }};
 
-	// Predefined list of employee ids
-	private ArrayList<String> employeeIds = new ArrayList<String>() {
-		{
-			add("abcd");
-			add("efgh");
-		}
-	};
+  public Application() {
+      projects = new HashMap<>();
+      employees = new HashMap<>();
+      for (String id : employeeIds) {
+          getEmployees().put(id, new Employee(id));
+      }
+  }
 
-	public Application() {
-		projects = new HashMap<>();
-		employees = new HashMap<>();
-		for (String id : employeeIds) {
-			getEmployees().put(id, new Employee(id));
-		}
-	}
+  public void quit() {
+    isQuitting = true;
+  }
 
-	public void quit() {
-		isQuitting = true;
-	}
+  public boolean getIsQuitting() {
+    return isQuitting;
+  }
 
-	public boolean getIsQuitting() {
-		return isQuitting;
-	}
+  public Employee getSignedInEmployee() {
+    return signedInEmployee;
+  }
 
-	public int createProject(String title) throws AuthException {
-		if (isSignedIn()) {
-			Project newProject = new Project(newProjectId++, title);
-			projects.put(newProject.getId(), newProject);
-			return newProject.getId();
-		}
+  public int createProject(String title) throws AuthException {
+      if (isSignedIn()) {
+          Project newProject = new Project(newProjectId++, title);
+          projects.put(newProject.getId(), newProject);
+          return newProject.getId();
+      }
 
-		ErrorMessageHandler.addErrorMessage("Employee must be signed in to create project");
+	ErrorMessageHandler.addErrorMessage("Employee must be signed in to create project");
 		return -1;
 	}
 
@@ -72,9 +74,15 @@ public class Application {
 		return employees.get(id);
 	}
 
-	public void signIn(String id) {
-		signedInEmployee = getEmployees().get(id);
-	}
+    public void signIn(String id) {
+    	if(!employees.containsKey(id)) {
+    		System.out.println("No employee exists with the ID \"" + id + "\"");
+    		return;
+    	}
+    	
+        signedInEmployee = getEmployees().get(id);
+        System.out.println("Successfully signed in as \"" + id + "\"");
+    }
 
 	public void signOut() {
 		signedInEmployee = null;
