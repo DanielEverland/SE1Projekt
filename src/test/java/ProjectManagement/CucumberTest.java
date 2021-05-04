@@ -1,6 +1,5 @@
 package ProjectManagement;
 
-
 import org.junit.runner.RunWith;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
@@ -12,11 +11,8 @@ For example, the class name CucumberTests (Test with an s) will be ignored by Ma
 */
 
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin= {"summary", "html:target/cucumber/wikipedia.html"},
-		 features={"features"},
-		 monochrome=true,
-		 publish= false
-		 )
+@CucumberOptions(plugin = { "summary", "html:target/cucumber/wikipedia.html" }, features = {
+		"features" }, monochrome = true, publish = false)
 public class CucumberTest {
-	
+
 }

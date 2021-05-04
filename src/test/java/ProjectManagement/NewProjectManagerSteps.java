@@ -32,5 +32,4 @@ public class NewProjectManagerSteps {
 		assertTrue(project.isProjectLeader(holder.app.getEmployee(employeeID)));
 	}
 
-
 }

@@ -34,16 +34,14 @@ public class Employee {
 				tasks.add((Task) assignedActivity);
 			}
 		}
-		
+
 		if (tasks.isEmpty()) {
 			ErrorMessageHandler.addErrorMessage("No assigned tasks for this identification code");
 		}
-		
+
 		return tasks;
 
-
 	}
-
 
 	public List<Activity> getEvents() {
 		ArrayList<Activity> events = new ArrayList<>();
@@ -54,15 +52,13 @@ public class Employee {
 		}
 		return events;
 	}
-	
 
 	public void assignToActivity(Activity activity) {
-  assert !assignedActivites.contains(activity);
-  
+		assert !assignedActivites.contains(activity);
+
 		assignedActivites.add(activity);
 
 	}
-
 
 	public boolean isAvailable(Date startDate, Date endDate) {
 		int tasksInPeriod = 0;
@@ -83,6 +79,5 @@ public class Employee {
 	public boolean isAvailable(Task task) {
 		return isAvailable(task.startDate, task.endDate);
 	}
-
 
 }
