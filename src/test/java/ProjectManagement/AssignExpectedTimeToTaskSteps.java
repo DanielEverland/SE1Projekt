@@ -20,8 +20,8 @@ public class AssignExpectedTimeToTaskSteps {
 			String description, String startDate, String endDate) throws AuthException {
 		TaskConstructorInfo taskInfo = new TaskConstructorInfo(taskName, description, Date.FromString(startDate),
 				Date.FromString(endDate));
-		project = holder.app.getProjectByTitle(title);
-		holder.app.getProjectByTitle(title).createTask(taskInfo);
+		project = holder.app.getSpecificProjectByTitle(title);
+		project.createTask(taskInfo);
 		task = project.findTask(taskName, description, Date.FromString(startDate), Date.FromString(endDate));
 
 	}
