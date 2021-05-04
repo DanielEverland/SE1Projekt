@@ -6,14 +6,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Project {
-    // The number of digits in the stringified id of projects
-    private static final int serialDigits = 4;
+	// The number of digits in the stringified id of projects
+	private static final int serialDigits = 4;
 
-    private int year;
-    private int id;
-    private String title;
-    private ArrayList<Task> tasks;
-    private Employee projectLead;
+	private int year;
+	private int id;
+	private String title;
+	private ArrayList<Task> tasks;
+	private Employee projectLead;
+	private boolean completed;
 
     public Project(int id, String title) {
         Assert.assertFalse("Id must be a non-negative integer", id < 0);
@@ -69,10 +70,11 @@ public class Project {
     
     public void assignTaskToEmployee(Employee employee, Task task) {    	
     	if (employee.isAvailable(task)) {
-    		employee.assignToTask(task);
+    		employee.assignToActivity(task);
     	} else {
     		ErrorMessageHandler.addErrorMessage("Employee is unavailable");
     	}
+
 	}
 
 	public boolean isProjectLeader(Employee employee) {
@@ -85,13 +87,54 @@ public class Project {
 
 	public Task findTask(String title, String description, Date startDate, Date endDate) {
 		for (Task task : tasks) {
-			if(task.getTitle().equals(title) &&
-					task.getDescription().equals(description) &&
-					task.getStartDate().equals(startDate) &&
-					task.getEndDate().equals(endDate)) {
+			if (task.getTitle().equals(title) && task.getDescription().equals(description)
+					&& task.getStartDate().equals(startDate) && task.getEndDate().equals(endDate)) {
 				return task;
 			}
 		}
 		return null;
+	}
+
+	public void editTaskTitle(Task task, String newTitle, Employee employee) {
+		if (isProjectLeader(employee)) {
+			task.editTitle(newTitle);
+		}
+
+	}
+
+	public void editTaskDescription(Task task, String newDescription, Employee employee) {
+		if (isProjectLeader(employee)) {
+			task.editDescription(newDescription);
+		}
+	}
+
+	public void editTaskStartDate(Task task, Date newStartDate, Employee employee) {
+		if (isProjectLeader(employee)) {
+			task.setStartDate(newStartDate);
+		}
+	}
+
+	public void editTaskEndDate(Task task, Date newEndDate, Employee employee) {
+		if (isProjectLeader(employee)) {
+			task.setEndDate(newEndDate);
+		}
+	}
+
+	public void editExpectedTimeForTask(Task task, Double newExpectedTime, Employee employee) {
+		if (isProjectLeader(employee)) {
+			task.setExpectedTime(newExpectedTime);
+		}
+	}
+
+	public void markAsCompleted() {
+		if (!completed) {
+			completed = true;
+		} else {
+			ErrorMessageHandler.addErrorMessage("Project already marked as complete");
+		}
+	}
+
+	public boolean isCompleted() {
+		return completed;
 	}
 }

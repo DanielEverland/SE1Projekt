@@ -13,46 +13,48 @@ public class Application {
 	}
 
 	private static Application instance;
+  
+  private Map<Integer, Project> projects;
+  private Map<String, Employee> employees;
+  private Employee signedInEmployee;
 
-	private Map<Integer, Project> projects;
-	private Map<String, Employee> employees;
-	private Employee signedInEmployee;
+  private int newProjectId = 0;
+  private boolean isQuitting;
 
-	private int newProjectId = 0;
-	private boolean isQuitting;
+  // Predefined list of employee ids
+  private ArrayList<String> employeeIds = new ArrayList<String>(){{
+      add("abcd");
+      add("efgh");
+  }};
 
-	// Predefined list of employee ids
-	private ArrayList<String> employeeIds = new ArrayList<String>() {
-		{
-			add("abcd");
-			add("efgh");
-		}
-	};
+  public Application() {
+      projects = new HashMap<>();
+      employees = new HashMap<>();
+      for (String id : employeeIds) {
+          getEmployees().put(id, new Employee(id));
+      }
+  }
 
-	public Application() {
-		projects = new HashMap<>();
-		employees = new HashMap<>();
-		for (String id : employeeIds) {
-			getEmployees().put(id, new Employee(id));
-		}
-	}
+  public void quit() {
+    isQuitting = true;
+  }
 
-	public void quit() {
-		isQuitting = true;
-	}
+  public boolean getIsQuitting() {
+    return isQuitting;
+  }
 
-	public boolean getIsQuitting() {
-		return isQuitting;
-	}
+  public Employee getSignedInEmployee() {
+    return signedInEmployee;
+  }
 
-	public int createProject(String title) throws AuthException {
-		if (isSignedIn()) {
-			Project newProject = new Project(newProjectId++, title);
-			projects.put(newProject.getId(), newProject);
-			return newProject.getId();
-		}
+  public int createProject(String title) throws AuthException {
+      if (isSignedIn()) {
+          Project newProject = new Project(newProjectId++, title);
+          projects.put(newProject.getId(), newProject);
+          return newProject.getId();
+      }
 
-		ErrorMessageHandler.addErrorMessage("Employee must be signed in to create project");
+	ErrorMessageHandler.addErrorMessage("Employee must be signed in to create project");
 		return -1;
 	}
 
@@ -72,9 +74,15 @@ public class Application {
 		return employees.get(id);
 	}
 
-	public void signIn(String id) {
-		signedInEmployee = getEmployees().get(id);
-	}
+    public void signIn(String id) {
+    	if(!employees.containsKey(id)) {
+    		System.out.println("No employee exists with the ID \"" + id + "\"");
+    		return;
+    	}
+    	
+        signedInEmployee = getEmployees().get(id);
+        System.out.println("Successfully signed in as \"" + id + "\"");
+    }
 
 	public void signOut() {
 		signedInEmployee = null;
@@ -106,16 +114,61 @@ public class Application {
 		}
 
 		return availableEmployees;
+
+	}
+
+	private ArrayList<Project> findProjectsByTitle(String title) {
+		ArrayList<Project> foundProjects = new ArrayList<Project>();
+		for (Map.Entry<Integer, Project> entry : projects.entrySet()) {
+			if (title.equals(entry.getValue().getTitle())) {
+				Project project = entry.getValue();
+				foundProjects.add(project);
+			}
+		}
+		return foundProjects;
 	}
 
 	public Project getProjectByTitle(String title) {
-		for (Map.Entry<Integer, Project> entry : projects.entrySet()) {
-			if (title.equals(entry.getValue().getTitle())) {
-				return entry.getValue();
-			}
+		ArrayList<Project> foundProjects = findProjectsByTitle(title);
+
+		if (foundProjects.size() == 1) {
+			return foundProjects.get(0);
+		} else {
+			return null;
+		}
+
+	}
+
+	public boolean isMoreThanOneProjectFound(String title) {
+		ArrayList<Project> foundProjects = findProjectsByTitle(title);
+		boolean multipleProjectsFound = foundProjects.size() > 1;
+		if (multipleProjectsFound) {
+			ErrorMessageHandler.addErrorMessage("More than one project with the title " + title + " has been found");
 
 		}
-		return null;
+		return multipleProjectsFound;
+
+
+	public boolean isNoProjectsFound(String title) {
+		ArrayList<Project> foundProjects = findProjectsByTitle(title);
+		boolean noProjectsFound = foundProjects.size() < 1;
+		if (noProjectsFound) {
+			ErrorMessageHandler.addErrorMessage("No project with the title " + title + " has been found");
+		}
+		return noProjectsFound;
+
 	}
+
+    public void assignVacation(Employee employee, Date startDate, Date endDate) {
+        employee.assignToActivity(new Vacation(startDate, endDate));
+    }
+
+    public void assignSickLeave(Employee employee, Date startDate, Date endDate) {
+        employee.assignToActivity(new SickLeave(startDate, endDate));
+    }
+
+    public void assignCourse(Employee employee, String description, Date startDate, Date endDate) {
+        employee.assignToActivity(new Course(description, startDate, endDate));
+    }
 
 }
