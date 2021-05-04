@@ -1,5 +1,6 @@
 package ProjectManagement.UserInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ProjectManagement.Application;
@@ -26,5 +27,12 @@ public class CreateProjectCommand implements UserCommand {
 		 }
 		 
 		 Main.setPreviousUserInterface();
+	}
+	
+	@Override
+	public List<String> getParameterNames() {
+		return new ArrayList<String>() {{
+			add("projectName");
+		}};
 	}
 }

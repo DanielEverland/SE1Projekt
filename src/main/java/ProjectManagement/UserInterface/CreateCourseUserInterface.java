@@ -29,6 +29,6 @@ public class CreateCourseUserInterface extends CreateEventUserInterface {
 	
 	@Override
 	protected void populateAdditionalCommands(List<UserCommand> commands) {
-		commands.add(new GenericInputCommand("Description", (String input) -> description = input));
+		commands.add(new GenericInputCommand("Description", "description", (String input) -> description = input));
 	}
 }

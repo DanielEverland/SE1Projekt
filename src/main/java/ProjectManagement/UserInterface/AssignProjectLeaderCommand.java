@@ -1,5 +1,6 @@
 package ProjectManagement.UserInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ProjectManagement.Application;
@@ -29,6 +30,13 @@ public class AssignProjectLeaderCommand implements UserCommand {
 		}
 		
 		Main.getSelectedProject().assignProjectLeader(selectedEmployee);
+	}
+
+	@Override
+	public List<String> getParameterNames() {
+		return new ArrayList<String>() {{
+			add("userName");
+		}};
 	}
 
 }

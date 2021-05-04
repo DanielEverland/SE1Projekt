@@ -23,7 +23,7 @@ public class CreateTaskUserInterface extends CreateActivityUserInterface {
 
 	@Override
 	protected void populateAdditionalCommands(List<UserCommand> commands) {
-		commands.add(new GenericInputCommand("Description", (String input) -> information.Description = input));
+		commands.add(new GenericInputCommand("Description", "description", (String input) -> information.Description = input));
 	}
 
 	@Override
