@@ -54,6 +54,11 @@ public class EventSteps {
 		}
 	}
 
+	@When("the course has its description changed to {string}")
+	public void the_course_has_its_description_changed_to(String newDescription) {
+		((Course)activity).setDescription(newDescription);
+	}
+
 	@Then("the employee has a vacation from {string} to {string}")
 	public void the_employee_has_a_vacation_from_to(String startDate, String endDate) {
 		boolean hasVacation = activity instanceof Vacation && activity.getStartDate().equals(Date.FromString(startDate))

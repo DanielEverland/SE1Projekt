@@ -51,3 +51,9 @@ Scenario: Employee on course is still available
 Given an employee with id "emp1" exists in the application
 When course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020" is assigned to the employee
 Then the employee is available from "01/01/2020" to "01/05/2020"
+
+  Scenario: Description of course assigned to employee is changed
+    Given an employee with id "emp1" exists in the application
+    And course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020" is assigned to the employee
+    When the course has its description changed to "Software Engineering 2"
+    Then the employee has a course with description "Software Engineering 2" from "01/01/2020" to "01/05/2020"
