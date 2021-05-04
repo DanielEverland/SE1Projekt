@@ -1,5 +1,7 @@
 package ProjectManagement;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +28,9 @@ public class Task extends Activity {
 	}
 
 	public void logWorkHours(Employee employee, double hoursWorked) {
+		assert hoursWorked > 0;
+		assertNotNull(employee);
+		
 		if (!minutesWorked.containsKey(employee)) {
 			minutesWorked.put(employee, new Duration());
 		}
