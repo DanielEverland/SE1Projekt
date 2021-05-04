@@ -1,5 +1,5 @@
 Feature: Edit task 
-	Description: The project leader edits the task
+Description: The project leader edits the task
 Actor: Project leader
 
 Scenario: Project leader edits the title of a task
@@ -45,9 +45,4 @@ Scenario: Project leader edits the expected time of a task
 	And A task with title "Test Title", description "Test Description", start date "31/12/1998" and end date "31/12/2000" exists
 	And the task has 3.0 hours of expected time
 	When the employee edits expected time to 5.0 hours for task
-	Then the task now has 5.0 hours of expected time 
-
-
-
-
-
+	Then the task now has 5.0 hours of expected time
