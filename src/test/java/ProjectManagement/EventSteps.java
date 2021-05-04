@@ -66,6 +66,22 @@ public class EventSteps {
 		assertThat(hasVacation, is(equalTo(true)));
 	}
 
+	@Then("the activity produces string consisting of {string}, {string}, and {string}")
+	public void the_activity_produces_string_consisting_of_and(String title, String startDate, String endDate) {
+		String string = "Title: " + title + "\nStart date: " + startDate + "\nEnd date: " + endDate;
+		assertThat(activity.toString(), is(string));
+	}
+
+	@Then("vacation is in interval {string} to {string}")
+	public void vacation_is_in_interval_to(String startDate, String endDate) {
+		assertThat(activity.isInDateInterval(Date.FromString(startDate), Date.FromString(endDate)), is(equalTo(true)));
+	}
+
+	@Then("vacation is not in interval {string} to {string}")
+	public void vacation_is_not_in_interval_to(String startDate, String endDate) {
+		assertThat(activity.isInDateInterval(Date.FromString(startDate), Date.FromString(endDate)), is(equalTo(false)));
+	}
+
 	@Then("the employee has sick leave from {string} to {string}")
 	public void the_employee_has_sick_leave_from_to(String startDate, String endDate) {
 		boolean hasSickLeave = activity instanceof SickLeave && activity.getStartDate().equals(Date.FromString(startDate))
@@ -81,6 +97,12 @@ public class EventSteps {
 					&& activity.getEndDate().equals(Date.FromString(endDate));
 
 		assertThat(hasCourse, is(equalTo(true)));
+	}
+
+	@Then("the course produces string consisting of {string}, {string}, {string}, and {string}")
+	public void the_course_produces_string_consisting_of_and(String title, String startDate, String endDate, String description) {
+		String string = "Title: " + title + "\nStart date: " + startDate + "\nEnd date: " + endDate + "\nDescription: " + description;
+		assertThat(((Course)activity).toString(), is(string));
 	}
 
 	@Then("the employee is unavailable from {string} to {string}")

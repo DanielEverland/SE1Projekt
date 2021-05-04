@@ -15,4 +15,9 @@ public class Course extends Activity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "\nDescription: " + description;
+	}
 }
