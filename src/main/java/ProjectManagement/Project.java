@@ -2,6 +2,8 @@ package ProjectManagement;
 
 import org.junit.Assert;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -45,11 +47,10 @@ public class Project {
 	public void assignProjectLeader(Employee newProjectLeader) {
 		if (this.hasProjectLeader()) {
 			ErrorMessageHandler.addErrorMessage("The project already has an assigned project leader");
-		}
-		else {
+		} else {
 			projectLead = newProjectLeader;
 		}
-						
+
 	}
 
 	public Employee getProjectLeader() {
@@ -91,6 +92,9 @@ public class Project {
 	}
 
 	public Task findTask(String title, String description, Date startDate, Date endDate) {
+		if (tasks.isEmpty()) {
+			return null;
+		}
 		for (Task task : tasks) {
 			if (task.getTitle().equals(title) && task.getDescription().equals(description)
 					&& task.getStartDate().equals(startDate) && task.getEndDate().equals(endDate)) {
@@ -142,7 +146,7 @@ public class Project {
 	public boolean isCompleted() {
 		return completed;
 	}
-	
+
 	@Override
 	public String toString() {
 		return id + ": " + title;
