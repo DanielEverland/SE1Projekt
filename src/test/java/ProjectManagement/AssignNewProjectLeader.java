@@ -5,11 +5,11 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class AssigneNowProjectLeader {
+public class AssignNewProjectLeader {
 
 	private MainHolder holder;
 
-	public AssigneNowProjectLeader(MainHolder holder) {
+	public AssignNewProjectLeader(MainHolder holder) {
 		this.holder = holder;
 	}
 
