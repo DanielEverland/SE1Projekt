@@ -22,6 +22,9 @@ public class Date {
 
 	@Override
 	public String toString() {
+		if(InternalDate == null)
+			return "N/A";
+		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		return dateFormat.format(InternalDate);
 	}
