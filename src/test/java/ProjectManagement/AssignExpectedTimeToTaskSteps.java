@@ -15,15 +15,15 @@ public class AssignExpectedTimeToTaskSteps {
 		this.holder = holder;
 	}
 
-	@Given("the project with title {string} exists and the project contains a task with name {string}")
-	public void the_project_with_title_exists_and_the_project_contains_a_task_with_name(String title, String taskName)
-			throws AuthException {
-		TaskConstructorInfo taskInfo = new TaskConstructorInfo(taskName, "test_task", Date.FromString("01/01/2000"),
-				Date.FromString("01/01/2001"));
-		holder.app.createProject(title);
-		project = holder.app.getProjectByTitle(title);
-		project.createTask(taskInfo);
-		task = project.getTasks().get(0);
+	@Given("the project contains a task with name {string}, description {string}, start date {string} and end date {string}")
+	public void the_project_contains_a_task_with_name_description_start_date_and_end_date(String taskName,
+			String description, String startDate, String endDate) throws AuthException {
+		TaskConstructorInfo taskInfo = new TaskConstructorInfo(taskName, description, Date.FromString(startDate),
+				Date.FromString(endDate));
+		project = holder.app.getProjectByTitle("default_test_project");
+		holder.app.getProjectByTitle("default_test_project").createTask(taskInfo);
+		task = project.findTask(taskName, description, Date.FromString(startDate), Date.FromString(endDate));
+
 	}
 
 	@When("the project leader with id {string} enters the amount of hours {double} that he expect that the task will take to complete")
