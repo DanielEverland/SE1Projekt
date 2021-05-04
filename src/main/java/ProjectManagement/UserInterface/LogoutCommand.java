@@ -15,5 +15,5 @@ public class LogoutCommand implements UserCommand {
 	public void execute(List<String> args) {
 		Application.Get().signOut();
 	}
-	
+
 }

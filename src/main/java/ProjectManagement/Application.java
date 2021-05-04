@@ -13,48 +13,50 @@ public class Application {
 	}
 
 	private static Application instance;
-  
-  private Map<Integer, Project> projects;
-  private Map<String, Employee> employees;
-  private Employee signedInEmployee;
 
-  private int newProjectId = 0;
-  private boolean isQuitting;
+	private Map<Integer, Project> projects;
+	private Map<String, Employee> employees;
+	private Employee signedInEmployee;
 
-  // Predefined list of employee ids
-  private ArrayList<String> employeeIds = new ArrayList<String>(){{
-      add("abcd");
-      add("efgh");
-  }};
+	private int newProjectId = 0;
+	private boolean isQuitting;
 
-  public Application() {
-      projects = new HashMap<>();
-      employees = new HashMap<>();
-      for (String id : employeeIds) {
-          getEmployees().put(id, new Employee(id));
-      }
-  }
+	// Predefined list of employee ids
+	private ArrayList<String> employeeIds = new ArrayList<String>() {
+		{
+			add("abcd");
+			add("efgh");
+		}
+	};
 
-  public void quit() {
-    isQuitting = true;
-  }
+	public Application() {
+		projects = new HashMap<>();
+		employees = new HashMap<>();
+		for (String id : employeeIds) {
+			getEmployees().put(id, new Employee(id));
+		}
+	}
 
-  public boolean getIsQuitting() {
-    return isQuitting;
-  }
+	public void quit() {
+		isQuitting = true;
+	}
 
-  public Employee getSignedInEmployee() {
-    return signedInEmployee;
-  }
+	public boolean getIsQuitting() {
+		return isQuitting;
+	}
 
-  public int createProject(String title) throws AuthException {
-      if (isSignedIn()) {
-          Project newProject = new Project(newProjectId++, title);
-          projects.put(newProject.getId(), newProject);
-          return newProject.getId();
-      }
+	public Employee getSignedInEmployee() {
+		return signedInEmployee;
+	}
 
-	ErrorMessageHandler.addErrorMessage("Employee must be signed in to create project");
+	public int createProject(String title) throws AuthException {
+		if (isSignedIn()) {
+			Project newProject = new Project(newProjectId++, title);
+			projects.put(newProject.getId(), newProject);
+			return newProject.getId();
+		}
+
+		ErrorMessageHandler.addErrorMessage("Employee must be signed in to create project");
 		return -1;
 	}
 
@@ -74,15 +76,15 @@ public class Application {
 		return employees.get(id);
 	}
 
-    public void signIn(String id) {
-    	if(!employees.containsKey(id)) {
-    		System.out.println("No employee exists with the ID \"" + id + "\"");
-    		return;
-    	}
-    	
-        signedInEmployee = getEmployees().get(id);
-        System.out.println("Successfully signed in as \"" + id + "\"");
-    }
+	public void signIn(String id) {
+		if (!employees.containsKey(id)) {
+			System.out.println("No employee exists with the ID \"" + id + "\"");
+			return;
+		}
+
+		signedInEmployee = getEmployees().get(id);
+		System.out.println("Successfully signed in as \"" + id + "\"");
+	}
 
 	public void signOut() {
 		signedInEmployee = null;
@@ -147,7 +149,7 @@ public class Application {
 
 		}
 		return multipleProjectsFound;
-
+	}
 
 	public boolean isNoProjectsFound(String title) {
 		ArrayList<Project> foundProjects = findProjectsByTitle(title);
@@ -159,16 +161,16 @@ public class Application {
 
 	}
 
-    public void assignVacation(Employee employee, Date startDate, Date endDate) {
-        employee.assignToActivity(new Vacation(startDate, endDate));
-    }
+	public void assignVacation(Employee employee, Date startDate, Date endDate) {
+		employee.assignToActivity(new Vacation(startDate, endDate));
+	}
 
-    public void assignSickLeave(Employee employee, Date startDate, Date endDate) {
-        employee.assignToActivity(new SickLeave(startDate, endDate));
-    }
+	public void assignSickLeave(Employee employee, Date startDate, Date endDate) {
+		employee.assignToActivity(new SickLeave(startDate, endDate));
+	}
 
-    public void assignCourse(Employee employee, String description, Date startDate, Date endDate) {
-        employee.assignToActivity(new Course(description, startDate, endDate));
-    }
+	public void assignCourse(Employee employee, String description, Date startDate, Date endDate) {
+		employee.assignToActivity(new Course(description, startDate, endDate));
+	}
 
 }

@@ -39,14 +39,12 @@ public class Activity {
 		return "Title: " + title + "\nStart date: " + startDate.toString() + "\nEnd date: " + endDate.toString();
 	}
 
-
 	public boolean getIsBlocking() {
 		return isBlocking;
 	}
 
 	public boolean isInDateInterval(Date intervalStart, Date intervalEnd) {
-		return startDate.equals(intervalStart)
-				|| endDate.equals(intervalEnd)
+		return startDate.equals(intervalStart) || endDate.equals(intervalEnd)
 				|| (startDate.after(intervalStart) && startDate.before(intervalEnd))
 				|| (endDate.after(intervalStart) && endDate.before(intervalEnd))
 				|| (startDate.before(intervalStart) && endDate.after(intervalEnd));

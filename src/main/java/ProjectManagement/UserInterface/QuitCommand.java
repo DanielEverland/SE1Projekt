@@ -7,7 +7,7 @@ import ProjectManagement.Application;
 public class QuitCommand implements UserCommand {
 
 	@Override
-	public void execute(List<String> args) {		
+	public void execute(List<String> args) {
 		Application.Get().quit();
 	}
 
