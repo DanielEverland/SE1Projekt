@@ -32,7 +32,6 @@ public class NewProjectManagerSteps {
 		assertTrue(project.isProjectLeader(holder.app.getEmployee(employeeID)));
 	}
 
-
 	@Given("the project with title {string} already has an assigned project leader with ID {string}")
 	public void the_project_with_title_already_has_an_assigned_project_leader_with_id(String title, String employeeID) {
 
@@ -42,12 +41,12 @@ public class NewProjectManagerSteps {
 		}
 
 	}
-	
+
 	@Then("the employee with id {string} remains the project leader of the project {string}")
 	public void the_employee_with_id_remains_the_project_leader_of_the_project(String employeeID, String title) {
 		Project project = holder.app.getProjectByTitle(title);
 		project.assignProjectLeader(holder.app.getEmployee(employeeID));
-		assertTrue(project.getProjectLeader()==holder.app.getEmployee(employeeID));
+		assertTrue(project.getProjectLeader() == holder.app.getEmployee(employeeID));
 	}
 
 }
