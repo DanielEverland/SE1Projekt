@@ -24,6 +24,8 @@ public class ActivityManagementUserInterface implements UserInterface {
 
 	@Override
 	public void PopulateCommands(List<UserCommand> commands) {
+		commands.add(new ShowAssignedActivitiesCommand());
+		
 		if(Main.getSelectedProject() != null) {
 			commands.add(new GenericCommand("Create new task", () -> Main.setUserInterface(new CreateTaskUserInterface(this))));
 		}
