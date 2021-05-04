@@ -51,7 +51,7 @@ public class EmployeeSteps {
 
 	@Given("the task has expected time of {double} hours")
 	public void the_task_has_expected_time_of_hours(Double expectedHours) {
-		 task.setExpectedTime(expectedHours);
+		task.setExpectedTime(expectedHours);
 	}
 
 	@Given("worked time of {double} hours is larger than expected time of {double} hours")
