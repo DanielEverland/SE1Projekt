@@ -2,6 +2,8 @@ package ProjectManagement;
 
 import java.util.*;
 
+import static org.junit.Assert.assertNotNull;
+
 public class Application {
 
 	public static Application Get() {
@@ -15,6 +17,7 @@ public class Application {
 	private static Application instance;
 
 	private Map<Integer, Project> projects;
+	private ArrayList<Project> projectList = new ArrayList<Project>();
 	private Map<String, Employee> employees;
 	private Employee signedInEmployee;
 
@@ -53,6 +56,7 @@ public class Application {
 		if (isSignedIn()) {
 			Project newProject = new Project(newProjectId++, title);
 			projects.put(newProject.getId(), newProject);
+			getProjectList().add(newProject);
 			return newProject.getId();
 		}
 
@@ -119,44 +123,73 @@ public class Application {
 
 	}
 
-	private ArrayList<Project> findProjectsByTitle(String title) {
+//	public ArrayList<Project> searchMapByEntry(String title) {
+//
+//		ArrayList<Project> foundProjects = new ArrayList<Project>();
+//		for (Map.Entry<Integer, Project> entry : projects.entrySet()) {
+//			if (title.equals(entry.getValue().getTitle())) {
+//				Project project = entry.getValue();
+//			}
+//		}
+//		return foundProjects;
+//	}
+
+	public ArrayList<Project> findProjectsContainingTitle(String title) {
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
-		for (Map.Entry<Integer, Project> entry : projects.entrySet()) {
-			if (title.equals(entry.getValue().getTitle())) {
-				Project project = entry.getValue();
+
+		if (isSignedIn()) {
+			for (Project project : projectList) {
+				if (project.getTitle().contains(title)) {
+					foundProjects.add(project);
+				}
+			}
+			return foundProjects;
+		}
+		ErrorMessageHandler.addErrorMessage("Employee must be signed in");
+		return null;
+
+	}
+
+	public Project getSpecificProjectByTitle(String title) {
+		assert !projectList.isEmpty() && !multipleProjectsWithSameTitle(projectList, title);
+
+		if (isSignedIn()) {
+			for (Project project : projectList) {
+				if (project.getTitle().equals(title)) {
+					return project;
+				}
+			}
+		}
+		ErrorMessageHandler.addErrorMessage("Employee must be signed in");
+		return null;
+
+	}
+
+	private boolean multipleProjectsWithSameTitle(ArrayList<Project> projectList, String title) {
+		assert projectList.size() > 0;
+
+		ArrayList<Project> foundProjects = new ArrayList<Project>();
+		for (Project project : projectList) {
+			if (project.getTitle().equals(title)) {
 				foundProjects.add(project);
 			}
 		}
-		return foundProjects;
+		return foundProjects.size() > 1 ? true : false;
 	}
 
-	public Project getProjectByTitle(String title) {
-		ArrayList<Project> foundProjects = findProjectsByTitle(title);
+	public boolean multipleProjectsContainingTitleFound(String title) {
+		assert projectList.size() > 1;
 
-		if (foundProjects.size() == 1) {
-			return foundProjects.get(0);
-		} else {
-			return null;
-		}
-
-	}
-
-	public boolean isMoreThanOneProjectFound(String title) {
-		ArrayList<Project> foundProjects = findProjectsByTitle(title);
-		boolean multipleProjectsFound = foundProjects.size() > 1;
-		if (multipleProjectsFound) {
-			ErrorMessageHandler.addErrorMessage("More than one project with the title " + title + " has been found");
-
-		}
+		boolean multipleProjectsFound = true;
+		ErrorMessageHandler.addErrorMessage("More than one project with the title \"" + title + "\" has been found");
 		return multipleProjectsFound;
 	}
 
-	public boolean isNoProjectsFound(String title) {
-		ArrayList<Project> foundProjects = findProjectsByTitle(title);
-		boolean noProjectsFound = foundProjects.size() < 1;
-		if (noProjectsFound) {
-			ErrorMessageHandler.addErrorMessage("No project with the title " + title + " has been found");
-		}
+	public boolean noProjectContainingTitleFound(String title) {
+		assert findProjectsContainingTitle(title).isEmpty();
+
+		boolean noProjectsFound = true;
+		ErrorMessageHandler.addErrorMessage("No project with the title \"" + title + "\" has been found");
 		return noProjectsFound;
 
 	}
@@ -171,6 +204,10 @@ public class Application {
 
 	public void assignCourse(Employee employee, String description, Date startDate, Date endDate) {
 		employee.assignToActivity(new Course(description, startDate, endDate));
+	}
+
+	public ArrayList<Project> getProjectList() {
+		return projectList;
 	}
 
 }
