@@ -3,6 +3,7 @@ package ProjectManagement.UserInterface;
 import java.util.List;
 
 import ProjectManagement.Application;
+import ProjectManagement.Main;
 
 public class CreateProjectCommand implements UserCommand {
 
@@ -18,7 +19,12 @@ public class CreateProjectCommand implements UserCommand {
 			 return;
 		 }
 		 
-		 Application.Get().createProject(args.get(0));
+		 int createdId = Application.Get().createProject(args.get(0));
+		 
+		 if(Main.getSelectedProject() == null) {
+			 Main.selectProject(Application.Get().getProject(createdId));
+		 }
+		 
+		 Main.setPreviousUserInterface();
 	}
-
 }

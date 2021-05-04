@@ -2,7 +2,9 @@ package ProjectManagement.UserInterface;
 
 import java.util.List;
 
+import ProjectManagement.Application;
 import ProjectManagement.Main;
+import ProjectManagement.Project;
 
 public class ActivityManagementUserInterface implements UserInterface {
 
@@ -26,7 +28,8 @@ public class ActivityManagementUserInterface implements UserInterface {
 	public void PopulateCommands(List<UserCommand> commands) {
 		commands.add(new ShowAssignedActivitiesCommand());
 		
-		if(Main.getSelectedProject() != null) {
+		Project selectedProject = Main.getSelectedProject();
+		if(selectedProject != null && selectedProject.getProjectLeader() == Application.Get().getSignedInEmployee()) {
 			commands.add(new GenericCommand("Create new task", () -> Main.setUserInterface(new CreateTaskUserInterface(this))));
 		}
 		
