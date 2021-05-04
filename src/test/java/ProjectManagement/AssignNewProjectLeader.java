@@ -36,9 +36,7 @@ public class AssignNewProjectLeader {
 	public void the_project_with_title_already_has_an_assigned_project_leader_with_id(String title, String employeeID) {
 
 		Project project = holder.app.getSpecificProjectByTitle(title);
-		if (!project.hasProjectLeader()) {
-			project.assignProjectLeader(holder.app.getEmployee(employeeID));
-		}
+		project.assignProjectLeader(holder.app.getEmployee(employeeID));
 
 	}
 
