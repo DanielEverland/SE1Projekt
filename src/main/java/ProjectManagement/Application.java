@@ -49,7 +49,7 @@ public class Application {
 		return signedInEmployee;
 	}
 
-	public int createProject(String title) throws AuthException {
+	public int createProject(String title) {
 		if (isSignedIn()) {
 			Project newProject = new Project(newProjectId++, title);
 			projects.put(newProject.getId(), newProject);
