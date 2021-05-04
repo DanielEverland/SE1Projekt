@@ -195,12 +195,19 @@ public class Application {
 
 	public ArrayList<Task> seeAllTasks() {
 		ArrayList<Task> allTasks = new ArrayList<Task>();
-		if (isSignedIn()) {
-			for (Project project : projects.values()) {
-				for (Task task : project.getTasks()) {
-					allTasks.add(task);
-				}
+		
+		if (!isSignedIn()) {
+			ErrorMessageHandler.addErrorMessage("Employee must be signed in");
+			return null;
+		}
+
+		for (Project project : projects.values()) {
+			for (Task task : project.getTasks()) {
+				allTasks.add(task);
 			}
+		}
+		if (allTasks.isEmpty()) {
+			ErrorMessageHandler.addErrorMessage("No tasks found");
 		}
 		return allTasks;
 
