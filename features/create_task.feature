@@ -9,7 +9,7 @@ And the employee is a project leader
 When The project leader creates a task with title "Test Title", description "Test Description", start date "31/12/1998" and end date "31/12/2000"
 Then A task exists with title "Test Title", description "Test Description", start date "31/12/1998" and end date "31/12/2000"
 
-Scenario: ASCII title entered
+Scenario: Illegal character in title
 Given an employee with id "test" exists in the application
 And the employee is signed in
 And the employee is a project leader
