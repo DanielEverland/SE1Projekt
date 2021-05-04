@@ -41,7 +41,7 @@ public class EmployeeSteps {
 	public void the_employee_inputs_hours_worked_on_the_task(Double hoursWorked) {
 		task.logWorkHours(holder.employee, hoursWorked);
 	}
-
+	
 	@Then("{double} hours is registered as worked on the task by the employee")
 	public void hours_is_registered_as_worked_on_the_task(Double hoursWorked) {
 		Map<Employee, Duration> minutesWorked = task.getMinutesWorked();
