@@ -8,14 +8,7 @@ Scenario: Employee register worked time to task
 	And the employee is signed in 
 	When the employee inputs 5.0 hours worked on the task 
 	Then 5.0 hours is registered as worked on the task by the employee 
-	
-	#Scenario: Invalid input
-	#Given an employee with id "test" exists in the application
-	#And the employee has an existing task with title "Task title", description "Task description", start date 01 and end date 02 
-	#And the employee is signed in
-	#When the employee inputs "abc" hours worked on the task with title "Task title", description "Task description", start date 01 and end date 02 
-	#Then "abc" hours is not registered as worked on the with title "Task title", description "Task description", start date 01 and end date 02 task by the employee
-	
+		
 Scenario: Input greater than expected time 
 	Given an employee with id "test" exists in the application 
 	And the employee has an existing task with title "Task title", description "Task description", start date "31/12/1998" and end date "31/12/2000" 
@@ -25,3 +18,9 @@ Scenario: Input greater than expected time
 	When the employee inputs 5.0 hours worked on the task 
 	Then 5.0 hours is registered as worked on the task by the employee 
 	And the error message "Too much time spent on task" is given
+	
+#Scenario: Employee not signed in
+#	Given an employee with id "test" exists in the application 
+#	And the employee has an existing task with title "Task title", description "Task description", start date "31/12/1998" and end date "31/12/2000" 
+#	When the employee inputs 5.0 hours worked on the task without being signed in
+#	Then the error message "Must be signed in to register time to task" is given
