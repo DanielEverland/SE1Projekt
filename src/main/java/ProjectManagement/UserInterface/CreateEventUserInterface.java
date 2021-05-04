@@ -33,6 +33,10 @@ public abstract class CreateEventUserInterface extends CreateActivityUserInterfa
 	// Disable behaviour as sick leave cannot have titles
 	@Override
 	protected void addTitleCommand(List<UserCommand> commands) {		
+	}	
+	@Override
+	protected boolean shouldDisplayTitleDescription() {
+		return false;
 	}
 	
 	protected abstract Activity createActivity();

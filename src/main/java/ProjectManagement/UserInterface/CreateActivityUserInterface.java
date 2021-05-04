@@ -18,7 +18,9 @@ public abstract class CreateActivityUserInterface implements UserInterface {
 		ActivityConstructorInfo constructorInfo = getConstructorInfo();		
 		String description = new String();
 		
-		description += String.format("Title: %s\n", constructorInfo.title);
+		if(shouldDisplayTitleDescription())
+			description += String.format("Title: %s\n", getConstructorInfo().title);
+		
 		description += String.format("Start Date: %s\n", constructorInfo.startDate.toString());
 		description += String.format("End Date: %s\n", constructorInfo.endDate.toString());
 		
@@ -40,6 +42,10 @@ public abstract class CreateActivityUserInterface implements UserInterface {
 		
 		commands.add(new GenericCommand("Create", () -> create()));
 		commands.add(new ReturnCommand());
+	}
+	
+	protected boolean shouldDisplayTitleDescription() {
+		return true;
 	}
 	
 	protected void addTitleCommand(List<UserCommand> commands) {
