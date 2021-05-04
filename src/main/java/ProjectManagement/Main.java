@@ -73,7 +73,7 @@ public class Main {
 		List<UserCommand> allCurrentCommands = new ArrayList<UserCommand>();
 		currentUserInterface.PopulateCommands(allCurrentCommands);
 		for (int i = 0; i < allCurrentCommands.size(); i++) {
-			System.out.println(String.format("%d: %s", i + 1, allCurrentCommands.get(i).getDisplayName()));
+			System.out.println(String.format("[%d] %s", i + 1, allCurrentCommands.get(i).getDisplayName()));
 		}
 	}
 

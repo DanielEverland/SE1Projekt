@@ -4,6 +4,7 @@ import java.util.List;
 
 import ProjectManagement.Application;
 import ProjectManagement.Main;
+import ProjectManagement.Project;
 
 public class ProjectManagementUserInterface implements UserInterface {
 
@@ -19,13 +20,18 @@ public class ProjectManagementUserInterface implements UserInterface {
 			commands.add(new GenericCommand("Select project", () -> Main.setUserInterface(new SelectProjectUserInterface(this))));
 		}
 		
+		if(Main.getSelectedProject() != null && !Main.getSelectedProject().hasProjectLeader()) {
+			commands.add(new AssignProjectLeaderCommand());
+		}
+		
 		commands.add(new CreateProjectCommand());
 		commands.add(new ReturnCommand());
 	}
 
 	@Override
 	public String getDescription() {
-		return "";
+		Project selectedProject = Main.getSelectedProject();
+		return String.format("Selected project: %s", selectedProject != null ? selectedProject.getTitle() : "None");
 	}
 
 	@Override
