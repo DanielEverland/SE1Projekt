@@ -32,6 +32,7 @@ public class EmployeeSteps {
 		Date endDate = Date.FromString(endDateString);
 
 		holder.project.createTask(new TaskConstructorInfo(title, description, startDate, endDate));
+
 		task = holder.project.findTask(title, description, startDate, endDate);
 		holder.project.assignTaskToEmployee(holder.employee, task);
 	}

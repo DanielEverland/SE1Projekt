@@ -7,6 +7,7 @@ public class Employee {
 	private String id;
 	private int maxTasks;
 	private List<Activity> assignedActivites;
+	private boolean projectSelected = false;
 
 	public Employee(String id, int maxTasks) {
 		this.id = id;
@@ -25,7 +26,7 @@ public class Employee {
 	public List<Activity> getAssignedActivites() {
 		return assignedActivites;
 	}
-	
+
 	public List<Task> getTasks() {
 		ArrayList<Task> tasks = new ArrayList<Task>();
 		for (Activity assignedActivity : assignedActivites) {
@@ -39,7 +40,10 @@ public class Employee {
 		}
 		
 		return tasks;
+
+
 	}
+
 
 	public List<Activity> getEvents() {
 		ArrayList<Activity> events = new ArrayList<>();
@@ -58,6 +62,7 @@ public class Employee {
 		assignedActivites.add(activity);
 
 	}
+
 
 	public boolean isAvailable(Date startDate, Date endDate) {
 		int tasksInPeriod = 0;
@@ -78,5 +83,6 @@ public class Employee {
 	public boolean isAvailable(Task task) {
 		return isAvailable(task.startDate, task.endDate);
 	}
+
 
 }
