@@ -51,3 +51,11 @@ Scenario: Searching for specific title with more than one project with the same 
 	When the employee searches for the project with title "Project test" 
 	Then there are more than one project with the title "Project test" 
 	And all projects that contain "Project test" in the title are found 
+
+Scenario: Searching when no projects exist
+	Given an employee with id "test" exists in the application 
+	And the employee is signed in 
+	And no projects exist in the application
+	When the employee searches for the project with title "Project test" 
+	Then assertion error is triggered 
+	
