@@ -43,7 +43,6 @@ public class AssignNewProjectLeader {
 	@Then("the employee with id {string} remains the project leader of the project {string}")
 	public void the_employee_with_id_remains_the_project_leader_of_the_project(String employeeID, String title) {
 		Project project = holder.app.getSpecificProjectByTitle(title);
-		project.assignProjectLeader(holder.app.getEmployee(employeeID));
 		assertTrue(project.getProjectLeader() == holder.app.getEmployee(employeeID));
 	}
 
