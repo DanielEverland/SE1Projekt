@@ -17,7 +17,6 @@ public class Application {
 	private static Application instance;
 
 	private Map<Integer, Project> projects;
-	private ArrayList<Project> projectList = new ArrayList<Project>();
 	private Map<String, Employee> employees;
 	private Employee signedInEmployee;
 
@@ -56,7 +55,6 @@ public class Application {
 		if (isSignedIn()) {
 			Project newProject = new Project(newProjectId++, title);
 			projects.put(newProject.getId(), newProject);
-			getProjectList().add(newProject);
 			return newProject.getId();
 		}
 
@@ -123,22 +121,11 @@ public class Application {
 
 	}
 
-//	public ArrayList<Project> searchMapByEntry(String title) {
-//
-//		ArrayList<Project> foundProjects = new ArrayList<Project>();
-//		for (Map.Entry<Integer, Project> entry : projects.entrySet()) {
-//			if (title.equals(entry.getValue().getTitle())) {
-//				Project project = entry.getValue();
-//			}
-//		}
-//		return foundProjects;
-//	}
-
 	public ArrayList<Project> findProjectsContainingTitle(String title) {
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
 
 		if (isSignedIn()) {
-			for (Project project : projectList) {
+			for (Project project : projects.values()) {
 				if (project.getTitle().contains(title)) {
 					foundProjects.add(project);
 				}
@@ -151,10 +138,10 @@ public class Application {
 	}
 
 	public Project getSpecificProjectByTitle(String title) {
-		assert !projectList.isEmpty() && !multipleProjectsWithSameTitle(projectList, title);
+		assert !projects.isEmpty() && !multipleProjectsWithSameTitle(projects.values(), title);
 
 		if (isSignedIn()) {
-			for (Project project : projectList) {
+			for (Project project : projects.values()) {
 				if (project.getTitle().equals(title)) {
 					return project;
 				}
@@ -165,11 +152,11 @@ public class Application {
 
 	}
 
-	private boolean multipleProjectsWithSameTitle(ArrayList<Project> projectList, String title) {
-		assert projectList.size() > 0;
+	private boolean multipleProjectsWithSameTitle(Collection<Project> collection, String title) {
+		assert collection.size() > 0;
 
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
-		for (Project project : projectList) {
+		for (Project project : collection) {
 			if (project.getTitle().equals(title)) {
 				foundProjects.add(project);
 			}
@@ -178,7 +165,7 @@ public class Application {
 	}
 
 	public boolean multipleProjectsContainingTitleFound(String title) {
-		assert projectList.size() > 1;
+		assert projects.size() > 1;
 
 		boolean multipleProjectsFound = true;
 		ErrorMessageHandler.addErrorMessage("More than one project with the title \"" + title + "\" has been found");
@@ -204,10 +191,6 @@ public class Application {
 
 	public void assignCourse(Employee employee, String description, Date startDate, Date endDate) {
 		employee.assignToActivity(new Course(description, startDate, endDate));
-	}
-
-	public ArrayList<Project> getProjectList() {
-		return projectList;
 	}
 
 }
