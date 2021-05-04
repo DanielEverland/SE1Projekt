@@ -17,8 +17,8 @@ public class Application {
 	private static Application instance;
 
 	private Map<Integer, Project> projects;
-	private ArrayList<Project> projectList = new ArrayList<Project>();
 	private Map<String, Employee> employees;
+	private ArrayList<Project> projectList = new ArrayList<Project>();
 	private Employee signedInEmployee;
 
 	private int newProjectId = 0;
@@ -208,6 +208,19 @@ public class Application {
 
 	public ArrayList<Project> getProjectList() {
 		return projectList;
+	}
+
+	public ArrayList<Task> seeAllTasks() {
+		ArrayList<Task> allTasks = new ArrayList<Task>();
+		if (isSignedIn()) {
+			for (Project project : projectList) {
+				for (Task task : project.getTasks()) {
+					allTasks.add(task);
+				}
+			}
+		}
+		return allTasks;
+
 	}
 
 }
