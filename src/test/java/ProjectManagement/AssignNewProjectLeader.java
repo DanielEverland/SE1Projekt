@@ -34,7 +34,6 @@ public class AssignNewProjectLeader {
 
 	@Given("the project with title {string} already has an assigned project leader with ID {string}")
 	public void the_project_with_title_already_has_an_assigned_project_leader_with_id(String title, String employeeID) {
-
 		Project project = holder.app.getSpecificProjectByTitle(title);
 		project.assignProjectLeader(holder.app.getEmployee(employeeID));
 
