@@ -1,8 +1,10 @@
 package ProjectManagement;
 
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.equalTo;
 import java.util.ArrayList;
@@ -11,14 +13,24 @@ public class SearchProjectSteps {
 	
 	private MainHolder holder;
 	private ArrayList<Project> projects;
+	private boolean assertionTriggered;
 	
 	public SearchProjectSteps(MainHolder holder) {
 		this.holder = holder;
 	}
 	
+	@Given("no projects exist in the application")
+	public void no_projects_exist_in_the_application() {
+		holder.app.getProjects().clear();
+	}
+	
 	@When("the employee searches for the project with title {string}")
 	public void the_employee_searches_for_the_project_with_title(String title) {
-		projects = holder.app.findProjectsContainingTitle(title);
+		try {
+			projects = holder.app.findProjectsContainingTitle(title);
+		} catch (java.lang.AssertionError e) {
+			assertionTriggered = true;
+		}
 	}
 	
 	@Then("there are more than one project with the title {string}")
@@ -37,5 +49,9 @@ public class SearchProjectSteps {
 		assertThat(holder.app.noProjectContainingTitleFound(string), is(equalTo(true)));
 	}
 	
+	@Then("assertion error is triggered")
+	public void assertion_error_is_triggered() {
+		assertTrue(assertionTriggered);
+	}
 	
 }
