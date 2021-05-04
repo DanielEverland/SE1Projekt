@@ -142,4 +142,9 @@ public class Project {
 	public boolean isCompleted() {
 		return completed;
 	}
+	
+	@Override
+	public String toString() {
+		return id + ": " + title;
+	}
 }
