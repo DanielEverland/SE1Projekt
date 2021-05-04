@@ -23,8 +23,8 @@ public class SeeAllTasksSteps {
 		allTasks = holder.app.seeAllTasks();
 	}
 
-	@Then("all tasks in the application are shown")
-	public void all_tasks_in_the_application_are_shown() {
+	@Then("all tasks in the application are found")
+	public void all_tasks_in_the_application_are_found() {
 		ArrayList<Task> tasks = holder.app.seeAllTasks();
 		assertThat(allTasks.equals(tasks), is(equalTo(true)));
 //		idk kan ikke komme på noget som ikke er dumt

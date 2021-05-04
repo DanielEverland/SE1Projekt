@@ -113,4 +113,12 @@ public class ProjectSteps {
 		assertTrue(holder.project.isCompleted());
 	}
 
+	@Given("the project with title {string} has an existing task with title {string}, description {string}, start date {string} and end date {string}")
+	public void the_project_with_title_has_an_existing_task_with_title_description_start_date_and_end_date(
+			String projectTitle, String taskTitle, String taskDescription, String taskStartDateString, String taskEndDateString) {
+		Project project = holder.app.getSpecificProjectByTitle(projectTitle);
+		project.createTask(new TaskConstructorInfo(taskTitle, taskDescription, Date.FromString(taskStartDateString), Date.FromString(taskEndDateString)));
+	}
+	
+	
 }
