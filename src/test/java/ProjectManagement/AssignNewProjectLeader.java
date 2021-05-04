@@ -13,7 +13,7 @@ public class AssignNewProjectLeader {
 		this.holder = holder;
 	}
 
-	@Given("The project with title {string} exists")
+	@Given("the project with title {string} exists")
 	public void the_project_with_title_exists(String title) throws AuthException {
 		holder.app.createProject(title);
 	}
