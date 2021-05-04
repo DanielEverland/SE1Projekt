@@ -4,7 +4,7 @@ Actor: Project leader
 
 Scenario: Assign expected time to task
 Given the project with title "default_test_project" exists
-And the project contains a task with name "default_test_task", description "test_task", start date "01/01/2000" and end date "01/01/2001"
+And the project with title "default_test_project" contains a task with name "default_test_task", description "test_task", start date "01/01/2000" and end date "01/01/2001"
 And an employee with id "emp1" exists in the application
 And the employee is signed in
 And the employee is a project leader
