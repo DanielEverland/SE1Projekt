@@ -43,7 +43,10 @@ public class Employee {
 	}
 	
 	public void assignToTask(Task task) {
-		assignedActivites.add(task);
+		assert !assignedActivites.contains(task);
+		
+		assignedActivites.add(task);			
+		
 	}
 
 	public boolean isAvailable(Date startDate, Date endDate) {
