@@ -114,16 +114,49 @@ public class Application {
 		}
 
 		return availableEmployees;
+
+	}
+
+	private ArrayList<Project> findProjectsByTitle(String title) {
+		ArrayList<Project> foundProjects = new ArrayList<Project>();
+		for (Map.Entry<Integer, Project> entry : projects.entrySet()) {
+			if (title.equals(entry.getValue().getTitle())) {
+				Project project = entry.getValue();
+				foundProjects.add(project);
+			}
+		}
+		return foundProjects;
 	}
 
 	public Project getProjectByTitle(String title) {
-		for (Map.Entry<Integer, Project> entry : projects.entrySet()) {
-			if (title.equals(entry.getValue().getTitle())) {
-				return entry.getValue();
-			}
+		ArrayList<Project> foundProjects = findProjectsByTitle(title);
 
+		if (foundProjects.size() == 1) {
+			return foundProjects.get(0);
+		} else {
+			return null;
 		}
-		return null;
+
 	}
 
+	public boolean isMoreThanOneProjectFound(String title) {
+		ArrayList<Project> foundProjects = findProjectsByTitle(title);
+		boolean multipleProjectsFound = foundProjects.size() > 1;
+		if (multipleProjectsFound) {
+			ErrorMessageHandler.addErrorMessage("More than one project with the title " + title + " has been found");
+
+		}
+		return multipleProjectsFound;
+
+	}
+
+	public boolean isNoProjectsFound(String title) {
+		ArrayList<Project> foundProjects = findProjectsByTitle(title);
+		boolean noProjectsFound = foundProjects.size() < 1;
+		if (noProjectsFound) {
+			ErrorMessageHandler.addErrorMessage("No project with the title " + title + " has been found");
+		}
+		return noProjectsFound;
+
+	}
 }
