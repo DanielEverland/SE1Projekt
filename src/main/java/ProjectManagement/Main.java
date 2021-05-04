@@ -73,8 +73,26 @@ public class Main {
 		List<UserCommand> allCurrentCommands = new ArrayList<UserCommand>();
 		currentUserInterface.PopulateCommands(allCurrentCommands);
 		for (int i = 0; i < allCurrentCommands.size(); i++) {
-			System.out.println(String.format("[%d] %s", i + 1, allCurrentCommands.get(i).getDisplayName()));
+			System.out.println(String.format("[%d] %s %s", i + 1, allCurrentCommands.get(i).getDisplayName(), getArgumentsString(allCurrentCommands.get(i))));
 		}
+	}
+	
+	private static String getArgumentsString(UserCommand command) {
+		String argumentsString = new String();
+		List<String> allArguments = command.getParameterNames();
+		
+		if(allArguments == null)
+			return "";
+		
+		for(int i = 0; i < allArguments.size(); i++) {
+			argumentsString += String.format("[%s]", allArguments.get(i));
+			
+			if(i < allArguments.size() - 1) {
+				argumentsString += " ";
+			}
+		}
+		
+		return argumentsString;
 	}
 
 	private static List<String> stringToArguments(String inputString) {

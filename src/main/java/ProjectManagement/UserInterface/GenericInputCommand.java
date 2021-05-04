@@ -1,5 +1,6 @@
 package ProjectManagement.UserInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ProjectManagement.ErrorMessageHandler;
@@ -7,11 +8,13 @@ import ProjectManagement.ErrorMessageHandler;
 public class GenericInputCommand implements UserCommand {
 
 	private String displayName;
-	private GenericInputFunctional response;
+	private String inputName;
+	private GenericInputFunctional response;	
 	
-	GenericInputCommand(String displayName, GenericInputFunctional response) {
+	GenericInputCommand(String displayName, String inputName, GenericInputFunctional response) {
 		this.displayName = displayName;
 		this.response = response;
+		this.inputName = inputName;
 	}
 	
 	@Override
@@ -29,4 +32,10 @@ public class GenericInputCommand implements UserCommand {
 		response.Invoke(args.get(0));
 	}
 
+	@Override
+	public List<String> getParameterNames() {
+		return new ArrayList<String>() {{
+			add(inputName);
+		}};
+	}
 }

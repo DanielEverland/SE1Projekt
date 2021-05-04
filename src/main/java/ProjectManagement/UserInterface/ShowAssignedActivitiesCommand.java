@@ -28,4 +28,9 @@ public class ShowAssignedActivitiesCommand implements UserCommand {
 			System.out.println();
 		}
 	}
+
+	@Override
+	public List<String> getParameterNames() {
+		return null;
+	}
 }

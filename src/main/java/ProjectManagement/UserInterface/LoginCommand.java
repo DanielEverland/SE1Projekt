@@ -1,5 +1,6 @@
 package ProjectManagement.UserInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ProjectManagement.Application;
@@ -21,4 +22,10 @@ public class LoginCommand implements UserCommand {
 		Application.Get().signIn(args.get(0));
 	}
 
+	@Override
+	public List<String> getParameterNames() {
+		return new ArrayList<String>() {{
+			add("userName");
+		}};
+	}
 }

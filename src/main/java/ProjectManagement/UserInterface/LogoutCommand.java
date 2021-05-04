@@ -16,4 +16,8 @@ public class LogoutCommand implements UserCommand {
 		Application.Get().signOut();
 	}
 
+	@Override
+	public List<String> getParameterNames() {
+		return null;
+	}
 }

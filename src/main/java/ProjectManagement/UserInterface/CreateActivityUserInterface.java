@@ -36,8 +36,8 @@ public abstract class CreateActivityUserInterface implements UserInterface {
 	@Override
 	public void PopulateCommands(List<UserCommand> commands) {
 		addTitleCommand(commands);
-		commands.add(new GenericInputCommand("Start Date", (String input) -> getConstructorInfo().startDate = Date.FromString(input)));
-		commands.add(new GenericInputCommand("End Date", (String input) -> getConstructorInfo().endDate = Date.FromString(input)));
+		commands.add(new GenericInputCommand("Start Date", "date", (String input) -> getConstructorInfo().startDate = Date.FromString(input)));
+		commands.add(new GenericInputCommand("End Date", "date", (String input) -> getConstructorInfo().endDate = Date.FromString(input)));
 		
 		populateAdditionalCommands(commands);
 		
@@ -54,7 +54,7 @@ public abstract class CreateActivityUserInterface implements UserInterface {
 	}
 	
 	protected void addTitleCommand(List<UserCommand> commands) {
-		commands.add(new GenericInputCommand("Title", (String input) -> getConstructorInfo().title = input));
+		commands.add(new GenericInputCommand("Title", "title", (String input) -> getConstructorInfo().title = input));
 	}
 	
 	protected abstract void populateAdditionalCommands(List<UserCommand> commands);
