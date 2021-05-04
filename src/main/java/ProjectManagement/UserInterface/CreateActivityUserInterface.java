@@ -4,6 +4,7 @@ import java.util.List;
 
 import ProjectManagement.ActivityConstructorInfo;
 import ProjectManagement.Date;
+import ProjectManagement.Main;
 
 public abstract class CreateActivityUserInterface implements UserInterface {
 
@@ -40,7 +41,11 @@ public abstract class CreateActivityUserInterface implements UserInterface {
 		
 		populateAdditionalCommands(commands);
 		
-		commands.add(new GenericCommand("Create", () -> create()));
+		commands.add(new GenericCommand("Create", () ->
+		{
+			create();
+			Main.setPreviousUserInterface();
+		}));
 		commands.add(new ReturnCommand());
 	}
 	
