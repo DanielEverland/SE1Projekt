@@ -5,6 +5,7 @@ Actor: Employee
 Scenario: An employee is assigned as project leader to project
 Given The project with title "default_test_project" exists
 And an employee with id "test" exists in the application
+And the employee is signed in
 When An employee enters the ID of employee "test" who shall be the project manager of the project with title "default_test_project"
 Then The employee with ID "test" is now the project manager of the project with title "default_test_project"
 
