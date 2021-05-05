@@ -83,7 +83,12 @@ public class Project {
 	}
 
 	public boolean isProjectLeader(Employee employee) {
-		return employee == projectLead ? true : false;
+		
+		boolean isEmployeeProjectLeader = employee == projectLead ? true : false;
+		if (!isEmployeeProjectLeader) {
+			ErrorMessageHandler.addErrorMessage("Must be project leader");
+		}
+		return isEmployeeProjectLeader;
 	}
 
 	public ArrayList<Task> getTasks() {
@@ -130,6 +135,8 @@ public class Project {
 			task.setExpectedTime(newExpectedTime);
 		}
 	}
+	
+	
 
 	public void markAsCompleted() {
 		if (!completed) {
