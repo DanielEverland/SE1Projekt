@@ -101,4 +101,3 @@ Scenario: Project leader edits every aspect of task
 	And A task with description "New Description" exists
 	And A task with start date "01/12/2000" exists
 	And A task with end date "01/12/2001" exists 
-	
