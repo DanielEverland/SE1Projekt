@@ -135,8 +135,6 @@ public class Project {
 			task.setExpectedTime(newExpectedTime);
 		}
 	}
-	
-	
 
 	public void markAsCompleted() {
 		if (!completed) {
