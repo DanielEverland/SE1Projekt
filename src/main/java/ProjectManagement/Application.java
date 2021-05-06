@@ -161,7 +161,7 @@ public class Application {
 				foundProjects.add(project);
 			}
 		}
-		boolean moreThanOneProjectFound = foundProjects.size() > 1 ? true : false;
+		boolean moreThanOneProjectFound = foundProjects.size() > 1;
 		if (moreThanOneProjectFound) {
 			ErrorMessageHandler.addErrorMessage("More than one project with the title \"" + title + "\" found");
 		}
