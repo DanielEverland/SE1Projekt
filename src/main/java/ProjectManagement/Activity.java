@@ -43,10 +43,7 @@ public class Activity {
 	}
 
 	public boolean isInDateInterval(Date intervalStart, Date intervalEnd) {
-		return startDate.equals(intervalStart) || endDate.equals(intervalEnd)
-				|| (startDate.after(intervalStart) && startDate.before(intervalEnd))
-				|| (endDate.after(intervalStart) && endDate.before(intervalEnd))
-				|| (startDate.before(intervalStart) && endDate.after(intervalEnd));
+		return !(endDate.before(intervalStart) || startDate.after(intervalEnd));
 	}
 
 }

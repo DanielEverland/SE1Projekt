@@ -15,12 +15,12 @@ Scenario: Assigned vacation produces the expected string
 Scenario: Assigned activity registers as belonging to the correct intervals
     Given an employee with id "emp1" exists in the application
     When vacation from "31/12/1998" to "31/01/1999" is assigned to the employee
-    Then vacation is in interval "31/12/1998" to "10/02/1999"
-    And vacation is in interval "20/12/1998" to "31/01/1999"
+    Then vacation is in interval "01/01/1999" to "10/01/1999"
     And vacation is in interval "01/01/1999" to "10/02/1999"
     And vacation is in interval "20/12/1998" to "10/01/1999"
     And vacation is in interval "20/12/1998" to "10/02/1999"
     And vacation is not in interval "01/12/1998" to "10/12/1998"
+    And vacation is not in interval "01/02/1999" to "10/12/1999"
 
 Scenario: Employee with tasks goes on vacation
     Given an employee with id "emp1" exists in the application
