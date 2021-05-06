@@ -84,7 +84,7 @@ public class Project {
 
 	public boolean isProjectLeader(Employee employee) {
 		
-		boolean isEmployeeProjectLeader = employee == projectLead ? true : false;
+		boolean isEmployeeProjectLeader = employee == projectLead;
 		if (!isEmployeeProjectLeader) {
 			ErrorMessageHandler.addErrorMessage("Must be project leader");
 		}
