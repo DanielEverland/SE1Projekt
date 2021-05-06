@@ -63,6 +63,8 @@ public class Employee {
 	}
 
 	public boolean isAvailable(Date startDate, Date endDate) {
+		assert !endDate.before(startDate);
+
 		// Special case: If employee isn't allowed to have tasks, they are always unavailable
 		if (maxTasks <= 0) {
 			return false;

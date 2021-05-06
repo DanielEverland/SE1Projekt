@@ -41,7 +41,7 @@ Scenario: Request available employees from an employee with tasks overlapping ou
 	When a list of available employees is requested from date "10/01/2020" to date "20/01/2020"
 	Then the application returns a list containing employee with id "test"
 
-	Scenario: Request a list of available employees between invalid dates
+Scenario: Request a list of available employees between invalid dates
 	Given an employee with id "test1" exists in the application 
 	When a list of available employees is requested from date "31/12/2000" to date "30/12/2000" 
 	Then the error message "Start date cannot be greater than end date" is given
