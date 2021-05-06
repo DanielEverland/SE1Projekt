@@ -102,14 +102,3 @@ Scenario: Project leader edits every aspect of task
 	And A task with start date "01/12/2000" exists
 	And A task with end date "01/12/2001" exists 
 	
-#Scenario: Employee that is not signed in edits task 
-#	Given an employee with id "test" exists in the application 
-#	And the employee is a project leader 
-#	And A task with title "Test Title", description "Test Description", start date "31/12/1998" and end date "31/12/2000" exists 
-#	And the task has 3.0 hours of expected time 
-#	When the employee edits expected time to 5.0 hours for task 
-#	And the employee edits title to "New title" for task 
-#	And the employee edits description to "New Description" for task 
-#	And the employee edits start date to "01/12/2000" for task 
-#	And the employee edits end date to "01/12/2001" for task 
-#	Then the error message "Employee must be signed in" is given
