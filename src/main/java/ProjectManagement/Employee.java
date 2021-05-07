@@ -1,5 +1,7 @@
 package ProjectManagement;
 
+import io.cucumber.messages.internal.com.google.common.collect.Sets;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,23 +88,25 @@ public class Employee {
 		}
 
 		// Construct a timeline of when tasks in the interval start and end
-		HashMap<Date, Integer> taskDeltas = new HashMap<>();
+		HashMap<Date, Integer> startDates = new HashMap<>();
+		HashMap<Date, Integer> endDates = new HashMap<>();
 		for (Task task : tasksInInterval) {
-			taskDeltas.put(task.getStartDate(),	taskDeltas.getOrDefault(task.getStartDate(), 0) + 1);
-			taskDeltas.put(task.getEndDate(),	taskDeltas.getOrDefault(task.getEndDate(), 0) - 1);
+			startDates.put(task.getStartDate(),	startDates.getOrDefault(task.getStartDate(), 0) + 1);
+			endDates.put(task.getEndDate(),	endDates.getOrDefault(task.getEndDate(), 0) + 1);
 		}
 
 		// Iterate through the timeline and check if the number of simultaneous tasks is ever equal to maxTasks
 		int overlappingTasks = 0;
-		for (Date date : taskDeltas.keySet().stream().sorted().collect(Collectors.toList())) {
+		for (Date date : Sets.union(startDates.keySet(), endDates.keySet()).stream().sorted().collect(Collectors.toList())) {
 			if (date.after(endDate)) {
 				break;
 			}
 
-			overlappingTasks += taskDeltas.get(date);
+			overlappingTasks += startDates.getOrDefault(date, 0);
 			if (overlappingTasks >= maxTasks && (date.equals(startDate) || date.after(startDate))) {
 				return false;
 			}
+			overlappingTasks -= endDates.getOrDefault(date, 0);
 		}
 
 		return true;
