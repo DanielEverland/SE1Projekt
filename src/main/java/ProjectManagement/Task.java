@@ -54,7 +54,7 @@ public class Task extends Activity {
 
 	@Override
 	public String toString() {
-		return super.toString() + "\nDescription: " + description + "\n";
+		return super.toString() + "\nDescription: " + description;
 	}
 
 	public void editTitle(String newTitle) {

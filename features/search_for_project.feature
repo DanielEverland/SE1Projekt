@@ -41,7 +41,7 @@ Scenario: Employee not signed in
 	When the employee searches for the project with title "Project" 
 	Then the error message "Employee must be signed in" is given
 
-Scenario: Searching for specific title with more than one project with the same title exists 
+Scenario: Searching for title with more than one project with the same title exists 
 	Given an employee with id "test" exists in the application 
 	And the employee is signed in 
 	And The project with title "test" exists 
@@ -51,3 +51,49 @@ Scenario: Searching for specific title with more than one project with the same 
 	When the employee searches for the project with title "Project test" 
 	Then there are more than one project with the title "Project test" 
 	And all projects that contain "Project test" in the title are found 
+
+Scenario: Searching for a specific title with exactly one project with that title
+	Given an employee with id "test" exists in the application 
+	And the employee is signed in 
+	And The project with title "Specific project title test" exists 
+	When the employee searches specifically for the project with title "Specific project title test"
+	Then the project with the title "Specific project title test" is found
+
+Scenario: Searching for a specific title without being logged in
+	Given an employee with id "test" exists in the application 
+	And The project with title "Specific project title test" exists 
+	When the employee searches specifically for the project with title "Specific project title test"
+	Then the project is not found
+	And the error message "Employee must be signed in" is given
+	
+Scenario: Searching for a specific title with more than one project of that title
+	Given an employee with id "test" exists in the application 
+	And the employee is signed in 
+	And The project with title "Project test" exists 
+	And The project with title "Project test" exists
+	When the employee searches specifically for the project with title "Project test"
+	Then the error message "More than one project with the title \"Project test\" found" is given
+
+Scenario: Less than one project exists 
+	Given an employee with id "test" exists in the application 
+	And the employee is signed in 
+	And the application has no existing projects
+	And The project with title "project example" exists
+	When the employee searches for the project with title "example" 
+	Then there are not more than one project with the title "example" 
+
+Scenario: No projects exist in the application
+	Given an employee with id "test" exists in the application 
+	And the employee is signed in 
+	And the application has no existing projects
+	When the employee searches for the project with title "test" 
+	Then there are no projects with the title "test"
+	And there is no projects in the application
+
+Scenario: Searching for specific project when no projects exist in the application
+	Given an employee with id "test" exists in the application 
+	And the employee is signed in 
+	And the application has no existing projects
+	When the employee searches specifically for the project with title "test" 
+	Then there are no projects with the title "test"
+	And there is no projects in the application

@@ -83,7 +83,12 @@ public class Project {
 	}
 
 	public boolean isProjectLeader(Employee employee) {
-		return employee == projectLead ? true : false;
+		
+		boolean isEmployeeProjectLeader = employee == projectLead;
+		if (!isEmployeeProjectLeader) {
+			ErrorMessageHandler.addErrorMessage("Must be project leader");
+		}
+		return isEmployeeProjectLeader;
 	}
 
 	public ArrayList<Task> getTasks() {
