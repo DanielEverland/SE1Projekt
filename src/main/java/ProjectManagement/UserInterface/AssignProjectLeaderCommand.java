@@ -23,7 +23,7 @@ public class AssignProjectLeaderCommand implements UserCommand {
 		}
 		
 		String selectedEmployeeId = args.get(0);		
-		Employee selectedEmployee = Application.Get().getEmployee(selectedEmployeeId);
+		Employee selectedEmployee = Main.getCurrentApplication().getEmployee(selectedEmployeeId);
 		if(selectedEmployee == null) {
 			ErrorMessageHandler.addErrorMessage("Couldn't find user " + selectedEmployeeId);
 			return;

@@ -1,15 +1,14 @@
 package ProjectManagement.UserInterface;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import ProjectManagement.Application;
+import ProjectManagement.Main;
 
 public class QuitCommand implements UserCommand {
 
 	@Override
 	public void execute(List<String> args) {
-		Application.Get().quit();
+		Main.getCurrentApplication().quit();
 	}
 
 	@Override

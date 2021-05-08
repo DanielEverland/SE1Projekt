@@ -29,7 +29,7 @@ public class ActivityManagementUserInterface implements UserInterface {
 		commands.add(new ShowAssignedActivitiesCommand());
 		
 		Project selectedProject = Main.getSelectedProject();
-		if(selectedProject != null && selectedProject.getProjectLeader() == Application.Get().getSignedInEmployee()) {
+		if(selectedProject != null && selectedProject.getProjectLeader() == Main.getCurrentApplication().getSignedInEmployee()) {
 			commands.add(new GenericCommand("Create new task", () -> Main.setUserInterface(new CreateTaskUserInterface(this))));
 		}
 		

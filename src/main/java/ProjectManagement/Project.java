@@ -15,14 +15,17 @@ public class Project {
 	private ArrayList<Task> tasks;
 	private Employee projectLead;
 	private boolean completed;
+	private Application owner;
 
-	public Project(int id, String title) {
+	public Project(int id, String title, Application owner) {
 		Assert.assertFalse("Id must be a non-negative integer", id < 0);
 		Assert.assertFalse("Title cannot be empty or contain '|'", title.length() == 0 || title.contains("|"));
+		assert owner != null;
 
 		year = Calendar.getInstance().get(Calendar.YEAR);
 		this.id = id;
 		this.title = title;
+		this.owner = owner;
 		tasks = new ArrayList<Task>();
 	}
 
