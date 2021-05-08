@@ -123,9 +123,8 @@ public class Application {
 
 //	Method for finding all projects in the application with String in title
 	public ArrayList<Project> findProjectsContainingTitle(String title) {
-
-
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
+
 		if (isSignedIn()) {
 			for (Project project : projects.values()) {
 				if (project.getTitle().contains(title)) {
