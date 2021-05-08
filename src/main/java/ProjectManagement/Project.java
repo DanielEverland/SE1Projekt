@@ -4,6 +4,7 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Project {
 	// The number of digits in the stringified id of projects
@@ -125,6 +126,17 @@ public class Project {
 			}
 		}
 		return null;
+	}
+	
+	public List<Employee> getAssignedEmployees(Task task) {
+		List<Employee> assignedEmployees = new ArrayList<Employee>();
+		
+		for(Employee employee : application.getEmployees().values()) {
+			if(employee.getTasks().contains(task))
+				assignedEmployees.add(employee);
+		}
+		
+		return assignedEmployees;
 	}
 
 	public void editTaskTitle(Task task, String newTitle, Employee employee) {
