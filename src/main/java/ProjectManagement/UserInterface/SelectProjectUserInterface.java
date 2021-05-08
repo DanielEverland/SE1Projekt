@@ -16,10 +16,10 @@ public class SelectProjectUserInterface implements UserInterface {
 	
 	@Override
 	public void PopulateCommands(List<UserCommand> commands) {
-		int projectCount = Application.Get().getProjects().values().size();
+		int projectCount = Main.getCurrentApplication().getProjects().values().size();
 		
 		for(int i = 0; i < projectCount; i++) {
-			Project currentProject = Application.Get().getProject(i);
+			Project currentProject = Main.getCurrentApplication().getProject(i);
 			commands.add(new GenericIndexedCommand(currentProject.getTitle(), i, (int selectedIndex) -> selectedCommand(selectedIndex)));
 		}
 		
@@ -27,7 +27,7 @@ public class SelectProjectUserInterface implements UserInterface {
 	}
 	
 	private void selectedCommand(int index) {
-		Main.selectProject(Application.Get().getProject(index));
+		Main.selectProject(Main.getCurrentApplication().getProject(index));
 	}
 
 	@Override

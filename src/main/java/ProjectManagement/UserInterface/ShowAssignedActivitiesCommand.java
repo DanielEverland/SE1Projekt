@@ -6,6 +6,7 @@ import java.util.List;
 import ProjectManagement.Activity;
 import ProjectManagement.Application;
 import ProjectManagement.Employee;
+import ProjectManagement.Main;
 
 public class ShowAssignedActivitiesCommand implements UserCommand {
 
@@ -16,9 +17,9 @@ public class ShowAssignedActivitiesCommand implements UserCommand {
 
 	@Override
 	public void execute(List<String> args) {
-		assert Application.Get().isSignedIn();
+		assert Main.getCurrentApplication().isSignedIn();
 		
-		Employee signedInEmployee = Application.Get().getSignedInEmployee();
+		Employee signedInEmployee = Main.getCurrentApplication().getSignedInEmployee();
 		Collection<Activity> assignedActivities = signedInEmployee.getAssignedActivites();
 		
 		System.out.println(String.format("The user \"%s\" have %d activities assigned to them\n", signedInEmployee.getId(), assignedActivities.size()));

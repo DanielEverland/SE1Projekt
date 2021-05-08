@@ -5,6 +5,7 @@ import java.util.List;
 import ProjectManagement.Activity;
 import ProjectManagement.ActivityConstructorInfo;
 import ProjectManagement.Application;
+import ProjectManagement.Main;
 
 public abstract class CreateEventUserInterface extends CreateActivityUserInterface {
 	
@@ -27,7 +28,7 @@ public abstract class CreateEventUserInterface extends CreateActivityUserInterfa
 
 	@Override
 	protected void create() {
-		Application.Get().getSignedInEmployee().assignToActivity(createActivity());
+		Main.getCurrentApplication().getSignedInEmployee().assignToActivity(createActivity());
 	}
 		
 	// Disable behaviour as sick leave cannot have titles

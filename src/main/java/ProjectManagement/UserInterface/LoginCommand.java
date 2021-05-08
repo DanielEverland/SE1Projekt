@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ProjectManagement.Application;
+import ProjectManagement.Main;
 
 public class LoginCommand implements UserCommand {
 
@@ -19,7 +20,7 @@ public class LoginCommand implements UserCommand {
 			return;
 		}
 
-		Application.Get().signIn(args.get(0));
+		Main.getCurrentApplication().signIn(args.get(0));
 	}
 
 	@Override

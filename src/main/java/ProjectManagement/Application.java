@@ -6,16 +6,6 @@ import static org.junit.Assert.assertNotNull;
 
 public class Application {
 
-	public static Application Get() {
-		if (instance == null) {
-			instance = new Application();
-		}
-
-		return instance;
-	}
-
-	private static Application instance;
-
 	private Map<Integer, Project> projects;
 	private Map<String, Employee> employees;
 	private Employee signedInEmployee;
@@ -53,7 +43,7 @@ public class Application {
 
 	public int createProject(String title) {
 		if (isSignedIn()) {
-			Project newProject = new Project(newProjectId++, title);
+			Project newProject = new Project(newProjectId++, title, this);
 			projects.put(newProject.getId(), newProject);
 			return newProject.getId();
 		}

@@ -20,10 +20,10 @@ public class CreateProjectCommand implements UserCommand {
 			 return;
 		 }
 		 
-		 int createdId = Application.Get().createProject(args.get(0));
+		 int createdId = Main.getCurrentApplication().createProject(args.get(0));
 		 
 		 if(Main.getSelectedProject() == null) {
-			 Main.selectProject(Application.Get().getProject(createdId));
+			 Main.selectProject(Main.getCurrentApplication().getProject(createdId));
 		 }
 		 
 		 Main.setPreviousUserInterface();
