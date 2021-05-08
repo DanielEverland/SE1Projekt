@@ -24,7 +24,9 @@ Scenario: Assigned activity registers as belonging to the correct intervals
 
 Scenario: Employee with tasks goes on vacation
     Given an employee with id "emp1" exists in the application
-    And the employee has an existing task with title "task", description "description", start date "31/12/1998" and end date "31/12/2000"
+    And the employee is signed in
+    And A task with title "Test Title", description "Test Description", start date "31/12/1998" and end date "31/12/2000" exists
+    And the task is assigned to the employee
     When vacation from "31/12/1998" to "31/01/1999" is assigned to the employee
     Then the employee has a vacation from "31/12/1998" to "31/01/1999"
 
@@ -46,7 +48,9 @@ Scenario: Assigned sick leave produces the expected string
 
 Scenario: Employee with tasks takes sick leave
     Given an employee with id "emp1" exists in the application
-    And the employee has an existing task with title "task", description "description", start date "01/01/2000" and end date "01/01/2001"
+    And the employee is signed in
+    And A task with title "Test Title", description "Test Description", start date "01/01/2000" and end date "01/01/2001" exists
+    And the task is assigned to the employee
     When sick leave from "01/10/2000" to "05/10/2000" is assigned to the employee
     Then the employee has sick leave from "01/10/2000" to "05/10/2000"
 
@@ -68,7 +72,9 @@ Scenario: Assigned course produces the expected string
 
 Scenario: Employee with tasks is assigned a course
     Given an employee with id "emp1" exists in the application
-    And the employee has an existing task with title "task", description "description", start date "01/01/2020" and end date "01/01/2021"
+    And the employee is signed in
+    And A task with title "Test Title", description "Test Description", start date "01/01/2020" and end date "01/01/2021" exists
+    And the task is assigned to the employee
     When course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020" is assigned to the employee
     Then the employee has a course with description "Software Engineering 1" from "01/01/2020" to "01/05/2020"
 
