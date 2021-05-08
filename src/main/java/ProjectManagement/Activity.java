@@ -43,6 +43,8 @@ public class Activity {
 	}
 
 	public boolean isInDateInterval(Date intervalStart, Date intervalEnd) {
+		assert !intervalEnd.before(intervalStart);
+
 		return !(endDate.before(intervalStart) || startDate.after(intervalEnd));
 	}
 
