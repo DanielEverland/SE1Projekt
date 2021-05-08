@@ -8,8 +8,6 @@ import io.cucumber.java.en.When;
 public class AssignExpectedTimeToTaskSteps {
 
 	private MainHolder holder;
-	private Project project;
-	private Task task;
 
 	public AssignExpectedTimeToTaskSteps(MainHolder holder) {
 		this.holder = holder;
@@ -21,7 +19,7 @@ public class AssignExpectedTimeToTaskSteps {
 		TaskConstructorInfo taskInfo = new TaskConstructorInfo(taskName, description, Date.FromString(startDate),
 				Date.FromString(endDate));
 		holder.project.createTask(taskInfo);
-		task = holder.project.findTask(taskName, description, Date.FromString(startDate), Date.FromString(endDate));
+		holder.task = holder.project.findTask(taskName, description, Date.FromString(startDate), Date.FromString(endDate));
 
 	}
 
@@ -29,15 +27,15 @@ public class AssignExpectedTimeToTaskSteps {
 	public void the_project_leader_with_id_enters_the_amount_of_hours_that_he_expect_that_the_task_will_take_to_complete(
 			String leaderID, Double hours) {
 
-		if (project.isProjectLeader(holder.app.getEmployee(leaderID))) {
-			task.setExpectedTime(hours);
+		if (holder.project.isProjectLeader(holder.app.getEmployee(leaderID))) {
+			holder.task.setExpectedTime(hours);
 		}
 
 	}
 
 	@Then("the task now has {double} hours remaining until completion")
 	public void the_task_now_has_hours_remaining_until_completion(Double hours) {
-		assertTrue(task.getExpectedTime() == hours);
+		assertTrue(holder.task.getExpectedTime() == hours);
 	}
 
 }
