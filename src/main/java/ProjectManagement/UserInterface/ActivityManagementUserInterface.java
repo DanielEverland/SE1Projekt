@@ -5,6 +5,7 @@ import java.util.List;
 import ProjectManagement.Activity;
 import ProjectManagement.Main;
 import ProjectManagement.Project;
+import ProjectManagement.Task;
 
 public class ActivityManagementUserInterface implements UserInterface {
 
@@ -34,6 +35,10 @@ public class ActivityManagementUserInterface implements UserInterface {
 		Project selectedProject = Main.getSelectedProject();
 		if(selectedProject != null && selectedProject.getProjectLeader() == Main.getCurrentApplication().getSignedInEmployee()) {
 			commands.add(new GenericCommand("Create new task", () -> Main.setUserInterface(new CreateTaskUserInterface(this))));
+			
+			if(Main.getSelectedActivity() != null && Main.getSelectedActivity() instanceof Task) {
+				commands.add(new GenericCommand("Assign employee to selected task", () -> Main.setUserInterface(new AssignTaskUserInterface(this))));
+			}
 		}
 		
 		commands.add(new GenericCommand("Create new sick leave", () -> Main.setUserInterface(new CreateSickPeriodUserInterface(this))));
