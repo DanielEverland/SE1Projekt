@@ -22,7 +22,11 @@ public class ActivityConstructorInfo {
 	}
 
 	public boolean isValid() {
-		return isASCIIString(title) && title.length() > minTitleLength;
+		return isASCIIString(title) && title.length() > minTitleLength && datesValid();
+	}
+	
+	public boolean datesValid() {
+		return endDate.afterOrEqual(startDate);
 	}
 
 	private boolean isASCIIString(String input) {

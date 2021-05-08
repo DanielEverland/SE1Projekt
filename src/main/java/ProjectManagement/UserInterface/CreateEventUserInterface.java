@@ -28,6 +28,9 @@ public abstract class CreateEventUserInterface extends CreateActivityUserInterfa
 
 	@Override
 	protected void create() {
+		if(isConstructorInfoInvalid())
+			return;
+		
 		Main.getCurrentApplication().getSignedInEmployee().assignToActivity(createActivity());
 	}
 		
