@@ -51,6 +51,19 @@ public class Application {
 		ErrorMessageHandler.addErrorMessage("Employee must be signed in to create project");
 		return -1;
 	}
+	
+	public List<Activity> getAllActivities() {
+		List<Activity> allActivities = new ArrayList<Activity>();
+		
+		for(Project project : projects.values()) {
+			allActivities.addAll(project.getTasks());
+		}
+		
+		if(isSignedIn())
+			allActivities.addAll(signedInEmployee.getEvents());
+		
+		return allActivities;
+	}
 
 	public Map<Integer, Project> getProjects() {
 		return projects;

@@ -2,7 +2,7 @@ package ProjectManagement.UserInterface;
 
 import java.util.List;
 
-import ProjectManagement.Application;
+import ProjectManagement.Activity;
 import ProjectManagement.Main;
 import ProjectManagement.Project;
 
@@ -16,7 +16,8 @@ public class ActivityManagementUserInterface implements UserInterface {
 	
 	@Override
 	public String getDescription() {
-		return "";
+		Activity selectedActivity = Main.getSelectedActivity();
+		return String.format("Selected activity: %s", selectedActivity != null ? selectedActivity.getTitle() : "None");
 	}
 
 	@Override
@@ -27,6 +28,8 @@ public class ActivityManagementUserInterface implements UserInterface {
 	@Override
 	public void PopulateCommands(List<UserCommand> commands) {
 		commands.add(new ShowAssignedActivitiesCommand());
+		
+		commands.add(new GenericCommand("Select activity", () -> Main.setUserInterface(new SelectActivityUserInterface(this))));
 		
 		Project selectedProject = Main.getSelectedProject();
 		if(selectedProject != null && selectedProject.getProjectLeader() == Main.getCurrentApplication().getSignedInEmployee()) {
