@@ -182,7 +182,6 @@ public class Application {
 		boolean noProjectsFound = true;
 		ErrorMessageHandler.addErrorMessage("No project with the title \"" + title + "\" has been found");
 		return noProjectsFound;
-
 	}
 
 	public void assignVacation(Employee employee, Date startDate, Date endDate) {
