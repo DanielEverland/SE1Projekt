@@ -9,18 +9,33 @@ public class Main {
 	private static UserInterface currentUserInterface;
 	private static Scanner inputScanner;
 	private static Project selectedProject;
+	private static Application currentApplication;
+	private static Activity selectedActivity;
 
 	public static void main(String[] arguments) {
 		inputScanner = new Scanner(System.in);
 		setDefaultUserInterface();
+		currentApplication = new Application();
 		while (mainLoop()) {
 		}
+	}
+	
+	public static void setSelectedActivity(Activity activity) {
+		selectedActivity = activity;
+	}
+	
+	public static Activity getSelectedActivity() {
+		return selectedActivity;
 	}
 	
 	public static void setUserInterface(UserInterface newUserInterface) {
 		assert newUserInterface != null;
 
 		currentUserInterface = newUserInterface;
+	}
+	
+	public static Application getCurrentApplication() {
+		return currentApplication;
 	}
 
 	public static void setPreviousUserInterface() {
@@ -42,7 +57,7 @@ public class Main {
 	}
 
 	private static boolean mainLoop() {
-		if (Application.Get().getIsQuitting())
+		if (currentApplication.getIsQuitting())
 			return false;
 		
 		System.out.println(currentUserInterface.getDescription());
