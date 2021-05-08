@@ -1,6 +1,8 @@
 package ProjectManagement;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ProjectManagement.UserInterface.*;
 
@@ -11,8 +13,10 @@ public class Main {
 	private static Project selectedProject;
 	private static Application currentApplication;
 	private static Activity selectedActivity;
+	private static Pattern pattern;
 
 	public static void main(String[] arguments) {
+		pattern = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"|'([^']*)'");
 		inputScanner = new Scanner(System.in);
 		setDefaultUserInterface();
 		currentApplication = new Application();
@@ -112,8 +116,14 @@ public class Main {
 
 	private static List<String> stringToArguments(String inputString) {
 		ArrayList<String> arguments = new ArrayList<String>();
-		for (String arg : inputString.split("\\s+")) {
-			arguments.add(arg);
+		Matcher match = pattern.matcher(inputString);
+		while(match.find()) {
+			String curr = match.group();
+			
+			if(curr.charAt(0) == '"' && curr.charAt(curr.length() - 1) == '"')
+				curr = curr.substring(1, curr.length() - 1);
+			
+			arguments.add(curr);
 		}
 		return arguments;
 	}
