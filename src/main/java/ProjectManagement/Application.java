@@ -151,6 +151,7 @@ public class Application {
 		return searchSpecificTitle(title).get(0);
 	}
 
+//	Method for finding all projects with exact title
 	private ArrayList<Project> searchSpecificTitle(String title) {
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
 		for (Project project : projects.values()) {
@@ -161,7 +162,7 @@ public class Application {
 		return foundProjects;
 	}
 
-//	Method for checking if there is more than one project with title
+//	Method for checking if there is more than one project with exact title
 	private boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
 		assert !projects.isEmpty();
 
