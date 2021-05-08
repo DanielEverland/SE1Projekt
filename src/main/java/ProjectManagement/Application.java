@@ -161,7 +161,7 @@ public class Application {
 		}
 		return foundProjects;
 	}
-
+//
 //	Method for checking if there is more than one project with exact title
 	private boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
 		assert !projects.isEmpty();
