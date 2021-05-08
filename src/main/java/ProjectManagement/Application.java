@@ -121,46 +121,62 @@ public class Application {
 
 	}
 
+//	Method for finding all projects in the application with String in title
 	public ArrayList<Project> findProjectsContainingTitle(String title) {
+
+		if (!isSignedIn()) {
+			ErrorMessageHandler.addErrorMessage("Employee must be signed in");
+			return null;
+		}
+
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
 
-		if (isSignedIn()) {
-			for (Project project : projects.values()) {
-				if (project.getTitle().contains(title)) {
-					foundProjects.add(project);
-				}
+		for (Project project : projects.values()) {
+			if (project.getTitle().contains(title)) {
+				foundProjects.add(project);
 			}
-			return foundProjects;
 		}
-		ErrorMessageHandler.addErrorMessage("Employee must be signed in");
-		return null;
+		return foundProjects;
 
 	}
 
+//	Method for finding a specific project by title
 	public Project getSpecificProjectByTitle(String title) {
+
+//		Make sure there is no more than one project with the title in the application
 		assert !multipleProjectsWithSameTitle(projects.values(), title);
 
-		if (isSignedIn()) {
-			for (Project project : projects.values()) {
-				if (project.getTitle().equals(title)) {
-					return project;
-				}
-			}
+		if (!isSignedIn()) {
+			ErrorMessageHandler.addErrorMessage("Employee must be signed in");
+			return null;
 		}
-		ErrorMessageHandler.addErrorMessage("Employee must be signed in");
-		return null;
-
+		return searchSpecificTitle(title).get(0); 
 	}
 
-	private boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
-		assert !projects.isEmpty();
-
+	private ArrayList<Project> searchSpecificTitle(String title) {
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
-		for (Project project : projects) {
+		for (Project project : projects.values()) {
 			if (project.getTitle().equals(title)) {
 				foundProjects.add(project);
 			}
 		}
+		return foundProjects;
+	}
+
+//	Method for checking if there is more than one project with title
+	private boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
+		assert !projects.isEmpty();
+
+		ArrayList<Project> foundProjects = new ArrayList<Project>();
+		ArrayList<Project> projectBySearch = searchSpecificTitle(title);
+		for (Project project : projects) {
+			for (Project project2 : projectBySearch) {
+				if (project.equals(project2)) {
+					foundProjects.add(project2);
+				}
+			}
+		}
+
 		boolean moreThanOneProjectFound = foundProjects.size() > 1;
 		if (moreThanOneProjectFound) {
 			ErrorMessageHandler.addErrorMessage("More than one project with the title \"" + title + "\" found");
@@ -169,7 +185,7 @@ public class Application {
 	}
 
 	public boolean multipleProjectsContainingTitleFound(String title) {
-		assert projects.size() > 1;
+		assert findProjectsContainingTitle(title).size() > 1;
 
 		boolean multipleProjectsFound = true;
 		ErrorMessageHandler.addErrorMessage("More than one project with the title \"" + title + "\" has been found");
