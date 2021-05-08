@@ -12,7 +12,6 @@ Scenario: Search for substring of project title
 	When the employee searches for the project with title "Project" 
 	Then all projects that contain "Project" in the title are found 
 
-
 Scenario: More than one project with the same title are found 
 	Given an employee with id "test" exists in the application 
 	And the employee is signed in 
