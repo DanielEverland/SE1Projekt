@@ -60,8 +60,8 @@ Scenario: Searching for a specific title with exactly one project with that titl
 
 Scenario: Searching for a specific title without being logged in
 	Given an employee with id "test" exists in the application 
-	And The project with title "Specific project title test" exists 
-	When the employee searches specifically for the project with title "Specific project title test"
+	And The project with title "default_test_project" exists 
+	When the employee searches specifically for the project with title "default_test_project"
 	Then the project is not found
 	And the error message "Employee must be signed in" is given
 	

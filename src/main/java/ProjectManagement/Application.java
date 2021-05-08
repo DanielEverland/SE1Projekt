@@ -144,7 +144,7 @@ public class Application {
 	public Project getSpecificProjectByTitle(String title) {
 
 //		Make sure there is no more than one project with the title in the application
-		assert !multipleProjectsWithSameTitle(projects.values(), title);
+		assert !multipleProjectsWithSameTitle(searchSpecificTitle(title), title);
 
 		if (!isSignedIn()) {
 			ErrorMessageHandler.addErrorMessage("Employee must be signed in");
@@ -167,17 +167,7 @@ public class Application {
 	private boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
 		assert !projects.isEmpty();
 
-		ArrayList<Project> foundProjects = new ArrayList<Project>();
-		ArrayList<Project> projectBySearch = searchSpecificTitle(title);
-		for (Project project : projects) {
-			for (Project project2 : projectBySearch) {
-				if (project.equals(project2)) {
-					foundProjects.add(project2);
-				}
-			}
-		}
-
-		boolean moreThanOneProjectFound = foundProjects.size() > 1;
+		boolean moreThanOneProjectFound = projects.size() > 1;
 		if (moreThanOneProjectFound) {
 			ErrorMessageHandler.addErrorMessage("More than one project with the title \"" + title + "\" found");
 		}
