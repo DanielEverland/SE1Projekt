@@ -22,10 +22,31 @@ public class EmployeeSteps {
 	public EmployeeSteps(MainHolder holder) {
 		this.holder = holder;
 	}
-	
+
 	@Given("the task is assigned to the employee")
 	public void the_employee_is_assigned_to_the_task() {
+
+		// Create a temporary project leader so employees can have tasks assigned to
+		// them without being project leader
+		boolean alreadyHasProjectLead = holder.project.hasProjectLeader();
+		Employee currentSignedIn = holder.app.getSignedInEmployee();
+		Employee currentProjectLead = holder.project.getProjectLeader();
+
+		if (!alreadyHasProjectLead) {
+			Employee tempEmployee = new Employee("test_temp_employee_task_creation");
+			holder.app.addEmployee(tempEmployee);
+			holder.app.signIn(tempEmployee.getId());
+			holder.project.assignProjectLeader(tempEmployee);
+		}
+
 		holder.project.assignTaskToEmployee(holder.employee, holder.task);
+
+		// Revert to cached state
+		if (!alreadyHasProjectLead) {
+			holder.app.signIn(currentSignedIn.getId());
+			holder.project.removeProjectLeader();
+			holder.project.assignProjectLeader(currentProjectLead);
+		}
 	}
 
 	@When("the employee inputs {double} hours worked on the task")
