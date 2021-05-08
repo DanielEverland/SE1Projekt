@@ -28,7 +28,7 @@ Scenario: Project leader edits the start date of a task
 	When the employee edits start date to "01/12/2000" for task 
 	Then A task with start date "01/12/2000" exists 
 	And the task with start date "31/12/1998" does not exist 
-	
+
 Scenario: Project leader edits the end date of a task 
 	Given an employee with id "test" exists in the application 
 	And the employee is signed in 
@@ -102,3 +102,23 @@ Scenario: Project leader edits every aspect of task
 	And A task with description "New Description" exists
 	And A task with start date "01/12/2000" exists
 	And A task with end date "01/12/2001" exists 
+
+Scenario: Project leader adds to expected time
+	Given an employee with id "test" exists in the application
+	And the employee is signed in 
+	And the employee is a project leader 
+	And A task with title "Test Title", description "Test Description", start date "31/12/1998" and end date "31/12/2000" exists 
+	And the task has 3.0 hours of expected time 
+	When the employee adds 5.0 hours to the expected time 
+	Then the task now has 8.0 hours of expected time 
+	
+Scenario: Project leader adds invalid time to expected time
+	Given an employee with id "test" exists in the application
+	And the employee is signed in 
+	And the employee is a project leader 
+	And A task with title "Test Title", description "Test Description", start date "31/12/1998" and end date "31/12/2000" exists 
+	And the task has 3.0 hours of expected time 
+	When the employee adds 0.0 hours to the expected time 
+	Then the employee cannot add 0.0 hours to the expected time
+	And the task now has 3.0 hours of expected time
+	And the error message "Expected time must be above 0.0 hours" is given
