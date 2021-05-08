@@ -11,7 +11,7 @@ Request a list of available employees between invalid dates
 Scenario: (White Box B)
 Request a list of available employees from an employee with maximum workload of 0
   Given an employee with id "test" and maxTasks 0 exists in the application
-  When a list of available employees is requested from date "10/01/2020" to date "20/01/2020"
+  When the employee's availability is checked from date "10/01/2020" to date "20/01/2020"
   Then the employee is not available
 
 Scenario: (White Box C)
@@ -44,20 +44,26 @@ Request a list of available employees from an employee assigned a non-blocking, 
 Scenario: (White Box G)
 Request a list of available employees from an employee with 1 task equal to their maximum workload
   Given an employee with id "test" and maxTasks 1 exists in the application
-  And the employee has an existing task with title "Task title", description "Task description", start date "31/12/1998" and end date "31/12/2000"
+  And the employee is signed in
+  And A task with title "Task title", description "Task description", start date "31/12/1998" and end date "31/12/2000" exists
+  And the task is assigned to the employee
   When the employee's availability is checked from date "31/12/1998" to date "31/12/2000"
   Then the employee is not available
 
 Scenario: (White Box H)
 Request a list of available employees from an employee with a single-day task
   Given an employee with id "test" exists in the application
-  And the employee has an existing task with title "Task title", description "Task description", start date "01/01/2020" and end date "01/01/2020"
+  And the employee is signed in
+  And A task with title "Task title", description "Task description", start date "01/01/2020" and end date "01/01/2020" exists
+  And the task is assigned to the employee
   When the employee's availability is checked from date "31/12/2019" to date "31/12/2020"
   Then the employee is available
 
 Scenario: (White Box I)
 Request a list of available employees from an employee with a task beginning but not ending in the requested date interval
   Given an employee with id "test" exists in the application
-  And the employee has an existing task with title "Task title", description "Task description", start date "01/01/2020" and end date "01/12/2020"
+  And the employee is signed in
+  And A task with title "Task title", description "Task description", start date "01/01/2020" and end date "01/12/2020" exists
+  And the task is assigned to the employee
   When the employee's availability is checked from date "31/12/2019" to date "01/02/2020"
   Then the employee is available
