@@ -10,6 +10,7 @@ public class Main {
 	private static Scanner inputScanner;
 	private static Project selectedProject;
 	private static Application currentApplication;
+	private static Activity selectedActivity;
 
 	public static void main(String[] arguments) {
 		inputScanner = new Scanner(System.in);
@@ -17,6 +18,14 @@ public class Main {
 		currentApplication = new Application();
 		while (mainLoop()) {
 		}
+	}
+	
+	public static void setSelectedActivity(Activity activity) {
+		selectedActivity = activity;
+	}
+	
+	public static Activity getSelectedActivity() {
+		return selectedActivity;
 	}
 	
 	public static void setUserInterface(UserInterface newUserInterface) {
