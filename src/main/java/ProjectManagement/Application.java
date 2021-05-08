@@ -124,20 +124,19 @@ public class Application {
 //	Method for finding all projects in the application with String in title
 	public ArrayList<Project> findProjectsContainingTitle(String title) {
 
-		if (!isSignedIn()) {
-			ErrorMessageHandler.addErrorMessage("Employee must be signed in");
-			return null;
-		}
 
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
-
-		for (Project project : projects.values()) {
-			if (project.getTitle().contains(title)) {
-				foundProjects.add(project);
+		if (isSignedIn()) {
+			for (Project project : projects.values()) {
+				if (project.getTitle().contains(title)) {
+					foundProjects.add(project);
+				}
 			}
+			return foundProjects;
 		}
-		return foundProjects;
 
+		ErrorMessageHandler.addErrorMessage("Employee must be signed in");
+		return null;
 	}
 
 //	Method for finding a specific project by title
@@ -150,7 +149,7 @@ public class Application {
 			ErrorMessageHandler.addErrorMessage("Employee must be signed in");
 			return null;
 		}
-		return searchSpecificTitle(title).get(0); 
+		return searchSpecificTitle(title).get(0);
 	}
 
 	private ArrayList<Project> searchSpecificTitle(String title) {
