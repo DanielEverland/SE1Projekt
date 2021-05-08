@@ -88,11 +88,6 @@ public class EmployeeSteps {
 		assertTrue(employee.getTasks().isEmpty());
 	}
 
-	@Then("the employee get the error message {string}")
-	public void the_employee_get_the_error_message(String errorMessage) throws AuthException {
-		assertEquals(errorMessage, holder.errorMessage);
-	}
-
 	@When("the employee marks the task as complete")
 	public void the_employee_marks_the_task_as_complete() {
 		holder.task.markAsCompleted();
