@@ -101,7 +101,11 @@ public class Application {
 
 	public List<Task> searchAssignedTasksForEmployee(String id) {
 		Employee employeeToSearch = getEmployees().get(id);
-		return employeeToSearch.getTasks();
+		List<Task> tasks = employeeToSearch.getTasks();
+		if (tasks.isEmpty()) {
+			ErrorMessageHandler.addErrorMessage("No assigned tasks for this identification code");
+		}
+		return tasks;
 	}
 
 	public Map<String, Employee> getEmployees() {
