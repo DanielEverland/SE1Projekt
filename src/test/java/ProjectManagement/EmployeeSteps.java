@@ -18,8 +18,6 @@ public class EmployeeSteps {
 
 	private MainHolder holder;
 	private List<Task> assignedTasksForEmployee;
-	private Duration duration;
-	private Date date;
 
 	public EmployeeSteps(MainHolder holder) {
 		this.holder = holder;
@@ -99,5 +97,4 @@ public class EmployeeSteps {
 	public void the_task_is_marked_as_completed() {
 		assertTrue(holder.task.isCompleted());
 	}
-
 }
