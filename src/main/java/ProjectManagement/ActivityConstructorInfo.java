@@ -26,7 +26,7 @@ public class ActivityConstructorInfo {
 	}
 	
 	public boolean datesValid() {
-		return endDate.afterOrEqual(startDate);
+		return startDate.hasSpecifiedDate() && endDate.hasSpecifiedDate() && endDate.afterOrEqual(startDate);
 	}
 
 	private boolean isASCIIString(String input) {

@@ -97,4 +97,9 @@ public class DateSteps {
 	public void their_dates_are_before_or_equal() {
 		assertTrue(currentDate.beforeOrEqual(anotherDate));
 	}
+	
+	@Then("the current date is specified")
+	public void the_current_date_is_specified() {
+	    assertTrue(currentDate.hasSpecifiedDate());
+	}
 }
