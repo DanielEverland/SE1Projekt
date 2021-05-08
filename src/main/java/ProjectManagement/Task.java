@@ -1,5 +1,7 @@
 package ProjectManagement;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,5 +77,12 @@ public class Task extends Activity {
 
 	public boolean isCompleted() {
 		return completed;
+	}
+
+	public Duration getLoggedWorkHours(Employee employee) {
+		assertNotNull(employee);
+		
+		return minutesWorked.get(employee);
+		
 	}
 }
