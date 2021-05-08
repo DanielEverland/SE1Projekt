@@ -1,6 +1,6 @@
 package ProjectManagement;
 
-public class Activity {
+public abstract class Activity {
 	protected String title;
 	protected boolean isBlocking;
 	protected Date startDate;
