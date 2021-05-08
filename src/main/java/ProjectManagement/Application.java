@@ -124,7 +124,6 @@ public class Application {
 
 	}
 
-//	Method for finding all projects in the application with String in title
 	public ArrayList<Project> findProjectsContainingTitle(String title) {
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
 
@@ -136,40 +135,36 @@ public class Application {
 			}
 			return foundProjects;
 		}
-
 		ErrorMessageHandler.addErrorMessage("Employee must be signed in");
 		return null;
+
 	}
 
-//	Method for finding a specific project by title
 	public Project getSpecificProjectByTitle(String title) {
+		assert !multipleProjectsWithSameTitle(projects.values(), title);
 
-//		Make sure there is no more than one project with the title in the application
-		assert !multipleProjectsWithSameTitle(searchSpecificTitle(title), title);
-
-		if (!isSignedIn()) {
-			ErrorMessageHandler.addErrorMessage("Employee must be signed in");
-			return null;
+		if (isSignedIn()) {
+			for (Project project : projects.values()) {
+				if (project.getTitle().equals(title)) {
+					return project;
+				}
+			}
 		}
-		return searchSpecificTitle(title).get(0);
+		ErrorMessageHandler.addErrorMessage("Employee must be signed in");
+		return null;
+
 	}
 
-//	Method for finding all projects with exact title
-	private ArrayList<Project> searchSpecificTitle(String title) {
+	private boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
+		assert !projects.isEmpty();
+
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
-		for (Project project : projects.values()) {
+		for (Project project : projects) {
 			if (project.getTitle().equals(title)) {
 				foundProjects.add(project);
 			}
 		}
-		return foundProjects;
-	}
-
-//	Method for checking if there is more than one project with exact title
-	private boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
-		assert !projects.isEmpty();
-
-		boolean moreThanOneProjectFound = projects.size() > 1;
+		boolean moreThanOneProjectFound = foundProjects.size() > 1;
 		if (moreThanOneProjectFound) {
 			ErrorMessageHandler.addErrorMessage("More than one project with the title \"" + title + "\" found");
 		}
@@ -177,7 +172,7 @@ public class Application {
 	}
 
 	public boolean multipleProjectsContainingTitleFound(String title) {
-		assert findProjectsContainingTitle(title).size() > 1;
+		assert projects.size() > 1;
 
 		boolean multipleProjectsFound = true;
 		ErrorMessageHandler.addErrorMessage("More than one project with the title \"" + title + "\" has been found");
