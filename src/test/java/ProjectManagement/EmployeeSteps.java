@@ -18,6 +18,8 @@ public class EmployeeSteps {
 
 	private MainHolder holder;
 	private List<Task> assignedTasksForEmployee;
+	private Duration duration;
+	private Date date;
 
 	public EmployeeSteps(MainHolder holder) {
 		this.holder = holder;
@@ -88,11 +90,6 @@ public class EmployeeSteps {
 		assertTrue(employee.getTasks().isEmpty());
 	}
 
-	@Then("the employee get the error message {string}")
-	public void the_employee_get_the_error_message(String errorMessage) throws AuthException {
-		assertEquals(errorMessage, holder.errorMessage);
-	}
-
 	@When("the employee marks the task as complete")
 	public void the_employee_marks_the_task_as_complete() {
 		holder.task.markAsCompleted();
@@ -102,4 +99,16 @@ public class EmployeeSteps {
 	public void the_task_is_marked_as_completed() {
 		assertTrue(holder.task.isCompleted());
 	}
+	
+	@When("the employee clicks to see number of hours worked on the task")
+	public void the_employee_clicks_to_see_number_of_hours_worked_on_the_task() {
+		duration = holder.task.getLoggedWorkHours(holder.employee);
+	}
+
+	@Then("the employee can see {double} hours registered to the task")
+	public void the_employee_can_see_hours_registered_to_the_task(Double hours) {
+		assertThat(duration.GetHoursPassed(), is(equalTo(hours)));
+	}
+
+
 }
