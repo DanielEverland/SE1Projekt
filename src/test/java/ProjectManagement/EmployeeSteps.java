@@ -17,41 +17,32 @@ import io.cucumber.java.en.When;
 public class EmployeeSteps {
 
 	private MainHolder holder;
-	private Task task;
 	private List<Task> assignedTasksForEmployee;
 
 	public EmployeeSteps(MainHolder holder) {
 		this.holder = holder;
 	}
-
-	@Given("the employee has an existing task with title {string}, description {string}, start date {string} and end date {string}")
-	public void theEmployeeHasAnExistingTaskWithTitleDescriptionStartDateAndEndDate(String title, String description,
-			String startDateString, String endDateString) {
-
-		Date startDate = Date.FromString(startDateString);
-		Date endDate = Date.FromString(endDateString);
-
-		holder.project.createTask(new TaskConstructorInfo(title, description, startDate, endDate));
-
-		task = holder.project.findTask(title, description, startDate, endDate);
-		holder.project.assignTaskToEmployee(holder.employee, task);
+	
+	@Given("the task is assigned to the employee")
+	public void the_employee_is_assigned_to_the_task() {
+		holder.project.assignTaskToEmployee(holder.employee, holder.task);
 	}
 
 	@When("the employee inputs {double} hours worked on the task")
 	public void the_employee_inputs_hours_worked_on_the_task(Double hoursWorked) {
-		task.logWorkHours(holder.employee, hoursWorked);
+		holder.task.logWorkHours(holder.employee, hoursWorked);
 	}
 
 	@Then("{double} hours is registered as worked on the task by the employee")
 	public void hours_is_registered_as_worked_on_the_task(Double hoursWorked) {
-		Map<Employee, Duration> minutesWorked = task.getMinutesWorked();
+		Map<Employee, Duration> minutesWorked = holder.task.getMinutesWorked();
 		Duration duration = minutesWorked.get(holder.employee);
 		assertThat(duration.GetHoursPassed(), is(equalTo(hoursWorked)));
 	}
 
 	@Given("the task has expected time of {double} hours")
 	public void the_task_has_expected_time_of_hours(Double expectedHours) {
-		task.setExpectedTime(expectedHours);
+		holder.task.setExpectedTime(expectedHours);
 	}
 
 	@Given("worked time of {double} hours is larger than expected time of {double} hours")
@@ -83,11 +74,11 @@ public class EmployeeSteps {
 
 	@When("the employee marks the task as complete")
 	public void the_employee_marks_the_task_as_complete() {
-		task.markAsCompleted();
+		holder.task.markAsCompleted();
 	}
 
 	@Then("the task is marked as completed")
 	public void the_task_is_marked_as_completed() {
-		assertTrue(task.isCompleted());
+		assertTrue(holder.task.isCompleted());
 	}
 }

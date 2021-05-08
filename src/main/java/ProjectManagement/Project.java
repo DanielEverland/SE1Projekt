@@ -15,7 +15,7 @@ public class Project {
 	private ArrayList<Task> tasks;
 	private Employee projectLead;
 	private boolean completed;
-	private Application owner;
+	private Application application;
 
 	public Project(int id, String title, Application owner) {
 		Assert.assertFalse("Id must be a non-negative integer", id < 0);
@@ -25,7 +25,7 @@ public class Project {
 		year = Calendar.getInstance().get(Calendar.YEAR);
 		this.id = id;
 		this.title = title;
-		this.owner = owner;
+		this.application = owner;
 		tasks = new ArrayList<Task>();
 	}
 
@@ -43,6 +43,10 @@ public class Project {
 
 	private String idToString() {
 		return String.format("%0" + serialDigits + "d", id);
+	}
+	
+	public void removeProjectLeader() {
+		projectLead = null;
 	}
 
 	public void assignProjectLeader(Employee newProjectLeader) {
@@ -66,6 +70,21 @@ public class Project {
 	public void createTask(TaskConstructorInfo info) {
 		if (!info.isValid()) {
 			ErrorMessageHandler.addErrorMessage("Constructor info contains invalid information");
+			return;
+		}
+		
+		if(projectLead == null) {
+			ErrorMessageHandler.addErrorMessage("No project lead has been assigned to this project");
+			return;
+		}
+		
+		if(!application.isSignedIn()) {
+			ErrorMessageHandler.addErrorMessage("Cannot create tasks when not signed in");
+			return;
+		}
+		
+		if(application.getSignedInEmployee() != projectLead) {
+			ErrorMessageHandler.addErrorMessage("Currently signed in employee is not project leader");
 			return;
 		}
 

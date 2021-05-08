@@ -88,7 +88,8 @@ Scenario: Employee edits the expected time of a task
 	Then the error message "Must be project leader" is given
 
 Scenario: Project leader edits every aspect of task 
-	Given an employee with id "test" exists in the application 
+	Given an employee with id "test" exists in the application
+	And the employee is signed in 
 	And the employee is a project leader 
 	And A task with title "Test Title", description "Test Description", start date "31/12/1998" and end date "31/12/2000" exists 
 	And the task has 3.0 hours of expected time 

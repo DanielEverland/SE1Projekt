@@ -23,4 +23,5 @@ public class MainHolder {
 	public Employee employee;
 	public Project project;
 	public String errorMessage;
+	public Task task;
 }
