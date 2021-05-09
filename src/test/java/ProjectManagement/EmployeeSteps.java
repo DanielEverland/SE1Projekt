@@ -1,26 +1,103 @@
 package ProjectManagement;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.junit.Assert.assertEquals;
 
 import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.equalTo;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.hamcrest.Matcher;
 
 public class EmployeeSteps {
 
 	private MainHolder holder;
 	private List<Task> assignedTasksForEmployee;
+	private List<Activity> assignedActivities;
 
 	public EmployeeSteps(MainHolder holder) {
 		this.holder = holder;
+	}
+
+	@When("an employee is created with id {string}")
+	public void an_employee_is_created_with_id(String id) {
+		holder.employee = new Employee(id);
+	}
+
+	@When("an employee is created with id {string} and max tasks {int}")
+	public void an_employee_is_created_with_id_and_max_tasks(String id, int maxTasks) {
+		holder.employee = new Employee(id, maxTasks);
+	}
+
+	@Then("the employee has id {string} and maxTasks {int}")
+	public void the_employee_has_id_and_max_tasks(String id, Integer maxTasks) {
+		assertThat(holder.employee, hasProperty("id", is(id)));
+		assertThat(holder.employee, hasProperty("maxTasks", is(maxTasks)));
+	}
+
+	@When("a list of the employee's assigned activities is requested")
+	public void a_list_of_the_employee_s_assigned_activities_is_requested() {
+		assignedActivities = holder.employee.getAssignedActivites();
+	}
+
+	@Then("the list has {int} elements")
+	public void the_list_has_elements(Integer count) {
+		assertThat(assignedActivities.size(), is(equalTo(count)));
+	}
+
+	@Then("the list contains a task with title {string}, description {string}, start date {string} and end date {string}")
+	public void the_list_contains_a_task_with_title_description_start_date_and_end_date(String title, String description, String startDate, String endDate) {
+		boolean hasTask = false;
+		for (Activity activity : assignedActivities) {
+			if (activity instanceof Task) {
+				Task task = (Task)activity;
+				if (task.getTitle().equals(title) && task.getDescription().equals(description)
+				    && task.getStartDate().equals(Date.FromString(startDate)) && task.getEndDate().equals(Date.FromString(endDate))) {
+					hasTask = true;
+					break;
+				}
+			}
+		}
+
+		assertTrue(hasTask);
+	}
+
+	@Then("the list contains a vacation from {string} to {string}")
+	public void the_list_contains_a_vacation_from_to(String startDate, String endDate) {
+		boolean hasVacation = false;
+		for (Activity activity : assignedActivities) {
+			if (activity instanceof Vacation) {
+				Vacation vacation = (Vacation) activity;
+				if (vacation.getStartDate().equals(Date.FromString(startDate))
+					&& vacation.getEndDate().equals(Date.FromString(endDate))) {
+					hasVacation = true;
+					break;
+				}
+			}
+		}
+
+		assertTrue(hasVacation);
+	}
+
+	@When("the same vacation is attempted assigned to the employee")
+	public void the_same_vacation_is_attempted_assigned_to_the_employee() {
+		Vacation vacation = null;
+		for (Activity activity : holder.employee.getEvents()) {
+			if (activity instanceof Vacation) {
+				vacation = (Vacation)activity;
+			}
+		}
+
+		holder.employee.assignToActivity(vacation);
 	}
 
 	@Given("the task is assigned to the employee")

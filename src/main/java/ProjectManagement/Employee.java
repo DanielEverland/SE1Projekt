@@ -27,6 +27,10 @@ public class Employee {
 		return id;
 	}
 
+	public int getMaxTasks() {
+		return maxTasks;
+	}
+
 	public List<Activity> getAssignedActivites() {
 		return assignedActivites;
 	}
@@ -55,7 +59,8 @@ public class Employee {
 
 	public void assignToActivity(Activity activity) {
 		if (assignedActivites.contains(activity)) {
-			ErrorMessageHandler.addErrorMessage("The task is already assigned to employee");
+			ErrorMessageHandler.addErrorMessage("The activity is already assigned to employee");
+			return;
 		}
 		assert !assignedActivites.contains(activity);
 
