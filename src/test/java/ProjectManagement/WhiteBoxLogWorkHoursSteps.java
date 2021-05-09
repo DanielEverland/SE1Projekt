@@ -16,12 +16,12 @@ public class WhiteBoxLogWorkHoursSteps {
 
 	@Given("the employee has not worked on the task before")
 	public void the_employee_has_not_worked_on_the_task_before() {
-		holder.task.getMinutesWorked().clear();
+		holder.task.getDurationWorked().clear();
 	}
 	
 	@Given("the employee has worked on the task before")
 	public void the_employee_has_worked_on_the_task_before() {
-		holder.task.getMinutesWorked().put(holder.employee, new Duration());
+		holder.task.getDurationWorked().put(holder.employee, new Duration());
 	}
 
 	@When("the employee inputs {double} hours as worked on the task")
