@@ -38,6 +38,7 @@ public class ActivityManagementUserInterface implements UserInterface {
 			
 			if(Main.getSelectedActivity() != null && Main.getSelectedActivity() instanceof Task) {
 				commands.add(new GenericCommand("Assign employee to selected task", () -> Main.setUserInterface(new AssignTaskUserInterface(this))));
+				commands.add(new GenericCommand("Edit current activity", () -> Main.setUserInterface(new EditTaskUserInterface(this))));
 			}
 		}
 		
