@@ -15,7 +15,7 @@ public class AssignExpectedTimeToTaskSteps {
 
 	@Given("the project with title {string} contains a task with name {string}, description {string}, start date {string} and end date {string}")
 	public void the_project_with_title_contains_a_task_with_name_description_start_date_and_end_date(String title, String taskName,
-			String description, String startDate, String endDate) throws AuthException {
+			String description, String startDate, String endDate) {
 		TaskConstructorInfo taskInfo = new TaskConstructorInfo(taskName, description, Date.FromString(startDate),
 				Date.FromString(endDate));
 		holder.project.createTask(taskInfo);

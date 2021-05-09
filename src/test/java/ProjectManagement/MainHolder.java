@@ -2,7 +2,7 @@ package ProjectManagement;
 
 public class MainHolder {
 
-	public MainHolder() throws AuthException {
+	public MainHolder() {
 		app = new Application();
 
 		// Remove this, maybe? But then all the scenarios need to create projects

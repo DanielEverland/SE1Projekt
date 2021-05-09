@@ -14,7 +14,7 @@ public class AssignNewProjectLeader {
 	}
 
 	@Given("The project with title {string} exists")
-	public void the_project_with_title_exists(String title) throws AuthException {
+	public void the_project_with_title_exists(String title) {
 		holder.app.createProject(title);
 	}
 
