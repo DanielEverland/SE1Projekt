@@ -96,6 +96,7 @@ public class Project {
 	}
 
 	public void assignTaskToEmployee(Employee employee, Task task) {
+
 		if (!isProjectLeader(application.getSignedInEmployee())) {
 			ErrorMessageHandler.addErrorMessage("Currently signed in employee is not project leader");
 			return;
@@ -115,7 +116,8 @@ public class Project {
 		}
 
 		assert !employee.isAvailable((task)) || employee.getTasks().stream()
-				.anyMatch(m -> m.getTitle().contentEquals(task.getTitle()) && m.getDescription().contentEquals(task.getDescription())
+				.anyMatch(m -> m.getTitle().contentEquals(task.getTitle())
+						&& m.getDescription().contentEquals(task.getDescription())
 						&& m.getStartDate().equals(task.getStartDate()) && m.getEndDate().equals(task.getEndDate()));
 	}
 
@@ -132,18 +134,21 @@ public class Project {
 	}
 
 	public Task findTask(String title, String description, Date startDate, Date endDate) {
-		assert title != null && description != null && startDate != null && endDate != null : "Pre condition";
-		
-		if (tasks.isEmpty()) {
+		if (title == null || description == null || startDate == null || endDate == null) { 
+			return null;
+		}
+		assert title != null && description != null && startDate != null && endDate != null : "Pre condition"; 
+
+		if (tasks.isEmpty()) { 
 			ErrorMessageHandler.addErrorMessage("No tasks assigned to the project");
 			return null;
 		}
-		
-		for (Task task : tasks) {
+
+		for (Task task : tasks) { 
 			if (task.getTitle().equals(title) && 
-					task.getDescription().equals(description) &&
+					task.getDescription().equals(description) && 
 					task.getStartDate().equals(startDate) && 
-					task.getEndDate().equals(endDate)) {
+					task.getEndDate().equals(endDate)) { 
 				return task;
 			}
 		}
@@ -153,8 +158,8 @@ public class Project {
 	public List<Employee> getAssignedEmployees(Task task) {
 		List<Employee> assignedEmployees = new ArrayList<Employee>();
 
-		for(Employee employee : application.getEmployees().values()) {
-			if(employee.getTasks().contains(task))
+		for (Employee employee : application.getEmployees().values()) {
+			if (employee.getTasks().contains(task))
 				assignedEmployees.add(employee);
 		}
 
