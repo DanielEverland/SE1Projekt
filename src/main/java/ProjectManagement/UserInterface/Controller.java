@@ -1,59 +1,29 @@
-package ProjectManagement;
+package ProjectManagement.UserInterface;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import ProjectManagement.UserInterface.*;
+import ProjectManagement.Activity;
+import ProjectManagement.Application;
+import ProjectManagement.Project;
 
-public class Main {
+public class Controller {
 
-	private static UserInterface currentUserInterface;
+	private UserInterface currentUserInterface;
+	private Application currentApplication;
+	private Activity selectedActivity;
 	private static Scanner inputScanner;
 	private static Project selectedProject;
-	private static Application currentApplication;
-	private static Activity selectedActivity;
 	private static Pattern pattern;
-
-	public static void main(String[] arguments) {
+	
+	public Controller() {
+		setDefaultUserInterface();
 		pattern = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"|'([^']*)'");
 		inputScanner = new Scanner(System.in);
-		setDefaultUserInterface();
 		currentApplication = new Application();
-		while (mainLoop()) {
-		}
-	}
-	
-	public static void setSelectedActivity(Activity activity) {
-		selectedActivity = activity;
-	}
-	
-	public static Activity getSelectedActivity() {
-		return selectedActivity;
-	}
-	
-	public static void setUserInterface(UserInterface newUserInterface) {
-		assert newUserInterface != null;
-
-		currentUserInterface = newUserInterface;
-	}
-	
-	public static Application getCurrentApplication() {
-		return currentApplication;
-	}
-
-	public static void setPreviousUserInterface() {
-		setUserInterface(currentUserInterface.getParent());		
-	}
-	
-	public static void setDefaultUserInterface() {
-		currentUserInterface = new DefaultUserInterface();
-	}
-	
-	public static void selectProject(Project toSelect) {
-		assert toSelect != null;
-		
-		selectedProject = toSelect;
 	}
 	
 	public static String getArgumentsString(UserCommand command) {
@@ -82,11 +52,7 @@ public class Main {
 		return argumentsString;
 	}
 	
-	public static Project getSelectedProject() {
-		return selectedProject;
-	}
-
-	private static boolean mainLoop() {
+	public boolean runMainLoop() {
 		if (currentApplication.getIsQuitting())
 			return false;
 		
@@ -113,16 +79,40 @@ public class Main {
 
 		return true;
 	}
-
-	private static void printAllCommands() {
-		List<UserCommand> allCurrentCommands = new ArrayList<UserCommand>();
-		currentUserInterface.PopulateCommands(allCurrentCommands);
-		for (int i = 0; i < allCurrentCommands.size(); i++) {
-			System.out.println(String.format("[%d] %s %s", i + 1, allCurrentCommands.get(i).getDisplayName(), getArgumentsString(allCurrentCommands.get(i))));
-		}
+	
+	public void setSelectedActivity(Activity activity) {
+		selectedActivity = activity;
 	}
-
-	private static List<String> stringToArguments(String inputString) {
+	
+	public Activity getSelectedActivity() {
+		return selectedActivity;
+	}
+	
+	public void setUserInterface(UserInterface newUserInterface) {
+		assert newUserInterface != null;
+	
+		currentUserInterface = newUserInterface;
+	}
+	
+	public Application getCurrentApplication() {
+		return currentApplication;
+	}
+	
+	public void setPreviousUserInterface() {
+		setUserInterface(currentUserInterface.getParent());		
+	}
+	
+	public void setDefaultUserInterface() {
+		currentUserInterface = new DefaultUserInterface(this);
+	}
+	
+	public void selectProject(Project toSelect) {
+		assert toSelect != null;
+		
+		selectedProject = toSelect;
+	}
+	
+	private List<String> stringToArguments(String inputString) {
 		ArrayList<String> arguments = new ArrayList<String>();
 		Matcher match = pattern.matcher(inputString);
 		while(match.find()) {
@@ -135,12 +125,24 @@ public class Main {
 		}
 		return arguments;
 	}
+	
+	public Project getSelectedProject() {
+		return selectedProject;
+	}
 
-	private static int tryParseCommandSelection(List<String> args) {
+	private void printAllCommands() {
+		List<UserCommand> allCurrentCommands = new ArrayList<UserCommand>();
+		currentUserInterface.PopulateCommands(allCurrentCommands);
+		for (int i = 0; i < allCurrentCommands.size(); i++) {
+			System.out.println(String.format("[%d] %s %s", i + 1, allCurrentCommands.get(i).getDisplayName(), getArgumentsString(allCurrentCommands.get(i))));
+		}
+	}
+
+	private int tryParseCommandSelection(List<String> args) {
 		return Integer.parseInt(args.get(0));
 	}
 
-	private static void executeCommand(int commandIndex, List<String> args) {
+	private void executeCommand(int commandIndex, List<String> args) {
 		List<UserCommand> allCurrentCommands = new ArrayList<UserCommand>();
 		currentUserInterface.PopulateCommands(allCurrentCommands);
 		int idx = commandIndex - 1;
@@ -156,7 +158,7 @@ public class Main {
 		System.out.println();
 	}
 
-	private static List<String> removeCommandIndexFromArguments(List<String> args) {
+	private List<String> removeCommandIndexFromArguments(List<String> args) {
 		// Remove the index used to call the command
 		if (args.size() > 1) {
 			args = args.subList(1, args.size());

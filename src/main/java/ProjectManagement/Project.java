@@ -132,6 +132,13 @@ public class Project {
 	}
 
 	public Task findTask(String title, String description, Date startDate, Date endDate) {
+		
+		if (tasks.isEmpty()) {
+			ErrorMessageHandler.addErrorMessage("No tasks assigned to the project");
+			return null;
+		}
+		assert(!tasks.isEmpty());
+		
 		for (Task task : tasks) {
 			if (task.getTitle().equals(title) && task.getDescription().equals(description)
 					&& task.getStartDate().equals(startDate) && task.getEndDate().equals(endDate)) {
