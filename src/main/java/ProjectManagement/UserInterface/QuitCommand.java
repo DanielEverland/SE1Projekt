@@ -2,13 +2,17 @@ package ProjectManagement.UserInterface;
 
 import java.util.List;
 
-import ProjectManagement.Main;
-
 public class QuitCommand implements UserCommand {
 
-	@Override
+	private Controller controller;
+	
+	public QuitCommand(Controller controller) {
+		this.controller = controller;
+	}
+	
+ 	@Override
 	public void execute(List<String> args) {
-		Main.getCurrentApplication().quit();
+		controller.getCurrentApplication().quit();
 	}
 
 	@Override

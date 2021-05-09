@@ -5,7 +5,6 @@ import java.util.List;
 import ProjectManagement.ActivityConstructorInfo;
 import ProjectManagement.Date;
 import ProjectManagement.ErrorMessageHandler;
-import ProjectManagement.Main;
 
 public abstract class CreateActivityUserInterface implements UserInterface {
 
@@ -45,9 +44,9 @@ public abstract class CreateActivityUserInterface implements UserInterface {
 		commands.add(new GenericCommand("Create", () ->
 		{
 			create();
-			Main.setPreviousUserInterface();
+			getController().setPreviousUserInterface();
 		}));
-		commands.add(new ReturnCommand());
+		commands.add(new ReturnCommand(getController()));
 	}
 	
 	protected boolean shouldDisplayTitleDescription() {
@@ -70,6 +69,11 @@ public abstract class CreateActivityUserInterface implements UserInterface {
 		}
 		
 		return false;
+	}
+	
+	@Override
+	public Controller getController() {
+		return getParent().getController();
 	}
 	
 	protected abstract void populateAdditionalCommands(List<UserCommand> commands);

@@ -4,7 +4,6 @@ import java.util.List;
 
 import ProjectManagement.Activity;
 import ProjectManagement.Employee;
-import ProjectManagement.Main;
 import ProjectManagement.Task;
 
 public class LogHoursWorkedUserInterface implements UserInterface {
@@ -27,16 +26,21 @@ public class LogHoursWorkedUserInterface implements UserInterface {
 
 	@Override
 	public void PopulateCommands(List<UserCommand> commands) {
-		Employee signedInEmployee = Main.getCurrentApplication().getSignedInEmployee();
+		Employee signedInEmployee = getController().getCurrentApplication().getSignedInEmployee();
 		List<Activity> assignedActivities = signedInEmployee.getAssignedActivities();
-		
+
 		for(int i = 0; i < assignedActivities.size(); i++) {
 			Activity currActivity = assignedActivities.get(i);
 			if(currActivity instanceof Task) {
-				commands.add(new LogHoursCommand((Task)currActivity));
+				commands.add(new LogHoursCommand((Task)currActivity, getController()));
 			}
 		}
 		
-		commands.add(new ReturnCommand());
+		commands.add(new ReturnCommand(getController()));
+	}
+
+	@Override
+	public Controller getController() {
+		return getParent().getController();
 	}
 }
