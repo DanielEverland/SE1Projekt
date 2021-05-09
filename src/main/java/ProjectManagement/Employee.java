@@ -65,6 +65,9 @@ public class Employee {
 	}
 
 	public boolean isAvailable(Date startDate, Date endDate) {
+		if (endDate.before(startDate)) {
+			throw new IllegalArgumentException("Start date cannot be greater than end date");
+		}
 		assert !endDate.before(startDate);
 
 		// Special case: If employee isn't allowed to have tasks, they are always unavailable
