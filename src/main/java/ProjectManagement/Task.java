@@ -29,24 +29,24 @@ public class Task extends Activity {
 			ErrorMessageHandler.addErrorMessage("Input must be greater than 0");
 			return;
 		}
-		assert hoursWorked > 0 : "Pre condition"; 
-		if (!durationWorked.containsKey(employee)) { 
+		assert hoursWorked > 0 : "Pre condition";
+		if (!durationWorked.containsKey(employee)) {
 			durationWorked.put(employee, new Duration());
 		}
 		assert durationWorked.containsKey(employee) : "Pre condition";
 
 		double totalDurationBefore = getTotalDurationWorked();
-		durationWorked.get(employee).addHours(hoursWorked); 
+		durationWorked.get(employee).addHours(hoursWorked);
 		double totalDuration = getTotalDurationWorked();
 
-		boolean isDifferentEnough = totalDuration - totalDurationBefore >= 0.00001;
-		if (!isDifferentEnough) { 
+		boolean isDifferentEnough = Math.abs(totalDuration - (totalDurationBefore + hoursWorked)) <= 0.00001;
+		if (!isDifferentEnough) {
 			ErrorMessageHandler.addErrorMessage("Hours has not been logged");
 			return;
 		}
-		assert isDifferentEnough : "Post condition"; 
+		assert isDifferentEnough : "Post condition";
 
-		if (totalDuration > expectedTime && expectedTime != 0) { 
+		if (totalDuration > expectedTime && expectedTime != 0) {
 			ErrorMessageHandler.addErrorMessage("Too much time spent on task");
 		}
 
