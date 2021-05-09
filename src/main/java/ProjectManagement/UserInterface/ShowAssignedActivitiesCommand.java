@@ -10,11 +10,11 @@ import ProjectManagement.Employee;
 public class ShowAssignedActivitiesCommand implements UserCommand {
 
 	private Controller controller;
-	
+
 	public ShowAssignedActivitiesCommand(Controller controller) {
 		this.controller = controller;
 	}
-	
+
 	@Override
 	public String getDisplayName() {
 		return "Show assigned activities";
@@ -25,7 +25,7 @@ public class ShowAssignedActivitiesCommand implements UserCommand {
 		assert controller.getCurrentApplication().isSignedIn();
 		
 		Employee signedInEmployee = controller.getCurrentApplication().getSignedInEmployee();
-		Collection<Activity> assignedActivities = signedInEmployee.getAssignedActivites();
+		Collection<Activity> assignedActivities = signedInEmployee.getAssignedActivities();
 		
 		System.out.println(String.format("The user \"%s\" have %d activities assigned to them\n", signedInEmployee.getId(), assignedActivities.size()));
 		

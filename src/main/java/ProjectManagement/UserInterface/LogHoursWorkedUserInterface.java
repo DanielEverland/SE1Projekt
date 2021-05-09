@@ -27,8 +27,8 @@ public class LogHoursWorkedUserInterface implements UserInterface {
 	@Override
 	public void PopulateCommands(List<UserCommand> commands) {
 		Employee signedInEmployee = getController().getCurrentApplication().getSignedInEmployee();
-		List<Activity> assignedActivities = signedInEmployee.getAssignedActivites();
-		
+		List<Activity> assignedActivities = signedInEmployee.getAssignedActivities();
+
 		for(int i = 0; i < assignedActivities.size(); i++) {
 			Activity currActivity = assignedActivities.get(i);
 			if(currActivity instanceof Task) {
