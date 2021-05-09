@@ -32,3 +32,9 @@ Scenario: ToString of project matches id and title
 	And the employee is signed in 
 	When the employee creates a new project with title "ProjectName"
 	Then projects toString is "1: ProjectName"
+
+Scenario: Employee successfully creates a new project 
+	Given an employee with id "test" exists in the application 
+	And the employee is signed in 
+	When the employee creates a new project with title "" 
+	Then the error message "Title cannot be empty or contain '|'" is given 
