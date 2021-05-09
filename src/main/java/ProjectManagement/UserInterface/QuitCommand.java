@@ -2,8 +2,6 @@ package ProjectManagement.UserInterface;
 
 import java.util.List;
 
-import ProjectManagement.Main;
-
 public class QuitCommand implements UserCommand {
 
 	private Controller controller;

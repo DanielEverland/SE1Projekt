@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ProjectManagement.Application;
-import ProjectManagement.Main;
 
 public class CreateProjectCommand implements UserCommand {
 	

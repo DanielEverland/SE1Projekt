@@ -4,7 +4,6 @@ import java.util.List;
 
 import ProjectManagement.Date;
 import ProjectManagement.ErrorMessageHandler;
-import ProjectManagement.Main;
 import ProjectManagement.Task;
 
 public class EditTaskUserInterface implements UserInterface {

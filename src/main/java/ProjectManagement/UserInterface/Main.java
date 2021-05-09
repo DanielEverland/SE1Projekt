@@ -1,6 +1,4 @@
-package ProjectManagement;
-
-import ProjectManagement.UserInterface.*;
+package ProjectManagement.UserInterface;
 
 public class Main {
 

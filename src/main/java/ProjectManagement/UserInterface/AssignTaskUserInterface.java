@@ -4,7 +4,6 @@ import java.util.List;
 
 import ProjectManagement.Activity;
 import ProjectManagement.Employee;
-import ProjectManagement.Main;
 import ProjectManagement.Task;
 
 public class AssignTaskUserInterface implements UserInterface {

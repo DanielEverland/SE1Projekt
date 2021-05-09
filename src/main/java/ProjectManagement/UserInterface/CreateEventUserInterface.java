@@ -5,7 +5,6 @@ import java.util.List;
 import ProjectManagement.Activity;
 import ProjectManagement.ActivityConstructorInfo;
 import ProjectManagement.Application;
-import ProjectManagement.Main;
 
 public abstract class CreateEventUserInterface extends CreateActivityUserInterface {
 	

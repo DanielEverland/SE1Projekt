@@ -3,7 +3,6 @@ package ProjectManagement.UserInterface;
 import java.util.List;
 
 import ProjectManagement.Activity;
-import ProjectManagement.Main;
 
 public class SelectActivityUserInterface implements UserInterface {
 

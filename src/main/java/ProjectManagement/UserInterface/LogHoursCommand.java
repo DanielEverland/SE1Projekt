@@ -5,7 +5,6 @@ import java.util.List;
 
 import ProjectManagement.Duration;
 import ProjectManagement.ErrorMessageHandler;
-import ProjectManagement.Main;
 import ProjectManagement.Task;
 
 public class LogHoursCommand implements UserCommand {

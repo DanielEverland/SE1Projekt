@@ -6,7 +6,6 @@ import java.util.List;
 import ProjectManagement.Application;
 import ProjectManagement.Employee;
 import ProjectManagement.ErrorMessageHandler;
-import ProjectManagement.Main;
 
 public class AssignProjectLeaderCommand implements UserCommand {
 

@@ -6,7 +6,6 @@ import java.util.List;
 import ProjectManagement.Activity;
 import ProjectManagement.Application;
 import ProjectManagement.Employee;
-import ProjectManagement.Main;
 
 public class ShowAssignedActivitiesCommand implements UserCommand {
 

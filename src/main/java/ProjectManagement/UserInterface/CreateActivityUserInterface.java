@@ -5,7 +5,6 @@ import java.util.List;
 import ProjectManagement.ActivityConstructorInfo;
 import ProjectManagement.Date;
 import ProjectManagement.ErrorMessageHandler;
-import ProjectManagement.Main;
 
 public abstract class CreateActivityUserInterface implements UserInterface {
 
