@@ -26,3 +26,9 @@ Scenario: More than one project is created
 	Then project with title "Project name 1" is created 
 	When the employee creates a new project with title "Project name 2" 
 	Then project with title "Project name 2" is created
+	
+Scenario: ToString of project matches id and title
+	Given an employee with id "test" exists in the application
+	And the employee is signed in 
+	When the employee creates a new project with title "ProjectName"
+	Then projects toString is "1: ProjectName"
