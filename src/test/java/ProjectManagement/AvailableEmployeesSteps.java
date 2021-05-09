@@ -25,8 +25,8 @@ public class AvailableEmployeesSteps {
     public void the_employee_s_availability_is_checked_from_date_to_date(String startDate, String endDate) {
         try {
             isAvailable = holder.employee.isAvailable(Date.FromString(startDate), Date.FromString(endDate));
-        } catch (java.lang.AssertionError e) {
-            ErrorMessageHandler.addErrorMessage("Assertion triggered");
+        } catch (Exception e) {
+            ErrorMessageHandler.addErrorMessage(e.getMessage());
         }
     }
 

@@ -96,14 +96,27 @@ public class Project {
 	}
 
 	public void assignTaskToEmployee(Employee employee, Task task) {
+		if (!isProjectLeader(application.getSignedInEmployee())) {
+			ErrorMessageHandler.addErrorMessage("Currently signed in employee is not project leader");
+			return;
+		}
+		if (employee == null || task == null) {
+			ErrorMessageHandler.addErrorMessage("Employee being assigned task or assigned task was null");
+			return;
+		}
 		assert isProjectLeader(application.getSignedInEmployee());
-		
+		assert employee != null;
+		assert task != null;
+
 		if (employee.isAvailable(task)) {
 			employee.assignToActivity(task);
 		} else {
 			ErrorMessageHandler.addErrorMessage("Employee is unavailable");
 		}
 
+		assert !employee.isAvailable((task)) || employee.getTasks().stream()
+				.anyMatch(m -> m.getTitle().contentEquals(task.getTitle()) && m.getDescription().contentEquals(task.getDescription())
+						&& m.getStartDate().equals(task.getStartDate()) && m.getEndDate().equals(task.getEndDate()));
 	}
 
 	public boolean isProjectLeader(Employee employee) {
@@ -127,15 +140,15 @@ public class Project {
 		}
 		return null;
 	}
-	
+
 	public List<Employee> getAssignedEmployees(Task task) {
 		List<Employee> assignedEmployees = new ArrayList<Employee>();
-		
+
 		for(Employee employee : application.getEmployees().values()) {
 			if(employee.getTasks().contains(task))
 				assignedEmployees.add(employee);
 		}
-		
+
 		return assignedEmployees;
 	}
 
