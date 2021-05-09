@@ -51,17 +51,17 @@ public class Application {
 		ErrorMessageHandler.addErrorMessage("Employee must be signed in to create project");
 		return -1;
 	}
-	
+
 	public List<Activity> getAllActivities() {
 		List<Activity> allActivities = new ArrayList<Activity>();
-		
-		for(Project project : projects.values()) {
+
+		for (Project project : projects.values()) {
 			allActivities.addAll(project.getTasks());
 		}
-		
-		if(isSignedIn())
+
+		if (isSignedIn())
 			allActivities.addAll(signedInEmployee.getEvents());
-		
+
 		return allActivities;
 	}
 
@@ -101,7 +101,11 @@ public class Application {
 
 	public List<Task> searchAssignedTasksForEmployee(String id) {
 		Employee employeeToSearch = getEmployees().get(id);
-		return employeeToSearch.getTasks();
+		List<Task> tasks = employeeToSearch.getTasks();
+		if (tasks.isEmpty()) {
+			ErrorMessageHandler.addErrorMessage("No assigned tasks for this identification code");
+		}
+		return tasks;
 	}
 
 	public Map<String, Employee> getEmployees() {
@@ -123,20 +127,22 @@ public class Application {
 		return availableEmployees;
 
 	}
-
+	
+//	Method for finding all tasks that contain {String} in title 
 	public ArrayList<Project> findProjectsContainingTitle(String title) {
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
 
-		if (isSignedIn()) {
-			for (Project project : projects.values()) {
-				if (project.getTitle().contains(title)) {
-					foundProjects.add(project);
-				}
-			}
-			return foundProjects;
+		if (!isSignedIn()) {
+			ErrorMessageHandler.addErrorMessage("Employee must be signed in");	
+			return null;
 		}
-		ErrorMessageHandler.addErrorMessage("Employee must be signed in");
-		return null;
+
+		for (Project project : projects.values()) {
+			if (project.getTitle().contains(title)) {
+				foundProjects.add(project);
+			}
+		}
+		return foundProjects;
 
 	}
 

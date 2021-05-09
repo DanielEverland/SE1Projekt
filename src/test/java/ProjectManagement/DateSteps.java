@@ -77,4 +77,29 @@ public class DateSteps {
 	public void another_object_type_is_not_equal() {
 	    assertFalse(currentDate.equals(10));
 	}
+	
+	@Then("their dates are after or equal")
+	public void their_dates_are_after_or_equal() {
+	    assertTrue(currentDate.afterOrEqual(anotherDate));
+	}
+
+	@Then("their dates are not after or equal")
+	public void their_dates_are_not_after_or_equal() {
+		assertFalse(currentDate.afterOrEqual(anotherDate));
+	}
+
+	@Then("their dates are not before or equal")
+	public void their_dates_are_not_before_or_equal() {
+		assertFalse(currentDate.beforeOrEqual(anotherDate));
+	}
+
+	@Then("their dates are before or equal")
+	public void their_dates_are_before_or_equal() {
+		assertTrue(currentDate.beforeOrEqual(anotherDate));
+	}
+	
+	@Then("the current date is specified")
+	public void the_current_date_is_specified() {
+	    assertTrue(currentDate.hasSpecifiedDate());
+	}
 }

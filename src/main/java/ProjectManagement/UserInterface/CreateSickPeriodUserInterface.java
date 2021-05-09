@@ -11,7 +11,7 @@ public class CreateSickPeriodUserInterface extends CreateEventUserInterface {
 	}
 
 	@Override
-	protected Activity createActivity() {
+	protected Activity createActivity() {		
 		ActivityConstructorInfo info = getConstructorInfo();
 		return new SickLeave(info.startDate, info.endDate);
 	}

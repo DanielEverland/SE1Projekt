@@ -3,6 +3,7 @@ package ProjectManagement.UserInterface;
 import java.util.List;
 
 import ProjectManagement.ActivityConstructorInfo;
+import ProjectManagement.ErrorMessageHandler;
 import ProjectManagement.Main;
 import ProjectManagement.TaskConstructorInfo;
 
@@ -33,6 +34,9 @@ public class CreateTaskUserInterface extends CreateActivityUserInterface {
 
 	@Override
 	protected void create() {
+		if(isConstructorInfoInvalid())
+			return;
+		
 		Main.getSelectedProject().createTask(information);
 	}
 }

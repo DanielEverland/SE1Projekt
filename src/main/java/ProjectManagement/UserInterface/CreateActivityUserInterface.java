@@ -4,6 +4,7 @@ import java.util.List;
 
 import ProjectManagement.ActivityConstructorInfo;
 import ProjectManagement.Date;
+import ProjectManagement.ErrorMessageHandler;
 import ProjectManagement.Main;
 
 public abstract class CreateActivityUserInterface implements UserInterface {
@@ -55,6 +56,20 @@ public abstract class CreateActivityUserInterface implements UserInterface {
 	
 	protected void addTitleCommand(List<UserCommand> commands) {
 		commands.add(new GenericInputCommand("Title", "title", (String input) -> getConstructorInfo().title = input));
+	}
+	
+	protected boolean isConstructorInfoInvalid() {
+		if(!getConstructorInfo().datesValid()) {
+			ErrorMessageHandler.addErrorMessage("Dates are not valid. Start date must be before or on end date.");
+			return true;
+		}
+		
+		if(!getConstructorInfo().isValid()) {
+			ErrorMessageHandler.addErrorMessage("Information is invalid for an unspecified reason");
+			return true;
+		}
+		
+		return false;
 	}
 	
 	protected abstract void populateAdditionalCommands(List<UserCommand> commands);

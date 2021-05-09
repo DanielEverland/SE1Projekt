@@ -26,12 +26,13 @@ public class Task extends Activity {
 	}
 
 	public void logWorkHours(Employee employee, double hoursWorked) {
-		if (!minutesWorked.containsKey(employee)) {
+		if (!minutesWorked.containsKey(employee)) {	
 			minutesWorked.put(employee, new Duration());
 		}
 		minutesWorked.get(employee).AddHours(hoursWorked);
 
-		if (minutesWorked.get(employee).GetMinutesPassed() > expectedTime && expectedTime != 0) {
+		long mMinutesPassed = minutesWorked.get(employee).GetMinutesPassed();
+		if (mMinutesPassed > expectedTime && expectedTime != 0) {	
 			ErrorMessageHandler.addErrorMessage("Too much time spent on task");
 		}
 	}
@@ -54,7 +55,7 @@ public class Task extends Activity {
 
 	@Override
 	public String toString() {
-		return super.toString() + "\nDescription: " + description;
+		return super.toString() + "\nDescription: " + description + "\nExpected Time: " + expectedTime + " hours";
 	}
 
 	public void editTitle(String newTitle) {
