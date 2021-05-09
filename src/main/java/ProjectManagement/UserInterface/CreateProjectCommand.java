@@ -4,10 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ProjectManagement.Application;
-import ProjectManagement.Main;
 
 public class CreateProjectCommand implements UserCommand {
-
+	
+	private Controller controller;
+	
+	public CreateProjectCommand(Controller controller) {
+		this.controller = controller;
+	}
+	
 	@Override
 	public String getDisplayName() {
 		return "Create new project";
@@ -20,13 +25,13 @@ public class CreateProjectCommand implements UserCommand {
 			 return;
 		 }
 		 
-		 int createdId = Main.getCurrentApplication().createProject(args.get(0));
+		 int createdId = controller.getCurrentApplication().createProject(args.get(0));
 		 
-		 if(Main.getSelectedProject() == null) {
-			 Main.selectProject(Main.getCurrentApplication().getProject(createdId));
+		 if(controller.getSelectedProject() == null) {
+			 controller.selectProject(controller.getCurrentApplication().getProject(createdId));
 		 }
 		 
-		 Main.setPreviousUserInterface();
+		 controller.setPreviousUserInterface();
 	}
 	
 	@Override

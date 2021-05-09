@@ -3,7 +3,6 @@ package ProjectManagement.UserInterface;
 import java.util.List;
 
 import ProjectManagement.Activity;
-import ProjectManagement.Main;
 import ProjectManagement.Project;
 import ProjectManagement.Task;
 
@@ -17,7 +16,7 @@ public class ActivityManagementUserInterface implements UserInterface {
 	
 	@Override
 	public String getDescription() {
-		Activity selectedActivity = Main.getSelectedActivity();
+		Activity selectedActivity = getController().getSelectedActivity();
 		return String.format("Selected activity: %s", selectedActivity != null ? selectedActivity.getTitle() : "None");
 	}
 
@@ -28,29 +27,33 @@ public class ActivityManagementUserInterface implements UserInterface {
 
 	@Override
 	public void PopulateCommands(List<UserCommand> commands) {
-		commands.add(new ShowAssignedActivitiesCommand());
+		commands.add(new ShowAssignedActivitiesCommand(getController()));
 		
-		commands.add(new GenericCommand("Select activity", () -> Main.setUserInterface(new SelectActivityUserInterface(this))));
+		commands.add(new GenericCommand("Select activity", () -> getController().setUserInterface(new SelectActivityUserInterface(this))));
 		
-		Project selectedProject = Main.getSelectedProject();
-		if(selectedProject != null && selectedProject.getProjectLeader() == Main.getCurrentApplication().getSignedInEmployee()) {
-			commands.add(new GenericCommand("Create new task", () -> Main.setUserInterface(new CreateTaskUserInterface(this))));
+		Project selectedProject = getController().getSelectedProject();
+		if(selectedProject != null && selectedProject.getProjectLeader() == getController().getCurrentApplication().getSignedInEmployee()) {
+			commands.add(new GenericCommand("Create new task", () -> getController().setUserInterface(new CreateTaskUserInterface(this))));
 
-			if(Main.getSelectedActivity() != null && Main.getSelectedActivity() instanceof Task) {
-				commands.add(new GenericCommand("Assign employee to selected task", () -> Main.setUserInterface(new AssignTaskUserInterface(this))));
-				commands.add(new GenericCommand("Edit current activity", () -> Main.setUserInterface(new EditTaskUserInterface(this))));
+			if(getController().getSelectedActivity() != null && getController().getSelectedActivity() instanceof Task) {
+				commands.add(new GenericCommand("Assign employee to selected task", () -> getController().setUserInterface(new AssignTaskUserInterface(this))));
+				commands.add(new GenericCommand("Edit current activity", () -> getController().setUserInterface(new EditTaskUserInterface(this))));
 			}
 		}
 		
-		if(selectedProject != null && Main.getCurrentApplication().isSignedIn()) {
-			commands.add(new GenericCommand("Log hours worked", () -> Main.setUserInterface(new LogHoursWorkedUserInterface(this))));
+		if(selectedProject != null && getController().getCurrentApplication().isSignedIn()) {
+			commands.add(new GenericCommand("Log hours worked", () -> getController().setUserInterface(new LogHoursWorkedUserInterface(this))));
 		}
 		
-		commands.add(new GenericCommand("Create new sick leave", () -> Main.setUserInterface(new CreateSickPeriodUserInterface(this))));
-		commands.add(new GenericCommand("Create new vacation", () -> Main.setUserInterface(new CreateVacationUserInterface(this))));
-		commands.add(new GenericCommand("Create new course", () -> Main.setUserInterface(new CreateCourseUserInterface(this))));
+		commands.add(new GenericCommand("Create new sick leave", () -> getController().setUserInterface(new CreateSickPeriodUserInterface(this))));
+		commands.add(new GenericCommand("Create new vacation", () -> getController().setUserInterface(new CreateVacationUserInterface(this))));
+		commands.add(new GenericCommand("Create new course", () -> getController().setUserInterface(new CreateCourseUserInterface(this))));
 		
-		commands.add(new ReturnCommand());
+		commands.add(new ReturnCommand(getController()));
 	}
 
+	@Override
+	public Controller getController() {
+		return getParent().getController();
+	}
 }

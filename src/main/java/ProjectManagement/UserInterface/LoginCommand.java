@@ -4,10 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ProjectManagement.Application;
-import ProjectManagement.Main;
 
 public class LoginCommand implements UserCommand {
 
+	private Controller controller;
+	
+	public LoginCommand(Controller controller) {
+		this.controller = controller;
+	}
+	
 	@Override
 	public String getDisplayName() {
 		return "Login";
@@ -20,7 +25,7 @@ public class LoginCommand implements UserCommand {
 			return;
 		}
 
-		Main.getCurrentApplication().signIn(args.get(0));
+		controller.getCurrentApplication().signIn(args.get(0));
 	}
 
 	@Override

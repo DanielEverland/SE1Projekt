@@ -3,6 +3,7 @@ package ProjectManagement;
 import java.util.ArrayList;
 import java.util.List;
 
+import ProjectManagement.UserInterface.Controller;
 import ProjectManagement.UserInterface.GenericArgumentsCommand;
 import ProjectManagement.UserInterface.UserCommand;
 
@@ -34,7 +35,7 @@ public class GetArgumentsStringSteps {
 	@When("the string representation of the commands arguments is requested")
 	public void the_string_representation_of_the_commands_arguments_is_requested() {
 		try {
-			stringRepresentation = Main.getArgumentsString(command);
+			stringRepresentation = Controller.getArgumentsString(command);
 		}
 		catch (Throwable e) {
 			hasThrown = true;
