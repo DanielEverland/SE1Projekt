@@ -56,6 +56,32 @@ public class Main {
 		selectedProject = toSelect;
 	}
 	
+	public static String getArgumentsString(UserCommand command) {
+		if(command == null) {
+			throw new NullPointerException("Command is null");
+		}
+		assert command != null : "Pre condition";
+		
+		String argumentsString = new String();
+		List<String> allArguments = command.getParameterNames();
+		
+		if(allArguments == null || allArguments.size() == 0) {
+			assert argumentsString.length() == 0 : "Post condition";
+			return argumentsString;
+		}
+		
+		for(int i = 0; i < allArguments.size(); i++) {
+			argumentsString += String.format("[%s]", allArguments.get(i));
+			
+			if(i < allArguments.size() - 1) {
+				argumentsString += " ";
+			}
+		}
+		
+		assert argumentsString.length() > 0 : "Post condition";
+		return argumentsString;
+	}
+	
 	public static Project getSelectedProject() {
 		return selectedProject;
 	}
@@ -94,24 +120,6 @@ public class Main {
 		for (int i = 0; i < allCurrentCommands.size(); i++) {
 			System.out.println(String.format("[%d] %s %s", i + 1, allCurrentCommands.get(i).getDisplayName(), getArgumentsString(allCurrentCommands.get(i))));
 		}
-	}
-	
-	private static String getArgumentsString(UserCommand command) {
-		String argumentsString = new String();
-		List<String> allArguments = command.getParameterNames();
-		
-		if(allArguments == null)
-			return "";
-		
-		for(int i = 0; i < allArguments.size(); i++) {
-			argumentsString += String.format("[%s]", allArguments.get(i));
-			
-			if(i < allArguments.size() - 1) {
-				argumentsString += " ";
-			}
-		}
-		
-		return argumentsString;
 	}
 
 	private static List<String> stringToArguments(String inputString) {

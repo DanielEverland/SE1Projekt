@@ -9,7 +9,8 @@ public class GenericArgumentsCommand implements UserCommand {
 	private GenericArgumentsFunctional response;
 	private List<String> usedArguments;
 	
-	GenericArgumentsCommand(String displayName, GenericArgumentsFunctional response, List<String> usedArguments) {
+	public GenericArgumentsCommand(String displayName, GenericArgumentsFunctional response, List<String> usedArguments) {
+		this.usedArguments = usedArguments;
 		this.displayName = displayName;
 		this.response = response;
 	}
