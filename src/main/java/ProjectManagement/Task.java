@@ -13,7 +13,7 @@ public class Task extends Activity {
 	public Task(TaskConstructorInfo info) {
 		super(new ActivityConstructorInfo(info.title, info.startDate, info.endDate, false));
 		durationWorked = new HashMap<Employee, Duration>();
-		description = info.Description;
+		description = info.description;
 	}
 
 	public String getDescription() {
