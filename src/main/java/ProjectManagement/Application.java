@@ -167,7 +167,7 @@ public class Application {
 			return false;
 		}
 		
-		assert !projects.isEmpty();																	//2
+		assert !projects.isEmpty();
 
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
 		for (Project project : projects) {
