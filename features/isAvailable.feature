@@ -6,7 +6,7 @@ Scenario: (White Box A)
 Request a list of available employees between invalid dates
   Given an employee with id "test1" exists in the application
   When the employee's availability is checked from date "31/12/2000" to date "30/12/2000"
-  Then the error message "Assertion triggered" is given
+  Then the error message "Start date cannot be greater than end date" is given
 
 Scenario: (White Box B)
 Request a list of available employees from an employee with maximum workload of 0
