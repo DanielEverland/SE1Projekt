@@ -162,16 +162,21 @@ public class Application {
 	}
 
 	private boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
-		assert !projects.isEmpty();
+		if (projects.isEmpty()) {																	//1
+			ErrorMessageHandler.addErrorMessage("List of projects cannot be empty.");
+			return false;
+		}
+		
+		assert !projects.isEmpty();																	//2
 
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
-		for (Project project : projects) {
-			if (project.getTitle().equals(title)) {
+		for (Project project : projects) {															//3
+			if (project.getTitle().equals(title)) {													//3a
 				foundProjects.add(project);
 			}
 		}
 		boolean moreThanOneProjectFound = foundProjects.size() > 1;
-		if (moreThanOneProjectFound) {
+		if (moreThanOneProjectFound) {																//4
 			ErrorMessageHandler.addErrorMessage("More than one project with the title \"" + title + "\" found");
 		}
 		return moreThanOneProjectFound;
