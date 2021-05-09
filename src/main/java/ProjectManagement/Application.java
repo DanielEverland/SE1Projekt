@@ -147,23 +147,38 @@ public class Application {
 	}
 
 	public Project getSpecificProjectByTitle(String title) {
-		assert !multipleProjectsWithSameTitle(projects.values(), title);
+		if (multipleProjectsWithSameTitle(projects.values(), title)) {
+			return null;
+		}
+		
+		if (title == null || title.isEmpty()) {
+			ErrorMessageHandler.addErrorMessage("String must not be empty");
+			return null;
+		}
+		
+		assert !multipleProjectsWithSameTitle(projects.values(), title) : "Pre condition";
+		assert title != null && !title.isEmpty() : "Pre condition";
 
+		Project projectFound = null;
+		
 		if (isSignedIn()) {
 			for (Project project : projects.values()) {
 				if (project.getTitle().equals(title)) {
-					return project;
+					projectFound = project;
 				}
 			}
+		} else {
+			ErrorMessageHandler.addErrorMessage("Employee must be signed in");
+			return null;
 		}
-		ErrorMessageHandler.addErrorMessage("Employee must be signed in");
-		return null;
+		
+		return projectFound;
 
 	}
 
 	private boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
 		if (projects.isEmpty()) {
-			ErrorMessageHandler.addErrorMessage("List of projects cannot be empty.");
+			ErrorMessageHandler.addErrorMessage("List of projects cannot be empty");
 			return false;
 		}
 		
