@@ -58,12 +58,24 @@ public class Date implements Comparable<Date> {
 	public int compareTo(Date date) {
 		return InternalDate.compareTo(date.InternalDate);
 	}
+	
+	public boolean hasSpecifiedDate() {
+		return InternalDate != null;
+	}
 
 	public boolean before(Date date) {
 		return InternalDate.before(date.InternalDate);
 	}
+	
+	public boolean beforeOrEqual(Date date) {
+		return InternalDate.before(date.InternalDate) || InternalDate.equals(date.InternalDate);
+	}
 
 	public boolean after(Date date) {
 		return InternalDate.after(date.InternalDate);
+	}
+	
+	public boolean afterOrEqual(Date date) {
+		return InternalDate.after(date.InternalDate) || InternalDate.equals(date.InternalDate);
 	}
 }
