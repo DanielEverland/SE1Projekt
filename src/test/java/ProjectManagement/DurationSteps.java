@@ -23,7 +23,7 @@ public class DurationSteps {
 	@When("duration is set to time passed")
 	public void duration_is_set_to_time_passed() {
 		try {
-			duration.AddHours(timePassedInHours);
+			duration.addHours(timePassedInHours);
 		} catch (java.lang.AssertionError e) {
 			assertionTriggered = true;
 		}
@@ -31,7 +31,7 @@ public class DurationSteps {
 
 	@Then("duration is equal to {double} hours")
 	public void duration_is_equal_to_hours(Double hoursPassed) {
-		assertThat(duration.GetHoursPassed(), is(equalTo(hoursPassed)));
+		assertThat(duration.getHoursPassed(), is(equalTo(hoursPassed)));
 	}
 
 	@Then("an assertion error is triggered")
@@ -41,18 +41,18 @@ public class DurationSteps {
 
 	@When("adding {double} hours and {int} minutes to duration")
 	public void adding_hours_and_minutes_to_duration(Double hours, Integer minutes) {
-		duration.AddTime(hours, minutes);
+		duration.addTime(hours, minutes);
 	}
 
 	@Then("duration minutes passed is equal to {long} minutes")
 	public void duration_minutes_passed_is_equal_to_minutes(Long minutesPassed) {
-		assertThat(duration.GetMinutesPassed(), is(equalTo(minutesPassed)));
+		assertThat(duration.getMinutesPassed(), is(equalTo(minutesPassed)));
 	}
 
 	@When("adding {int} minutes to duration")
 	public void adding_minutes_to_duration(Integer minutesToAdd) {
 		try {
-			duration.AddMinutes(minutesToAdd);
+			duration.addMinutes(minutesToAdd);
 		} catch (java.lang.AssertionError e) {
 			assertionTriggered = true;
 		}
