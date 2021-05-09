@@ -1,6 +1,8 @@
 package ProjectManagement;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ProjectManagement.UserInterface.*;
 
@@ -9,18 +11,35 @@ public class Main {
 	private static UserInterface currentUserInterface;
 	private static Scanner inputScanner;
 	private static Project selectedProject;
+	private static Application currentApplication;
+	private static Activity selectedActivity;
+	private static Pattern pattern;
 
 	public static void main(String[] arguments) {
+		pattern = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"|'([^']*)'");
 		inputScanner = new Scanner(System.in);
 		setDefaultUserInterface();
+		currentApplication = new Application();
 		while (mainLoop()) {
 		}
+	}
+	
+	public static void setSelectedActivity(Activity activity) {
+		selectedActivity = activity;
+	}
+	
+	public static Activity getSelectedActivity() {
+		return selectedActivity;
 	}
 	
 	public static void setUserInterface(UserInterface newUserInterface) {
 		assert newUserInterface != null;
 
 		currentUserInterface = newUserInterface;
+	}
+	
+	public static Application getCurrentApplication() {
+		return currentApplication;
 	}
 
 	public static void setPreviousUserInterface() {
@@ -42,7 +61,7 @@ public class Main {
 	}
 
 	private static boolean mainLoop() {
-		if (Application.Get().getIsQuitting())
+		if (currentApplication.getIsQuitting())
 			return false;
 		
 		System.out.println(currentUserInterface.getDescription());
@@ -73,14 +92,38 @@ public class Main {
 		List<UserCommand> allCurrentCommands = new ArrayList<UserCommand>();
 		currentUserInterface.PopulateCommands(allCurrentCommands);
 		for (int i = 0; i < allCurrentCommands.size(); i++) {
-			System.out.println(String.format("%d: %s", i + 1, allCurrentCommands.get(i).getDisplayName()));
+			System.out.println(String.format("[%d] %s %s", i + 1, allCurrentCommands.get(i).getDisplayName(), getArgumentsString(allCurrentCommands.get(i))));
 		}
+	}
+	
+	private static String getArgumentsString(UserCommand command) {
+		String argumentsString = new String();
+		List<String> allArguments = command.getParameterNames();
+		
+		if(allArguments == null)
+			return "";
+		
+		for(int i = 0; i < allArguments.size(); i++) {
+			argumentsString += String.format("[%s]", allArguments.get(i));
+			
+			if(i < allArguments.size() - 1) {
+				argumentsString += " ";
+			}
+		}
+		
+		return argumentsString;
 	}
 
 	private static List<String> stringToArguments(String inputString) {
 		ArrayList<String> arguments = new ArrayList<String>();
-		for (String arg : inputString.split("\\s+")) {
-			arguments.add(arg);
+		Matcher match = pattern.matcher(inputString);
+		while(match.find()) {
+			String curr = match.group();
+			
+			if(curr.charAt(0) == '"' && curr.charAt(curr.length() - 1) == '"')
+				curr = curr.substring(1, curr.length() - 1);
+			
+			arguments.add(curr);
 		}
 		return arguments;
 	}

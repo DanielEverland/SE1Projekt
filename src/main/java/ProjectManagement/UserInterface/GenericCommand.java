@@ -22,4 +22,9 @@ public class GenericCommand implements UserCommand {
 		response.Invoke();
 	}
 
+	@Override
+	public List<String> getParameterNames() {
+		return null;
+	}
+
 }

@@ -22,3 +22,10 @@ Scenario: Too short title entered
 	And the employee is a project leader 
 	When The project leader creates a task with title "g", description "Test Description", start date "31/12/1998" and end date "31/12/2000" 
 	Then No task with title "g", description "Test Description", start date "31/12/1998" and end date "31/12/2000" exists 
+	
+Scenario: Start date after end date fails
+	Given an employee with id "test" exists in the application 
+	And the employee is signed in 
+	And the employee is a project leader 
+	When The project leader creates a task with title "Test Title", description "Test Description", start date "31/12/2000" and end date "31/12/1990"
+	Then No task with title "Test Title", description "Test Description", start date "31/12/2000" and end date "31/12/1990" exists 

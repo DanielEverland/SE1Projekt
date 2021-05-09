@@ -3,6 +3,7 @@ package ProjectManagement.UserInterface;
 import java.util.List;
 
 import ProjectManagement.Application;
+import ProjectManagement.Main;
 
 public class LogoutCommand implements UserCommand {
 
@@ -13,7 +14,11 @@ public class LogoutCommand implements UserCommand {
 
 	@Override
 	public void execute(List<String> args) {
-		Application.Get().signOut();
+		Main.getCurrentApplication().signOut();
 	}
 
+	@Override
+	public List<String> getParameterNames() {
+		return null;
+	}
 }

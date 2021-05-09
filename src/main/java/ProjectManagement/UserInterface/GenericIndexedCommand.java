@@ -23,4 +23,9 @@ public class GenericIndexedCommand implements UserCommand {
 	public void execute(List<String> args) {
 		response.Invoke(index);
 	}
+
+	@Override
+	public List<String> getParameterNames() {
+		return null;
+	}
 }

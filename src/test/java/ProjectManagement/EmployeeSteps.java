@@ -17,41 +17,53 @@ import io.cucumber.java.en.When;
 public class EmployeeSteps {
 
 	private MainHolder holder;
-	private Task task;
 	private List<Task> assignedTasksForEmployee;
 
 	public EmployeeSteps(MainHolder holder) {
 		this.holder = holder;
 	}
 
-	@Given("the employee has an existing task with title {string}, description {string}, start date {string} and end date {string}")
-	public void theEmployeeHasAnExistingTaskWithTitleDescriptionStartDateAndEndDate(String title, String description,
-			String startDateString, String endDateString) {
+	@Given("the task is assigned to the employee")
+	public void the_employee_is_assigned_to_the_task() {
 
-		Date startDate = Date.FromString(startDateString);
-		Date endDate = Date.FromString(endDateString);
+		// Create a temporary project leader so employees can have tasks assigned to
+		// them without being project leader
+		boolean alreadyHasProjectLead = holder.project.hasProjectLeader();
+		Employee currentSignedIn = holder.app.getSignedInEmployee();
+		Employee currentProjectLead = holder.project.getProjectLeader();
 
-		holder.project.createTask(new TaskConstructorInfo(title, description, startDate, endDate));
+		if (!alreadyHasProjectLead) {
+			Employee tempEmployee = new Employee("test_temp_employee_task_creation");
+			holder.app.addEmployee(tempEmployee);
+			holder.app.signIn(tempEmployee.getId());
+			holder.project.assignProjectLeader(tempEmployee);
+		}
 
-		task = holder.project.findTask(title, description, startDate, endDate);
-		holder.project.assignTaskToEmployee(holder.employee, task);
+		holder.project.assignTaskToEmployee(holder.employee, holder.task);
+
+		// Revert to cached state
+		if (!alreadyHasProjectLead) {
+			holder.app.signIn(currentSignedIn.getId());
+			holder.project.removeProjectLeader();
+			holder.project.assignProjectLeader(currentProjectLead);
+		}
 	}
 
 	@When("the employee inputs {double} hours worked on the task")
 	public void the_employee_inputs_hours_worked_on_the_task(Double hoursWorked) {
-		task.logWorkHours(holder.employee, hoursWorked);
+		holder.task.logWorkHours(holder.employee, hoursWorked);
 	}
 
 	@Then("{double} hours is registered as worked on the task by the employee")
 	public void hours_is_registered_as_worked_on_the_task(Double hoursWorked) {
-		Map<Employee, Duration> minutesWorked = task.getMinutesWorked();
+		Map<Employee, Duration> minutesWorked = holder.task.getMinutesWorked();
 		Duration duration = minutesWorked.get(holder.employee);
 		assertThat(duration.GetHoursPassed(), is(equalTo(hoursWorked)));
 	}
 
 	@Given("the task has expected time of {double} hours")
 	public void the_task_has_expected_time_of_hours(Double expectedHours) {
-		task.setExpectedTime(expectedHours);
+		holder.task.setExpectedTime(expectedHours);
 	}
 
 	@Given("worked time of {double} hours is larger than expected time of {double} hours")
@@ -76,18 +88,13 @@ public class EmployeeSteps {
 		assertTrue(employee.getTasks().isEmpty());
 	}
 
-	@Then("the employee get the error message {string}")
-	public void the_employee_get_the_error_message(String errorMessage) throws AuthException {
-		assertEquals(errorMessage, holder.errorMessage);
-	}
-
 	@When("the employee marks the task as complete")
 	public void the_employee_marks_the_task_as_complete() {
-		task.markAsCompleted();
+		holder.task.markAsCompleted();
 	}
 
 	@Then("the task is marked as completed")
 	public void the_task_is_marked_as_completed() {
-		assertTrue(task.isCompleted());
+		assertTrue(holder.task.isCompleted());
 	}
 }

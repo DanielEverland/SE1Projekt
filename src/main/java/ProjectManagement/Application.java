@@ -2,17 +2,9 @@ package ProjectManagement;
 
 import java.util.*;
 
+import static org.junit.Assert.assertNotNull;
+
 public class Application {
-
-	public static Application Get() {
-		if (instance == null) {
-			instance = new Application();
-		}
-
-		return instance;
-	}
-
-	private static Application instance;
 
 	private Map<Integer, Project> projects;
 	private Map<String, Employee> employees;
@@ -51,13 +43,26 @@ public class Application {
 
 	public int createProject(String title) {
 		if (isSignedIn()) {
-			Project newProject = new Project(newProjectId++, title);
+			Project newProject = new Project(newProjectId++, title, this);
 			projects.put(newProject.getId(), newProject);
 			return newProject.getId();
 		}
 
 		ErrorMessageHandler.addErrorMessage("Employee must be signed in to create project");
 		return -1;
+	}
+
+	public List<Activity> getAllActivities() {
+		List<Activity> allActivities = new ArrayList<Activity>();
+
+		for (Project project : projects.values()) {
+			allActivities.addAll(project.getTasks());
+		}
+
+		if (isSignedIn())
+			allActivities.addAll(signedInEmployee.getEvents());
+
+		return allActivities;
 	}
 
 	public Map<Integer, Project> getProjects() {
@@ -96,7 +101,11 @@ public class Application {
 
 	public List<Task> searchAssignedTasksForEmployee(String id) {
 		Employee employeeToSearch = getEmployees().get(id);
-		return employeeToSearch.getTasks();
+		List<Task> tasks = employeeToSearch.getTasks();
+		if (tasks.isEmpty()) {
+			ErrorMessageHandler.addErrorMessage("No assigned tasks for this identification code");
+		}
+		return tasks;
 	}
 
 	public Map<String, Employee> getEmployees() {
@@ -118,47 +127,70 @@ public class Application {
 		return availableEmployees;
 
 	}
-
-	private ArrayList<Project> findProjectsByTitle(String title) {
+	
+//	Method for finding all tasks that contain {String} in title 
+	public ArrayList<Project> findProjectsContainingTitle(String title) {
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
-		for (Map.Entry<Integer, Project> entry : projects.entrySet()) {
-			if (title.equals(entry.getValue().getTitle())) {
-				Project project = entry.getValue();
+
+		if (!isSignedIn()) {
+			ErrorMessageHandler.addErrorMessage("Employee must be signed in");	
+			return null;
+		}
+
+		for (Project project : projects.values()) {
+			if (project.getTitle().contains(title)) {
 				foundProjects.add(project);
 			}
 		}
 		return foundProjects;
-	}
-
-	public Project getProjectByTitle(String title) {
-		ArrayList<Project> foundProjects = findProjectsByTitle(title);
-
-		if (foundProjects.size() == 1) {
-			return foundProjects.get(0);
-		} else {
-			return null;
-		}
 
 	}
 
-	public boolean isMoreThanOneProjectFound(String title) {
-		ArrayList<Project> foundProjects = findProjectsByTitle(title);
-		boolean multipleProjectsFound = foundProjects.size() > 1;
-		if (multipleProjectsFound) {
-			ErrorMessageHandler.addErrorMessage("More than one project with the title " + title + " has been found");
+	public Project getSpecificProjectByTitle(String title) {
+		assert !multipleProjectsWithSameTitle(projects.values(), title);
 
+		if (isSignedIn()) {
+			for (Project project : projects.values()) {
+				if (project.getTitle().equals(title)) {
+					return project;
+				}
+			}
 		}
+		ErrorMessageHandler.addErrorMessage("Employee must be signed in");
+		return null;
+
+	}
+
+	private boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
+		assert !projects.isEmpty();
+
+		ArrayList<Project> foundProjects = new ArrayList<Project>();
+		for (Project project : projects) {
+			if (project.getTitle().equals(title)) {
+				foundProjects.add(project);
+			}
+		}
+		boolean moreThanOneProjectFound = foundProjects.size() > 1;
+		if (moreThanOneProjectFound) {
+			ErrorMessageHandler.addErrorMessage("More than one project with the title \"" + title + "\" found");
+		}
+		return moreThanOneProjectFound;
+	}
+
+	public boolean multipleProjectsContainingTitleFound(String title) {
+		assert projects.size() > 1;
+
+		boolean multipleProjectsFound = true;
+		ErrorMessageHandler.addErrorMessage("More than one project with the title \"" + title + "\" has been found");
 		return multipleProjectsFound;
 	}
 
-	public boolean isNoProjectsFound(String title) {
-		ArrayList<Project> foundProjects = findProjectsByTitle(title);
-		boolean noProjectsFound = foundProjects.size() < 1;
-		if (noProjectsFound) {
-			ErrorMessageHandler.addErrorMessage("No project with the title " + title + " has been found");
-		}
-		return noProjectsFound;
+	public boolean noProjectContainingTitleFound(String title) {
+		assert findProjectsContainingTitle(title).isEmpty();
 
+		boolean noProjectsFound = true;
+		ErrorMessageHandler.addErrorMessage("No project with the title \"" + title + "\" has been found");
+		return noProjectsFound;
 	}
 
 	public void assignVacation(Employee employee, Date startDate, Date endDate) {

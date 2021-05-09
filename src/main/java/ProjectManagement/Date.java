@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class Date {
+public class Date implements Comparable<Date> {
 
 	private java.util.Date InternalDate;
 
@@ -22,6 +22,9 @@ public class Date {
 
 	@Override
 	public String toString() {
+		if(InternalDate == null)
+			return "N/A";
+		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		return dateFormat.format(InternalDate);
 	}
@@ -51,11 +54,28 @@ public class Date {
 		return true;
 	}
 
+	@Override
+	public int compareTo(Date date) {
+		return InternalDate.compareTo(date.InternalDate);
+	}
+	
+	public boolean hasSpecifiedDate() {
+		return InternalDate != null;
+	}
+
 	public boolean before(Date date) {
 		return InternalDate.before(date.InternalDate);
+	}
+	
+	public boolean beforeOrEqual(Date date) {
+		return InternalDate.before(date.InternalDate) || InternalDate.equals(date.InternalDate);
 	}
 
 	public boolean after(Date date) {
 		return InternalDate.after(date.InternalDate);
+	}
+	
+	public boolean afterOrEqual(Date date) {
+		return InternalDate.after(date.InternalDate) || InternalDate.equals(date.InternalDate);
 	}
 }

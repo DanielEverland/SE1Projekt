@@ -1,13 +1,15 @@
 package ProjectManagement.UserInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GenericArgumentsCommand implements UserCommand {
 
 	private String displayName;
 	private GenericArgumentsFunctional response;
+	private List<String> usedArguments;
 	
-	GenericArgumentsCommand(String displayName, GenericArgumentsFunctional response) {
+	GenericArgumentsCommand(String displayName, GenericArgumentsFunctional response, List<String> usedArguments) {
 		this.displayName = displayName;
 		this.response = response;
 	}
@@ -22,4 +24,8 @@ public class GenericArgumentsCommand implements UserCommand {
 		response.Invoke(args);
 	}
 
+	@Override
+	public List<String> getParameterNames() {
+		return usedArguments;
+	}
 }

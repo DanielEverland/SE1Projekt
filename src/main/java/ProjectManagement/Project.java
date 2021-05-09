@@ -4,6 +4,7 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Project {
 	// The number of digits in the stringified id of projects
@@ -15,14 +16,17 @@ public class Project {
 	private ArrayList<Task> tasks;
 	private Employee projectLead;
 	private boolean completed;
+	private Application application;
 
-	public Project(int id, String title) {
+	public Project(int id, String title, Application owner) {
 		Assert.assertFalse("Id must be a non-negative integer", id < 0);
 		Assert.assertFalse("Title cannot be empty or contain '|'", title.length() == 0 || title.contains("|"));
+		assert owner != null;
 
 		year = Calendar.getInstance().get(Calendar.YEAR);
 		this.id = id;
 		this.title = title;
+		this.application = owner;
 		tasks = new ArrayList<Task>();
 	}
 
@@ -42,8 +46,17 @@ public class Project {
 		return String.format("%0" + serialDigits + "d", id);
 	}
 
+	public void removeProjectLeader() {
+		projectLead = null;
+	}
+
 	public void assignProjectLeader(Employee newProjectLeader) {
-		projectLead = newProjectLeader;
+		if (this.hasProjectLeader()) {
+			ErrorMessageHandler.addErrorMessage("The project already has an assigned project leader");
+		} else {
+			projectLead = newProjectLeader;
+		}
+
 	}
 
 	public Employee getProjectLeader() {
@@ -60,6 +73,21 @@ public class Project {
 			return;
 		}
 
+		if (projectLead == null) {
+			ErrorMessageHandler.addErrorMessage("No project lead has been assigned to this project");
+			return;
+		}
+
+		if (!application.isSignedIn()) {
+			ErrorMessageHandler.addErrorMessage("Cannot create tasks when not signed in");
+			return;
+		}
+
+		if (application.getSignedInEmployee() != projectLead) {
+			ErrorMessageHandler.addErrorMessage("Currently signed in employee is not project leader");
+			return;
+		}
+
 		tasks.add(new Task(info));
 	}
 
@@ -68,6 +96,8 @@ public class Project {
 	}
 
 	public void assignTaskToEmployee(Employee employee, Task task) {
+		assert isProjectLeader(application.getSignedInEmployee());
+		
 		if (employee.isAvailable(task)) {
 			employee.assignToActivity(task);
 		} else {
@@ -77,7 +107,11 @@ public class Project {
 	}
 
 	public boolean isProjectLeader(Employee employee) {
-		return employee == projectLead ? true : false;
+		boolean isEmployeeProjectLeader = employee == projectLead;
+		if (!isEmployeeProjectLeader) {
+			ErrorMessageHandler.addErrorMessage("Must be project leader");
+		}
+		return isEmployeeProjectLeader;
 	}
 
 	public ArrayList<Task> getTasks() {
@@ -92,6 +126,17 @@ public class Project {
 			}
 		}
 		return null;
+	}
+	
+	public List<Employee> getAssignedEmployees(Task task) {
+		List<Employee> assignedEmployees = new ArrayList<Employee>();
+		
+		for(Employee employee : application.getEmployees().values()) {
+			if(employee.getTasks().contains(task))
+				assignedEmployees.add(employee);
+		}
+		
+		return assignedEmployees;
 	}
 
 	public void editTaskTitle(Task task, String newTitle, Employee employee) {
@@ -135,5 +180,10 @@ public class Project {
 
 	public boolean isCompleted() {
 		return completed;
+	}
+
+	@Override
+	public String toString() {
+		return id + ": " + title;
 	}
 }

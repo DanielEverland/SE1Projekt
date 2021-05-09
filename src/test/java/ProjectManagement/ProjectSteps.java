@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -100,21 +101,6 @@ public class ProjectSteps {
 		assertTrue(holder.app.getEmployee(empID).getTasks().stream()
 				.anyMatch(m -> m.getTitle().contentEquals(title) && m.getDescription().contentEquals(description)
 						&& m.getStartDate().toString().equals(startDate) && m.getEndDate().toString().equals(endDate)));
-	}
-
-	@When("the employee searches for the project with title {string}")
-	public void the_employee_searches_for_the_project_with_title(String title) {
-		holder.app.getProjectByTitle(title);
-	}
-
-	@Then("there are more than one project with the title {string}")
-	public void there_are_more_than_one_project_with_the_title(String title) {
-		assertThat(holder.app.isMoreThanOneProjectFound(title), is(equalTo(true)));
-	}
-
-	@Then("there are no projects with the title {string}")
-	public void there_are_no_projects_with_the_title(String string) {
-		assertThat(holder.app.isNoProjectsFound(string), is(equalTo(true)));
 	}
 
 	@When("the employee marks the project as complete")

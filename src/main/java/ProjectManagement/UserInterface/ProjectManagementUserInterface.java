@@ -4,6 +4,7 @@ import java.util.List;
 
 import ProjectManagement.Application;
 import ProjectManagement.Main;
+import ProjectManagement.Project;
 
 public class ProjectManagementUserInterface implements UserInterface {
 
@@ -15,8 +16,12 @@ public class ProjectManagementUserInterface implements UserInterface {
 	
 	@Override
 	public void PopulateCommands(List<UserCommand> commands) {
-		if(Application.Get().getProjects().size() > 0) {
+		if(Main.getCurrentApplication().getProjects().size() > 0) {
 			commands.add(new GenericCommand("Select project", () -> Main.setUserInterface(new SelectProjectUserInterface(this))));
+		}
+		
+		if(Main.getSelectedProject() != null && !Main.getSelectedProject().hasProjectLeader()) {
+			commands.add(new AssignProjectLeaderCommand());
 		}
 		
 		commands.add(new CreateProjectCommand());
@@ -25,7 +30,8 @@ public class ProjectManagementUserInterface implements UserInterface {
 
 	@Override
 	public String getDescription() {
-		return "";
+		Project selectedProject = Main.getSelectedProject();
+		return String.format("Selected project: %s", selectedProject != null ? selectedProject.getTitle() : "None");
 	}
 
 	@Override

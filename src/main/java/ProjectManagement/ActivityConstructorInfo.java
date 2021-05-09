@@ -8,6 +8,12 @@ public class ActivityConstructorInfo {
 
 	private static final int minTitleLength = 3;
 
+	public ActivityConstructorInfo() {
+		title = "N/A";
+		startDate = new Date();
+		endDate = new Date();
+	}
+	
 	public ActivityConstructorInfo(String title, Date startDate, Date endDate, boolean isBlocking) {
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -16,7 +22,11 @@ public class ActivityConstructorInfo {
 	}
 
 	public boolean isValid() {
-		return isASCIIString(title) && title.length() > minTitleLength;
+		return isASCIIString(title) && title.length() > minTitleLength && datesValid();
+	}
+	
+	public boolean datesValid() {
+		return startDate.hasSpecifiedDate() && endDate.hasSpecifiedDate() && endDate.afterOrEqual(startDate);
 	}
 
 	private boolean isASCIIString(String input) {

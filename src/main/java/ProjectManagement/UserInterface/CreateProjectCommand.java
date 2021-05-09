@@ -1,8 +1,10 @@
 package ProjectManagement.UserInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ProjectManagement.Application;
+import ProjectManagement.Main;
 
 public class CreateProjectCommand implements UserCommand {
 
@@ -18,7 +20,19 @@ public class CreateProjectCommand implements UserCommand {
 			 return;
 		 }
 		 
-		 Application.Get().createProject(args.get(0));
+		 int createdId = Main.getCurrentApplication().createProject(args.get(0));
+		 
+		 if(Main.getSelectedProject() == null) {
+			 Main.selectProject(Main.getCurrentApplication().getProject(createdId));
+		 }
+		 
+		 Main.setPreviousUserInterface();
 	}
-
+	
+	@Override
+	public List<String> getParameterNames() {
+		return new ArrayList<String>() {{
+			add("projectName");
+		}};
+	}
 }
