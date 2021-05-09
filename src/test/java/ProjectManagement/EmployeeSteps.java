@@ -56,9 +56,9 @@ public class EmployeeSteps {
 
 	@Then("{double} hours is registered as worked on the task by the employee")
 	public void hours_is_registered_as_worked_on_the_task(Double hoursWorked) {
-		Map<Employee, Duration> minutesWorked = holder.task.getMinutesWorked();
+		Map<Employee, Duration> minutesWorked = holder.task.getDurationWorked();
 		Duration duration = minutesWorked.get(holder.employee);
-		assertThat(duration.GetHoursPassed(), is(equalTo(hoursWorked)));
+		assertThat(duration.getHoursPassed(), is(equalTo(hoursWorked)));
 	}
 
 	@Given("the task has expected time of {double} hours")

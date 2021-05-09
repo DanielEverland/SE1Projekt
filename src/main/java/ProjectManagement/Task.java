@@ -7,13 +7,12 @@ public class Task extends Activity {
 
 	private String description;
 	private double expectedTime;
-	private Map<Employee, Duration> minutesWorked;
-
+	private Map<Employee, Duration> durationWorked;
 	private boolean completed;
 
 	public Task(TaskConstructorInfo info) {
 		super(new ActivityConstructorInfo(info.title, info.startDate, info.endDate, false));
-		minutesWorked = new HashMap<Employee, Duration>();
+		durationWorked = new HashMap<Employee, Duration>();
 		description = info.Description;
 	}
 
@@ -21,20 +20,32 @@ public class Task extends Activity {
 		return description;
 	}
 
-	public Map<Employee, Duration> getMinutesWorked() {
-		return minutesWorked;
+	public Map<Employee, Duration> getDurationWorked() {
+		return durationWorked;
 	}
-
+	
 	public void logWorkHours(Employee employee, double hoursWorked) {
-		if (!minutesWorked.containsKey(employee)) {	
-			minutesWorked.put(employee, new Duration());
+		if (!durationWorked.containsKey(employee)) {	
+			durationWorked.put(employee, new Duration());
 		}
-		minutesWorked.get(employee).AddHours(hoursWorked);
-
-		long mMinutesPassed = minutesWorked.get(employee).GetMinutesPassed();
-		if (mMinutesPassed > expectedTime && expectedTime != 0) {	
+		assert durationWorked.containsKey(employee);
+		
+		durationWorked.get(employee).addHours(hoursWorked);
+		
+		double totalDurationWorked = getTotalDurationWorked();
+		
+		if (totalDurationWorked > expectedTime && expectedTime != 0) {	
 			ErrorMessageHandler.addErrorMessage("Too much time spent on task");
 		}
+	}
+
+	private double getTotalDurationWorked() {
+		double totalDuration = 0;
+		for (Duration duration : durationWorked.values()) {
+			totalDuration += duration.getHoursPassed();
+		}
+		return totalDuration;
+		
 	}
 
 	public double getExpectedTime() {

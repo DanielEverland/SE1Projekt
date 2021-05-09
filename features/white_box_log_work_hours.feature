@@ -7,6 +7,7 @@ Scenario: White box A
 	And the employee is signed in 
 	And A task with title "White box title", description "White box description", start date "11/11/2011" and end date "12/12/2012" exists 
 	And the employee has not worked on the task before 
+	And the task has expected time of 1.0 hours 
 	When the employee inputs 0.001 hours as worked on the task 
 	Then the hours are not logged 
 	
@@ -15,6 +16,7 @@ Scenario: White box B
 	And the employee is signed in 
 	And A task with title "White box title", description "White box description", start date "11/11/2011" and end date "12/12/2012" exists 
 	And the employee has worked on the task before 
+	And the task has expected time of 1.0 hours 
 	When the employee inputs 0.001 hours as worked on the task 
 	Then the hours are not logged 
 	
@@ -55,3 +57,4 @@ Scenario: White box F
 	When the employee inputs 1.5 hours as worked on the task 
 	Then 1.5 hours is registered as worked on the task by the employee 
 	And the error message "Too much time spent on task" is given 
+	

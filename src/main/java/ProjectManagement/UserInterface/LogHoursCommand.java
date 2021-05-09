@@ -34,8 +34,8 @@ public class LogHoursCommand implements UserCommand {
 			double hoursToLog = Double.parseDouble(input);
 			task.logWorkHours(Main.getCurrentApplication().getSignedInEmployee(), hoursToLog);
 			
-			Duration timeWorked = task.getMinutesWorked().get(Main.getCurrentApplication().getSignedInEmployee());
-			System.out.println(String.format("Logged %f additional hours. Total hours worked: %f", hoursToLog, timeWorked.GetHoursPassed()));
+			Duration timeWorked = task.getDurationWorked().get(Main.getCurrentApplication().getSignedInEmployee());
+			System.out.println(String.format("Logged %f additional hours. Total hours worked: %f", hoursToLog, timeWorked.getHoursPassed()));
 		}
 		catch(NumberFormatException e) {
 			ErrorMessageHandler.addErrorMessage(String.format("Couldn't format %s as double", input));
