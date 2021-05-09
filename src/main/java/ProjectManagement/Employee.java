@@ -54,10 +54,12 @@ public class Employee {
 	}
 
 	public void assignToActivity(Activity activity) {
+		if (assignedActivites.contains(activity)) {
+			ErrorMessageHandler.addErrorMessage("The task is already assigned to employee");
+		}
 		assert !assignedActivites.contains(activity);
 
 		assignedActivites.add(activity);
-
 	}
 
 	public boolean isAvailable(Date startDate, Date endDate) {
