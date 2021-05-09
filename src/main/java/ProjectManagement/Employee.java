@@ -10,13 +10,13 @@ import java.util.stream.Collectors;
 public class Employee {
 	private String id;
 	private int maxTasks;
-	private List<Activity> assignedActivites;
+	private List<Activity> assignedActivities;
 	private boolean projectSelected = false;
 
 	public Employee(String id, int maxTasks) {
 		this.id = id;
 		this.maxTasks = maxTasks;
-		assignedActivites = new ArrayList<Activity>();
+		assignedActivities = new ArrayList<Activity>();
 	}
 
 	public Employee(String id) {
@@ -31,13 +31,13 @@ public class Employee {
 		return maxTasks;
 	}
 
-	public List<Activity> getAssignedActivites() {
-		return assignedActivites;
+	public List<Activity> getAssignedActivities() {
+		return assignedActivities;
 	}
 
 	public List<Task> getTasks() {
 		ArrayList<Task> tasks = new ArrayList<Task>();
-		for (Activity assignedActivity : assignedActivites) {
+		for (Activity assignedActivity : assignedActivities) {
 			if (assignedActivity instanceof Task) {
 				tasks.add((Task) assignedActivity);
 			}
@@ -49,7 +49,7 @@ public class Employee {
 
 	public List<Activity> getEvents() {
 		ArrayList<Activity> events = new ArrayList<>();
-		for (Activity assignedActivity : assignedActivites) {
+		for (Activity assignedActivity : assignedActivities) {
 			if (!(assignedActivity instanceof Task)) {
 				events.add(assignedActivity);
 			}
@@ -58,13 +58,17 @@ public class Employee {
 	}
 
 	public void assignToActivity(Activity activity) {
-		if (assignedActivites.contains(activity)) {
+		if (activity == null) {
+			ErrorMessageHandler.addErrorMessage("Null value cannot be assigned to employee activities");
+		}
+		if (assignedActivities.contains(activity)) {
 			ErrorMessageHandler.addErrorMessage("The activity is already assigned to employee");
 			return;
 		}
-		assert !assignedActivites.contains(activity);
+		assert activity != null;
+		assert !assignedActivities.contains(activity);
 
-		assignedActivites.add(activity);
+		assignedActivities.add(activity);
 	}
 
 	public boolean isAvailable(Date startDate, Date endDate) {
@@ -82,7 +86,7 @@ public class Employee {
 		// If an activity is blocking, employee is unavailable
 		// If an activity is a task, add it to the list of tasks in the interval
 		ArrayList<Task> tasksInInterval = new ArrayList<>();
-		for (Activity activity : assignedActivites) {
+		for (Activity activity : assignedActivities) {
 			if (activity.isInDateInterval(startDate, endDate)) {
 				if (activity.getIsBlocking()) {
 					return false;

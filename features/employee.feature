@@ -21,6 +21,11 @@ Scenario: Assign and get activities assigned to employee
   And the list contains a task with title "Task title", description "Task description", start date "31/12/1998" and end date "31/12/2000"
   And the list contains a vacation from "01/01/2020" to "10/10/2020"
 
+  Scenario: Assign duplicate activity to employee
+    Given an employee with id "test" exists in the application
+    When null value is assigned to the employee's activities
+    Then the error message "Null value cannot be assigned to employee activities" is given
+
 Scenario: Assign duplicate activity to employee
   Given an employee with id "test" exists in the application
   And vacation from "01/01/2020" to "10/10/2020" is assigned to the employee

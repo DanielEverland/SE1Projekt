@@ -9,14 +9,12 @@ import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.hamcrest.Matcher;
 
 public class EmployeeSteps {
 
@@ -46,7 +44,7 @@ public class EmployeeSteps {
 
 	@When("a list of the employee's assigned activities is requested")
 	public void a_list_of_the_employee_s_assigned_activities_is_requested() {
-		assignedActivities = holder.employee.getAssignedActivites();
+		assignedActivities = holder.employee.getAssignedActivities();
 	}
 
 	@Then("the list has {int} elements")
@@ -86,6 +84,11 @@ public class EmployeeSteps {
 		}
 
 		assertTrue(hasVacation);
+	}
+
+	@When("null value is assigned to the employee's activities")
+	public void null_value_is_assigned_to_the_employee_s_activities() {
+		holder.employee.assignToActivity(null);
 	}
 
 	@When("the same vacation is attempted assigned to the employee")
