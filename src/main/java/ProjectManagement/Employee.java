@@ -60,6 +60,7 @@ public class Employee {
 	public void assignToActivity(Activity activity) {
 		if (activity == null) {
 			ErrorMessageHandler.addErrorMessage("Null value cannot be assigned to employee activities");
+			return;
 		}
 		if (assignedActivities.contains(activity)) {
 			ErrorMessageHandler.addErrorMessage("The activity is already assigned to employee");
