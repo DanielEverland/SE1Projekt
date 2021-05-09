@@ -96,24 +96,27 @@ public class Project {
 	}
 
 	public void assignTaskToEmployee(Employee employee, Task task) {
-		assert isProjectLeader(application.getSignedInEmployee());
-
-		if (employee == null || task == null) {
-			throw new IllegalArgumentException("Employee being assigned task or assigned task was null");
+		if (!isProjectLeader(application.getSignedInEmployee())) {
+			ErrorMessageHandler.addErrorMessage("Currently signed in employee is not project leader");
 		}
-
-		assert employee != null;
-		assert task != null;
-
-		if (employee.isAvailable(task)) {
-			employee.assignToActivity(task);
-		} else {
-			ErrorMessageHandler.addErrorMessage("Employee is unavailable");
+		else if (employee == null || task == null) {
+			ErrorMessageHandler.addErrorMessage("Employee being assigned task or assigned task was null");
 		}
+		else {
+			assert isProjectLeader(application.getSignedInEmployee());
+			assert employee != null;
+			assert task != null;
 
-		assert !employee.isAvailable((task)) || employee.getTasks().stream()
-				.anyMatch(m -> m.getTitle().contentEquals(task.getTitle()) && m.getDescription().contentEquals(task.getDescription())
-						&& m.getStartDate().equals(task.getStartDate()) && m.getEndDate().equals(task.getEndDate()));
+			if (employee.isAvailable(task)) {
+				employee.assignToActivity(task);
+			} else {
+				ErrorMessageHandler.addErrorMessage("Employee is unavailable");
+			}
+
+			assert !employee.isAvailable((task)) || employee.getTasks().stream()
+					.anyMatch(m -> m.getTitle().contentEquals(task.getTitle()) && m.getDescription().contentEquals(task.getDescription())
+							&& m.getStartDate().equals(task.getStartDate()) && m.getEndDate().equals(task.getEndDate()));
+		}
 	}
 
 	public boolean isProjectLeader(Employee employee) {
