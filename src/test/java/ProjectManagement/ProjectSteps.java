@@ -4,8 +4,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -34,6 +38,11 @@ public class ProjectSteps {
 	public void the_employee_is_signed_in() {
 		holder.app.signIn(holder.employee.getId());
 	}
+	
+	@Given("the employee is signed out")
+	public void the_employee_is_signed_out() {
+		holder.app.signOut();
+	}
 
 	@Given("the employee is a project leader")
 	public void the_employee_is_a_project_leader() {
@@ -56,7 +65,7 @@ public class ProjectSteps {
 		assertThat(holder.project.getTitle(), is(equalTo(title)));
 	}
 
-	@When("The project leader creates a task with title {string}, description {string}, start date {string} and end date {string}")
+	@When("The employee creates a task with title {string}, description {string}, start date {string} and end date {string}")
 	public void the_project_leader_creates_a_task_with_title_description_start_date_and_end_date(String title,
 			String description, String startDate, String endDate) {
 		holder.project.createTask(
@@ -84,7 +93,7 @@ public class ProjectSteps {
 				is(equalTo(false)));
 	}
 
-	@When("the project leader assigns the task with title {string}, description {string}, start date {string} and end date {string} to employee with id {string}")
+	@When("the employee assigns the task with title {string}, description {string}, start date {string} and end date {string} to employee with id {string}")
 	public void the_project_leader_assigns_the_task_with_title_description_start_date_and_end_date_to_employee_with_id(
 			String title, String description, String startDate, String endDate, String empID) {
 		try {
@@ -113,4 +122,20 @@ public class ProjectSteps {
 		assertTrue(holder.project.isCompleted());
 	}
 
+	@Then("the task with title {string}, description {string}, start date {string} and end date {string} is assigned to the employees with ids")
+	public void the_task_is_assigned_to_the_employees_with_ids(String title, String description, String startDate, String endDate, DataTable dataTable) {
+		Task task = holder.project.findTask(title, description, Date.FromString(startDate), Date.FromString(endDate));		
+	    List<String> ids = new ArrayList<String>(dataTable.asList());
+	    
+	    for(Employee assignedEmployee : holder.project.getAssignedEmployees(task)) {
+    		ids.remove(assignedEmployee.getId());
+	    }
+	    
+	    assertTrue(ids.isEmpty());
+	}
+	
+	@Then("projects toString is {string}")
+	public void projects_to_string_is(String expectedToString) {
+	    assertEquals(holder.project.toString(), expectedToString);
+	}
 }

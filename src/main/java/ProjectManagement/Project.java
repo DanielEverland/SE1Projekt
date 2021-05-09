@@ -3,14 +3,12 @@ package ProjectManagement;
 import org.junit.Assert;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class Project {
 	// The number of digits in the stringified id of projects
 	private static final int serialDigits = 4;
 
-	private int year;
 	private int id;
 	private String title;
 	private ArrayList<Task> tasks;
@@ -23,7 +21,6 @@ public class Project {
 		Assert.assertFalse("Title cannot be empty or contain '|'", title.length() == 0 || title.contains("|"));
 		assert owner != null;
 
-		year = Calendar.getInstance().get(Calendar.YEAR);
 		this.id = id;
 		this.title = title;
 		this.application = owner;
@@ -37,15 +34,7 @@ public class Project {
 	public String getTitle() {
 		return title;
 	}
-
-	public String getFullTitle() {
-		return year + "|" + idToString() + "|" + title;
-	}
-
-	private String idToString() {
-		return String.format("%0" + serialDigits + "d", id);
-	}
-
+	
 	public void removeProjectLeader() {
 		projectLead = null;
 	}
