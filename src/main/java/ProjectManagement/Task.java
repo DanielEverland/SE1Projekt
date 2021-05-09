@@ -23,17 +23,29 @@ public class Task extends Activity {
 	public Map<Employee, Duration> getDurationWorked() {
 		return durationWorked;
 	}
-
+	
 	public void logWorkHours(Employee employee, double hoursWorked) {
 		if (!durationWorked.containsKey(employee)) {	
 			durationWorked.put(employee, new Duration());
 		}
+		assert durationWorked.containsKey(employee);
+		
 		durationWorked.get(employee).addHours(hoursWorked);
-
-		double hoursPassed = durationWorked.get(employee).getHoursPassed();
-		if (hoursPassed > expectedTime && expectedTime != 0) {	
+		
+		double totalDurationWorked = getTotalDurationWorked();
+		
+		if (totalDurationWorked > expectedTime && expectedTime != 0) {	
 			ErrorMessageHandler.addErrorMessage("Too much time spent on task");
 		}
+	}
+
+	private double getTotalDurationWorked() {
+		double totalDuration = 0;
+		for (Duration duration : durationWorked.values()) {
+			totalDuration += duration.getHoursPassed();
+		}
+		return totalDuration;
+		
 	}
 
 	public double getExpectedTime() {
