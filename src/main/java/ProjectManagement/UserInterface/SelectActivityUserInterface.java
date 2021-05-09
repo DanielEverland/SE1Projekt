@@ -26,16 +26,21 @@ public class SelectActivityUserInterface implements UserInterface {
 
 	@Override
 	public void PopulateCommands(List<UserCommand> commands) {
-		allActivities = Main.getCurrentApplication().getAllActivities();
+		allActivities = getController().getCurrentApplication().getAllActivities();
 		for(int i = 0; i < allActivities.size(); i++) {
 			commands.add(new GenericIndexedCommand(allActivities.get(i).getTitle(), i, (int index) -> selectedActivity(index)));
 		}
 		
-		commands.add(new ReturnCommand());
+		commands.add(new ReturnCommand(getController()));
 	}
 	
 	private void selectedActivity(int index) {
-		Main.setSelectedActivity(allActivities.get(index));
-		Main.setPreviousUserInterface();
+		getController().setSelectedActivity(allActivities.get(index));
+		getController().setPreviousUserInterface();
+	}
+
+	@Override
+	public Controller getController() {
+		return getParent().getController();
 	}
 }

@@ -16,28 +16,33 @@ public class SelectProjectUserInterface implements UserInterface {
 	
 	@Override
 	public void PopulateCommands(List<UserCommand> commands) {
-		int projectCount = Main.getCurrentApplication().getProjects().values().size();
+		int projectCount = getController().getCurrentApplication().getProjects().values().size();
 		
 		for(int i = 0; i < projectCount; i++) {
-			Project currentProject = Main.getCurrentApplication().getProject(i);
+			Project currentProject = getController().getCurrentApplication().getProject(i);
 			commands.add(new GenericIndexedCommand(currentProject.getTitle(), i, (int selectedIndex) -> selectedCommand(selectedIndex)));
 		}
 		
-		commands.add(new ReturnCommand());
+		commands.add(new ReturnCommand(getController()));
 	}
 	
 	private void selectedCommand(int index) {
-		Main.selectProject(Main.getCurrentApplication().getProject(index));
+		getController().selectProject(getController().getCurrentApplication().getProject(index));
 	}
 
 	@Override
 	public String getDescription() {
-		Project selectedProject = Main.getSelectedProject();
+		Project selectedProject = getController().getSelectedProject();
 		return String.format("Selected project: %s", selectedProject != null ? selectedProject.getTitle() : "None");
 	}
 
 	@Override
 	public UserInterface getParent() {
 		return parent;
+	}
+
+	@Override
+	public Controller getController() {
+		return getParent().getController();
 	}
 }

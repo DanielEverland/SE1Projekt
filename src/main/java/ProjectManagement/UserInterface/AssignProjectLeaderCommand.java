@@ -10,6 +10,12 @@ import ProjectManagement.Main;
 
 public class AssignProjectLeaderCommand implements UserCommand {
 
+	private Controller controller;
+	
+	AssignProjectLeaderCommand(Controller controller) {
+		this.controller = controller;
+	}
+	
 	@Override
 	public String getDisplayName() {
 		return "Assign project leader";
@@ -23,13 +29,13 @@ public class AssignProjectLeaderCommand implements UserCommand {
 		}
 		
 		String selectedEmployeeId = args.get(0);		
-		Employee selectedEmployee = Main.getCurrentApplication().getEmployee(selectedEmployeeId);
+		Employee selectedEmployee = controller.getCurrentApplication().getEmployee(selectedEmployeeId);
 		if(selectedEmployee == null) {
 			ErrorMessageHandler.addErrorMessage("Couldn't find user " + selectedEmployeeId);
 			return;
 		}
 		
-		Main.getSelectedProject().assignProjectLeader(selectedEmployee);
+		controller.getSelectedProject().assignProjectLeader(selectedEmployee);
 	}
 
 	@Override

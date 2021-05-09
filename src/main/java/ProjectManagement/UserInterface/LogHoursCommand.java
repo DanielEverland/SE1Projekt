@@ -10,10 +10,12 @@ import ProjectManagement.Task;
 
 public class LogHoursCommand implements UserCommand {
 
-	private Task task;	
+	private Task task;
+	private Controller controller;
 	
-	LogHoursCommand(Task task) {
+	LogHoursCommand(Task task, Controller controller) {
 		this.task = task;
+		this.controller = controller;
 	}
 	
 	@Override
@@ -32,9 +34,9 @@ public class LogHoursCommand implements UserCommand {
 		
 		try {
 			double hoursToLog = Double.parseDouble(input);
-			task.logWorkHours(Main.getCurrentApplication().getSignedInEmployee(), hoursToLog);
+			task.logWorkHours(controller.getCurrentApplication().getSignedInEmployee(), hoursToLog);
 			
-			Duration timeWorked = task.getDurationWorked().get(Main.getCurrentApplication().getSignedInEmployee());
+			Duration timeWorked = task.getDurationWorked().get(controller.getCurrentApplication().getSignedInEmployee());
 			System.out.println(String.format("Logged %f additional hours. Total hours worked: %f", hoursToLog, timeWorked.getHoursPassed()));
 		}
 		catch(NumberFormatException e) {

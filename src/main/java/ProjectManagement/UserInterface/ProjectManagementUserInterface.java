@@ -16,26 +16,31 @@ public class ProjectManagementUserInterface implements UserInterface {
 	
 	@Override
 	public void PopulateCommands(List<UserCommand> commands) {
-		if(Main.getCurrentApplication().getProjects().size() > 0) {
-			commands.add(new GenericCommand("Select project", () -> Main.setUserInterface(new SelectProjectUserInterface(this))));
+		if(getController().getCurrentApplication().getProjects().size() > 0) {
+			commands.add(new GenericCommand("Select project", () -> getController().setUserInterface(new SelectProjectUserInterface(this))));
 		}
 		
-		if(Main.getSelectedProject() != null && !Main.getSelectedProject().hasProjectLeader()) {
-			commands.add(new AssignProjectLeaderCommand());
+		if(getController().getSelectedProject() != null && !getController().getSelectedProject().hasProjectLeader()) {
+			commands.add(new AssignProjectLeaderCommand(getController()));
 		}
 		
-		commands.add(new CreateProjectCommand());
-		commands.add(new ReturnCommand());
+		commands.add(new CreateProjectCommand(getController()));
+		commands.add(new ReturnCommand(getController()));
 	}
 
 	@Override
 	public String getDescription() {
-		Project selectedProject = Main.getSelectedProject();
+		Project selectedProject = getController().getSelectedProject();
 		return String.format("Selected project: %s", selectedProject != null ? selectedProject.getTitle() : "None");
 	}
 
 	@Override
 	public UserInterface getParent() {
 		return parent;
+	}
+
+	@Override
+	public Controller getController() {
+		return getParent().getController();
 	}
 }

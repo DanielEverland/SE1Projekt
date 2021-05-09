@@ -7,6 +7,12 @@ import ProjectManagement.Main;
 
 public class LogoutCommand implements UserCommand {
 
+	private Controller controller;
+	
+	public LogoutCommand(Controller controller) {
+		this.controller = controller;
+	}
+	
 	@Override
 	public String getDisplayName() {
 		return "Logout";
@@ -14,7 +20,7 @@ public class LogoutCommand implements UserCommand {
 
 	@Override
 	public void execute(List<String> args) {
-		Main.getCurrentApplication().signOut();
+		controller.getCurrentApplication().signOut();
 	}
 
 	@Override

@@ -1,12 +1,15 @@
 package ProjectManagement.UserInterface;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import ProjectManagement.Main;
 
 public class ReturnCommand implements UserCommand {
 
+	private Controller controller;
+	
+	public ReturnCommand(Controller controller) {
+		this.controller = controller;
+	}
+	
 	@Override
 	public String getDisplayName() {
 		return "Return";
@@ -14,7 +17,7 @@ public class ReturnCommand implements UserCommand {
 
 	@Override
 	public void execute(List<String> args) {
-		Main.setPreviousUserInterface();
+		controller.setPreviousUserInterface();
 	}
 	
 	@Override

@@ -37,6 +37,6 @@ public class CreateTaskUserInterface extends CreateActivityUserInterface {
 		if(isConstructorInfoInvalid())
 			return;
 		
-		Main.getSelectedProject().createTask(information);
+		getController().getSelectedProject().createTask(information);
 	}
 }

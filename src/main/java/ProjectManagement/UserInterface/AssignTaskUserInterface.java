@@ -35,27 +35,32 @@ public class AssignTaskUserInterface implements UserInterface {
 			commands.add(new GenericIndexedCommand(availableEmployees.get(i).getId(), i, (int index) -> selectedEmployee(index)));
 		}
 		
-		commands.add(new ReturnCommand());
+		commands.add(new ReturnCommand(getController()));
 	}
 	
 	private void selectedEmployee(int index) {
 		Employee selectedEmployee = availableEmployees.get(index);
-		Main.getSelectedProject().assignTaskToEmployee(selectedEmployee, getSelectedTask());
+		getController().getSelectedProject().assignTaskToEmployee(selectedEmployee, getSelectedTask());
 		createAssignedEmployeesList();
 		createAvailableEmployeesList();
 	}
 	
 	private void createAssignedEmployeesList() {
-		assignedEmployees = Main.getSelectedProject().getAssignedEmployees(getSelectedTask());
+		assignedEmployees = getController().getSelectedProject().getAssignedEmployees(getSelectedTask());
 	}
 	
 	private void createAvailableEmployeesList() {
-		Activity currentActivity = Main.getSelectedActivity();
-		availableEmployees = Main.getCurrentApplication().getAvailableEmployees(currentActivity.getStartDate(), currentActivity.getEndDate());		
+		Activity currentActivity = getController().getSelectedActivity();
+		availableEmployees = getController().getCurrentApplication().getAvailableEmployees(currentActivity.getStartDate(), currentActivity.getEndDate());		
 		availableEmployees.removeAll(assignedEmployees);
 	}
 	
 	private Task getSelectedTask() {
-		return (Task)Main.getSelectedActivity();
+		return (Task)getController().getSelectedActivity();
+	}
+
+	@Override
+	public Controller getController() {
+		return getParent().getController();
 	}
 }

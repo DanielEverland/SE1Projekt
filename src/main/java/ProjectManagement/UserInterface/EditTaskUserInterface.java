@@ -17,7 +17,7 @@ public class EditTaskUserInterface implements UserInterface {
 	
 	@Override
 	public String getDescription() {
-		return Main.getSelectedActivity().toString();
+		return getController().getSelectedActivity().toString();
 	}
 
 	@Override
@@ -33,11 +33,11 @@ public class EditTaskUserInterface implements UserInterface {
 		commands.add(new GenericInputCommand("End Date: ", "endDate", (String endDateString) -> setEndDate(endDateString)));
 		commands.add(new GenericInputCommand("Expected Time: ", "timeInHours", (String expectedTimeString) -> setExpectedTime(expectedTimeString)));
 		
-		commands.add(new ReturnCommand());
+		commands.add(new ReturnCommand(getController()));
 	}
 
 	private Task getSelectedTask() {
-		return (Task)Main.getSelectedActivity();
+		return (Task)getController().getSelectedActivity();
 	}
 	
 	private void setExpectedTime(String expectedTimeString) {
@@ -77,5 +77,10 @@ public class EditTaskUserInterface implements UserInterface {
 	
 	private boolean areDatesValid(Date startDate, Date endDate) {
 		return endDate.afterOrEqual(startDate);
+	}
+
+	@Override
+	public Controller getController() {
+		return getParent().getController();
 	}
 }

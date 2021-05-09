@@ -31,12 +31,12 @@ public abstract class CreateEventUserInterface extends CreateActivityUserInterfa
 		if(isConstructorInfoInvalid())
 			return;
 		
-		Main.getCurrentApplication().getSignedInEmployee().assignToActivity(createActivity());
+		getController().getCurrentApplication().getSignedInEmployee().assignToActivity(createActivity());
 	}
 		
 	// Disable behaviour as sick leave cannot have titles
 	@Override
-	protected void addTitleCommand(List<UserCommand> commands) {		
+	protected void addTitleCommand(List<UserCommand> commands) {	
 	}	
 	@Override
 	protected boolean shouldDisplayTitleDescription() {
