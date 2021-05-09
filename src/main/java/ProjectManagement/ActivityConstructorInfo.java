@@ -12,6 +12,7 @@ public class ActivityConstructorInfo {
 		title = "N/A";
 		startDate = new Date();
 		endDate = new Date();
+		isBlocking = false;
 	}
 	
 	public ActivityConstructorInfo(String title, Date startDate, Date endDate, boolean isBlocking) {
