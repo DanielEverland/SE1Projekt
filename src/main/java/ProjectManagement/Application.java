@@ -162,6 +162,11 @@ public class Application {
 	}
 
 	private boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
+		if (projects.isEmpty()) {
+			ErrorMessageHandler.addErrorMessage("List of projects cannot be empty.");
+			return false;
+		}
+		
 		assert !projects.isEmpty();
 
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
