@@ -3,7 +3,6 @@ package ProjectManagement.UserInterface;
 import java.util.List;
 
 import ProjectManagement.ActivityConstructorInfo;
-import ProjectManagement.ErrorMessageHandler;
 import ProjectManagement.TaskConstructorInfo;
 
 public class CreateTaskUserInterface extends CreateActivityUserInterface {
@@ -18,12 +17,12 @@ public class CreateTaskUserInterface extends CreateActivityUserInterface {
 	
 	@Override
 	public String getDescription() {
-		return super.getDescription() + String.format("Description: %s\n", information.Description);
+		return super.getDescription() + String.format("Description: %s\n", information.description);
 	}
 
 	@Override
 	protected void populateAdditionalCommands(List<UserCommand> commands) {
-		commands.add(new GenericInputCommand("Description", "description", (String input) -> information.Description = input));
+		commands.add(new GenericInputCommand("Description", "description", (String input) -> information.description = input));
 	}
 
 	@Override

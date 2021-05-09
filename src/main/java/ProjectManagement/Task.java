@@ -13,7 +13,7 @@ public class Task extends Activity {
 	public Task(TaskConstructorInfo info) {
 		super(new ActivityConstructorInfo(info.title, info.startDate, info.endDate, false));
 		durationWorked = new HashMap<Employee, Duration>();
-		description = info.Description;
+		description = info.description;
 	}
 
 	public String getDescription() {
@@ -23,20 +23,33 @@ public class Task extends Activity {
 	public Map<Employee, Duration> getDurationWorked() {
 		return durationWorked;
 	}
-	
+
 	public void logWorkHours(Employee employee, double hoursWorked) {
-		if (!durationWorked.containsKey(employee)) {	
+		if (!(hoursWorked > 0)) {
+			ErrorMessageHandler.addErrorMessage("Input must be greater than 0");
+			return;
+		}
+		assert hoursWorked > 0 : "Pre condition";
+		if (!durationWorked.containsKey(employee)) {
 			durationWorked.put(employee, new Duration());
 		}
-		assert durationWorked.containsKey(employee);
-		
+		assert durationWorked.containsKey(employee) : "Pre condition";
+
+		double totalDurationBefore = getTotalDurationWorked();
 		durationWorked.get(employee).addHours(hoursWorked);
-		
-		double totalDurationWorked = getTotalDurationWorked();
-		
-		if (totalDurationWorked > expectedTime && expectedTime != 0) {	
+		double totalDuration = getTotalDurationWorked();
+
+		boolean isDifferentEnough = Math.abs(totalDuration - (totalDurationBefore + hoursWorked)) <= 0.00001;
+		if (!isDifferentEnough) {
+			ErrorMessageHandler.addErrorMessage("Hours has not been logged");
+			return;
+		}
+		assert isDifferentEnough : "Post condition";
+
+		if (totalDuration > expectedTime && expectedTime != 0) {
 			ErrorMessageHandler.addErrorMessage("Too much time spent on task");
 		}
+
 	}
 
 	private double getTotalDurationWorked() {
@@ -45,7 +58,7 @@ public class Task extends Activity {
 			totalDuration += duration.getHoursPassed();
 		}
 		return totalDuration;
-		
+
 	}
 
 	public double getExpectedTime() {
