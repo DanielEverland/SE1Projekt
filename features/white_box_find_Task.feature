@@ -41,32 +41,32 @@ Scenario: White box F
 	Given an employee with id "test" exists in the application 
 	And the employee is signed in 
 	And The project with title "default_test_project" exists
-	And A task with title "Bad Task title", description "Task description", start date "01/01/2000" and end date "01/01/2001" exists 
-	When A task with title "Task title", description "Task description", start date "01/01/2000" and end date "01/01/2001" is searched for 
+	And A task with title "Task title", description "Task description", start date "01/01/2000" and end date "01/01/2001" exists 
+	When A task with title "Bad Task title", description "Task description", start date "01/01/2000" and end date "01/01/2001" is searched for 
 	Then null is returned
 	
 Scenario: White box G
 	Given an employee with id "test" exists in the application 
 	And the employee is signed in 
 	And The project with title "default_test_project" exists
-	And A task with title "Task title", description "Bad Task description", start date "01/01/2000" and end date "01/01/2001" exists 
-	When A task with title "Task title", description "Task description", start date "01/01/2000" and end date "01/01/2001" is searched for 
+	And A task with title "Task title", description "Task description", start date "01/01/2000" and end date "01/01/2001" exists 
+	When A task with title "Task title", description "Bad Task description", start date "01/01/2000" and end date "01/01/2001" is searched for 
 	Then null is returned
 
 Scenario: White box H
 	Given an employee with id "test" exists in the application 
 	And the employee is signed in 
 	And The project with title "default_test_project" exists
-	And A task with title "Task title", description "Task description", start date "01/01/2002" and end date "01/01/2001" exists 
-	When A task with title "Task title", description "Task description", start date "01/01/2000" and end date "01/01/2001" is searched for 
+	And A task with title "Task title", description "Task description", start date "01/01/2000" and end date "01/01/2001" exists 
+	When A task with title "Task title", description "Task description", start date "01/01/2002" and end date "01/01/2001" is searched for 
 	Then null is returned
 	
 Scenario: White box I
 	Given an employee with id "test" exists in the application 
 	And the employee is signed in 
 	And The project with title "default_test_project" exists
-	And A task with title "Task title", description "Task description", start date "01/01/2000" and end date "01/01/2002" exists 
-	When A task with title "Task title", description "Task description", start date "01/01/2000" and end date "01/01/2001" is searched for 
+	And A task with title "Task title", description "Task description", start date "01/01/2000" and end date "01/01/2001" exists 
+	When A task with title "Task title", description "Task description", start date "01/01/2000" and end date "01/01/2002" is searched for 
 	Then null is returned
 
 Scenario: White box J
