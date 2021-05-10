@@ -33,7 +33,7 @@ Scenario: ToString of project matches id and title
 	When the employee creates a new project with title "ProjectName"
 	Then projects toString is "1: ProjectName"
 
-Scenario: Employee successfully creates a new project 
+Scenario: Cannot create project with empty title 
 	Given an employee with id "test" exists in the application 
 	And the employee is signed in 
 	When the employee creates a new project with title "" 
