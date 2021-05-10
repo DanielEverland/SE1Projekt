@@ -23,7 +23,7 @@ public class ActivityConstructorInfo {
 	}
 
 	public boolean isValid() {
-		return isASCIIString(title) && title.length() > minTitleLength && datesValid();
+		return isASCIIString(title) && title.length() >= minTitleLength && datesValid();
 	}
 	
 	public boolean datesValid() {
