@@ -147,16 +147,28 @@ public class Application {
 	}
 
 	public Project getSpecificProjectByTitle(String title) {
-		assert !multipleProjectsWithSameTitle(projects.values(), title);
+		if (multipleProjectsWithSameTitle(projects.values(), title)) {
+			return null;
+		}
+		
+		assert !multipleProjectsWithSameTitle(projects.values(), title) : "Pre condition";
+		
+		Project foundProject = null; 
 
 		if (isSignedIn()) {
 			for (Project project : projects.values()) {
 				if (project.getTitle().equals(title)) {
-					return project;
+					foundProject = project;
+					assert foundProject.getTitle().equals(title) : "Post condition";
+					return foundProject;
 				}
 			}
+		} else {
+			ErrorMessageHandler.addErrorMessage("Employee must be signed in");
+			return null;
 		}
-		ErrorMessageHandler.addErrorMessage("Employee must be signed in");
+		
+		assert foundProject == null : "Post condition";
 		return null;
 
 	}
