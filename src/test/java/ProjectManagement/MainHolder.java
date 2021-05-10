@@ -3,7 +3,7 @@ package ProjectManagement;
 public class MainHolder {
 
 	public MainHolder() {
-		app = new Application();
+		app = Application.getInstance(true);
 
 		// Remove this, maybe? But then all the scenarios need to create projects
 		// manually... Not sure.
