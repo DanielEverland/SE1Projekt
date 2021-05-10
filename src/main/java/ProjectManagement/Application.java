@@ -161,13 +161,13 @@ public class Application {
 
 	}
 
-	private boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
-		if (projects.isEmpty()) {
-			ErrorMessageHandler.addErrorMessage("List of projects cannot be empty.");
+	public boolean multipleProjectsWithSameTitle(Collection<Project> projects, String title) {
+		if (projects == null || projects.isEmpty()) {
+			ErrorMessageHandler.addErrorMessage("List of projects cannot be empty");
 			return false;
 		}
 		
-		assert !projects.isEmpty();
+		assert projects != null && !projects.isEmpty();
 
 		ArrayList<Project> foundProjects = new ArrayList<Project>();
 		for (Project project : projects) {
