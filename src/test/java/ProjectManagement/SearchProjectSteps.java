@@ -3,6 +3,8 @@ package ProjectManagement;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -64,7 +66,6 @@ public class SearchProjectSteps {
 
 	}
 
-
 	@Then("there is no projects in the application")
 	public void there_is_no_projects_in_the_application() {
 		assertTrue(holder.app.getProjects().isEmpty());
@@ -74,15 +75,10 @@ public class SearchProjectSteps {
 	public void the_project_is_not_found() {
 		assertTrue(project == null);
 	}
-
-	@Then("there are not more than one project with the title {string}")
+	
+	@Then("there is not more than one project with the title {string}")
 	public void there_are_not_more_than_one_project_with_the_title(String title) {
-		assertThrows(java.lang.AssertionError.class, () -> {
-			holder.app.multipleProjectsContainingTitleFound(title);
-		});
-		assertThrows(java.lang.AssertionError.class, () -> {
-			holder.app.noProjectContainingTitleFound(title);
-		});
+		assertFalse(holder.app.multipleProjectsContainingTitleFound(title));
 	}
 
 }
