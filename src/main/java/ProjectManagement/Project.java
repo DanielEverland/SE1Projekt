@@ -132,16 +132,24 @@ public class Project {
 			ErrorMessageHandler.addErrorMessage("No tasks assigned to the project");
 			return null;
 		}
-
+		
+		assert !tasks.isEmpty() : "Post condition";
+		
+		Task taskToFind = null;
 		for (Task task : tasks) { 
 			if (task.getTitle().equals(title) && 
 					task.getDescription().equals(description) && 
 					task.getStartDate().equals(startDate) && 
 					task.getEndDate().equals(endDate)) { 
+				taskToFind = task;
 				return task;
 			}
+			assert !(task.getTitle().equals(title) && task.getDescription().equals(description) 
+					&& task.getStartDate().equals(startDate) && task.getEndDate().equals(endDate)) : "Post condition";			
 		}
+		assert taskToFind == null : "Post condition";
 		return null;
+		
 	}
 
 	public List<Employee> getAssignedEmployees(Task task) {
