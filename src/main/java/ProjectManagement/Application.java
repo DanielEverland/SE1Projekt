@@ -83,7 +83,7 @@ public class Application {
 
 	public void signIn(String id) {
 		if (!employees.containsKey(id)) {
-			System.out.println("No employee exists with the ID \"" + id + "\"");
+			ErrorMessageHandler.addErrorMessage("No employee exists with the ID \"" + id + "\"");
 			return;
 		}
 
