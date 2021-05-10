@@ -26,7 +26,7 @@ public class Controller {
 		currentApplication = new Application();
 	}
 	
-	public static String getArgumentsString(UserCommand command) {
+	public static String convertArgumentsString(UserCommand command) {
 		if(command == null) {
 			throw new NullPointerException("Command is null");
 		}
@@ -134,7 +134,7 @@ public class Controller {
 		List<UserCommand> allCurrentCommands = new ArrayList<UserCommand>();
 		currentUserInterface.PopulateCommands(allCurrentCommands);
 		for (int i = 0; i < allCurrentCommands.size(); i++) {
-			System.out.println(String.format("[%d] %s %s", i + 1, allCurrentCommands.get(i).getDisplayName(), getArgumentsString(allCurrentCommands.get(i))));
+			System.out.println(String.format("[%d] %s %s", i + 1, allCurrentCommands.get(i).getDisplayName(), convertArgumentsString(allCurrentCommands.get(i))));
 		}
 	}
 
