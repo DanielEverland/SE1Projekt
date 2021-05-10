@@ -66,12 +66,22 @@ public class Task extends Activity {
 	}
 
 	public void setExpectedTime(double expectedTime) {
+		if (!(expectedTime > 0.0)) {
+			ErrorMessageHandler.addErrorMessage("Expected time must be greater than 0.0");
+			return;
+		}
+		
 		assert expectedTime > 0.0;
 
 		this.expectedTime = expectedTime;
 	}
 
 	public void addToExpectedTime(double hours) {
+		if (!(hours > 0)) {
+			ErrorMessageHandler.addErrorMessage("Must add more than 0.0 hours");
+			return;
+		}
+		
 		assert hours > 0.0;
 
 		this.expectedTime += hours;
@@ -79,7 +89,7 @@ public class Task extends Activity {
 
 	@Override
 	public String toString() {
-		return super.toString() + "\nDescription: " + description + "\nExpected Time: " + expectedTime + " hours";
+		return super.toString() + "\nDescription: " + description + "\nExpected time: " + expectedTime + " hours";
 	}
 
 	public void editTitle(String newTitle) {
