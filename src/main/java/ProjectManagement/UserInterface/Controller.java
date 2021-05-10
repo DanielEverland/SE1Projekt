@@ -23,7 +23,7 @@ public class Controller {
 		setDefaultUserInterface();
 		pattern = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"|'([^']*)'");
 		inputScanner = new Scanner(System.in);
-		currentApplication = new Application();
+		currentApplication = Application.getInstance();
 	}
 	
 	public static String getArgumentsString(UserCommand command) {

@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNotNull;
 
 public class Application {
 
+	private static Application instance;
+
 	private Map<Integer, Project> projects;
 	private Map<String, Employee> employees;
 	private Employee signedInEmployee;
@@ -21,12 +23,23 @@ public class Application {
 		}
 	};
 
-	public Application() {
+	private Application() {
 		projects = new HashMap<>();
 		employees = new HashMap<>();
 		for (String id : employeeIds) {
 			getEmployees().put(id, new Employee(id));
 		}
+	}
+
+	public static Application getInstance(boolean reset) {
+		if (instance == null || reset) {
+			instance = new Application();
+		}
+		return instance;
+	}
+
+	public static Application getInstance() {
+		return getInstance(false);
 	}
 
 	public void quit() {
