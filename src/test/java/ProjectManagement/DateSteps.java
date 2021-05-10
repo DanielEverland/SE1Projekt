@@ -33,6 +33,11 @@ public class DateSteps {
 		anotherDate = Date.FromString(dateString);
 	}
 
+	@Then("the date's string value is {string}")
+	public void the_date_s_string_value_is(String string) {
+		assertThat(currentDate.toString(), is(equalTo(string)));
+	}
+
 	@Then("their hashcodes are different")
 	public void their_hashcodes_are_different() {
 	    assertThat(currentDate.hashCode(), is(not(equalTo(anotherDate.hashCode()))));

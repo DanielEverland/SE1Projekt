@@ -44,6 +44,11 @@ public class DurationSteps {
 		duration.addTime(hours, minutes);
 	}
 
+	@When("adding {double} hours to duration")
+	public void adding_hours_to_duration(Double hours) {
+		duration.addHours(hours);
+	}
+
 	@Then("duration minutes passed is equal to {long} minutes")
 	public void duration_minutes_passed_is_equal_to_minutes(Long minutesPassed) {
 		assertThat(duration.getMinutesPassed(), is(equalTo(minutesPassed)));
