@@ -32,9 +32,4 @@ public class WhiteBoxLogWorkHoursSteps {
 			assertionTriggered = true;
 		}
 	}
-
-	@Then("the hours are not logged")
-	public void the_hours_are_not_logged() {
-		assertTrue(assertionTriggered);
-	}
 }
