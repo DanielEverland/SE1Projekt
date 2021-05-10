@@ -35,7 +35,7 @@ public class GetArgumentsStringSteps {
 	@When("the string representation of the commands arguments is requested")
 	public void the_string_representation_of_the_commands_arguments_is_requested() {
 		try {
-			stringRepresentation = Controller.getArgumentsString(command);
+			stringRepresentation = Controller.convertArgumentsString(command);
 		}
 		catch (Throwable e) {
 			hasThrown = true;
