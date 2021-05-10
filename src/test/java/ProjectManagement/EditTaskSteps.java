@@ -16,8 +16,7 @@ import io.cucumber.java.en.*;
 public class EditTaskSteps {
 
 	private MainHolder holder;
-	private boolean assertionTriggered;
-	
+
 	public EditTaskSteps(MainHolder holder) {
 		this.holder = holder;
 	}
@@ -143,20 +142,7 @@ public class EditTaskSteps {
 
 	@When("the employee adds {double} hours to the expected time")
 	public void the_employee_adds_hours_to_the_expected_time(Double hoursToAdd) {
-		try {
-			holder.task.addToExpectedTime(hoursToAdd);
-			
-		} catch (Throwable e) {
-			ErrorMessageHandler.addErrorMessage("Expected time must be above 0.0 hours");
-		}
-		
-	}
-
-	@Then("the employee cannot add {double} hours to the expected time")
-	public void the_employee_cannot_add_hours_to_the_expected_time(Double hoursToAdd) {
-		assertThrows(java.lang.AssertionError.class, () -> {
-			holder.task.addToExpectedTime(hoursToAdd);
-		});
+		holder.task.addToExpectedTime(hoursToAdd);
 	}
 
 }

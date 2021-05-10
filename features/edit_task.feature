@@ -119,6 +119,6 @@ Scenario: Project leader adds invalid time to expected time
 	And A task with title "Test Title", description "Test Description", start date "31/12/1998" and end date "31/12/2000" exists 
 	And the task has 3.0 hours of expected time 
 	When the employee adds 0.0 hours to the expected time 
-	Then the employee cannot add 0.0 hours to the expected time
-	And the task now has 3.0 hours of expected time
-	And the error message "Expected time must be above 0.0 hours" is given
+	Then the task now has 3.0 hours of expected time
+	And the error message "Must add more than 0.0 hours" is given
+
