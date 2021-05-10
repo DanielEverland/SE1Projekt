@@ -9,7 +9,15 @@ Scenario: Different hashcode for different dates
 Scenario: Can calculate hashcode from unspecified date 
 	Given the current date is unspecified 
 	When the hashcode is calculated 
-	Then no assertion error is triggered 
+	Then no assertion error is triggered
+
+Scenario: Can get a string from unspecified date
+	Given the current date is unspecified
+	Then the date's string value is "N/A"
+
+Scenario: Can get a string from specified date
+	Given the current date is "01/01/2000"
+	Then the date's string value is "01/01/2000"
 	
 Scenario: Invalid date will print error message 
 	Given the current date is "NOT A VALID DATE" 

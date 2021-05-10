@@ -17,13 +17,11 @@ public class Duration {
 	}
 
 	public void addHours(double hours) {
-		assert isAtleastOneMinute(hours);
-		
 		if (!isAtleastOneMinute(hours)) {
 			ErrorMessageHandler.addErrorMessage("Input is less than one minute");
 			return;
 		}
-		
+		assert isAtleastOneMinute(hours);
 		
 		minutesPassed += (int) (hours * 60);
 	}

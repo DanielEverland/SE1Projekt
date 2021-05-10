@@ -17,8 +17,8 @@ Scenario: White box B
 	And A task with title "White box title", description "White box description", start date "11/11/2011" and end date "12/12/2012" exists 
 	And the employee has not worked on the task before 
 	And the task has expected time of 1.0 hours 
-	When the employee inputs 0.00001 hours as worked on the task 
-	Then the hours are not logged 
+	When the employee inputs 0.00001 hours as worked on the task
+	Then the error message "Input is less than one minute" is given
 	
 Scenario: White box C
 	Given an employee with id "test" exists in the application 
@@ -27,7 +27,7 @@ Scenario: White box C
 	And the employee has worked on the task before 
 	And the task has expected time of 1.0 hours 
 	When the employee inputs 0.00001 hours as worked on the task 
-	Then the hours are not logged 
+	Then the error message "Input is less than one minute" is given
 	
 Scenario: White box D
 	Given an employee with id "test" exists in the application 
