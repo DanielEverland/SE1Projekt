@@ -8,7 +8,7 @@ public class WhiteBoxMultipleProjectsWithSameTitleSteps {
 	public Application app;
 	
 	public WhiteBoxMultipleProjectsWithSameTitleSteps() {
-		app = new Application();
+		app = Application.getInstance(true);
 		Employee testEmployee = new Employee("default_test_employee");
 		app.addEmployee(testEmployee);
 		app.signIn("default_test_employee");
