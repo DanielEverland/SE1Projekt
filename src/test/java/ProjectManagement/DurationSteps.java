@@ -34,11 +34,6 @@ public class DurationSteps {
 		assertThat(duration.getHoursPassed(), is(equalTo(hoursPassed)));
 	}
 
-	@Then("an assertion error is triggered")
-	public void an_assertion_error_is_triggered() {
-		assertTrue(assertionTriggered);
-	}
-
 	@When("adding {double} hours and {int} minutes to duration")
 	public void adding_hours_and_minutes_to_duration(Double hours, Integer minutes) {
 		duration.addTime(hours, minutes);

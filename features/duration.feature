@@ -32,7 +32,7 @@ Scenario: Adding negative minutes will trigger assertions
 	Given time passed is 1.0 hours 
 	When duration is set to time passed 
 	When adding -30 minutes to duration 
-	Then an assertion error is triggered 
+	Then the error message "Input is less than one minute" is given 
 	
 Scenario: Adding valid minutes increments 
 	Given time passed is 1.0 hours 
