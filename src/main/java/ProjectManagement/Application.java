@@ -208,6 +208,9 @@ public class Application {
 	}
 
 	public boolean multipleProjectsContainingTitleFound(String title) {
+		if (projects.size() <= 1) {
+			return false;
+		}
 		assert projects.size() > 1;
 
 		boolean multipleProjectsFound = true;
@@ -216,6 +219,10 @@ public class Application {
 	}
 
 	public boolean noProjectContainingTitleFound(String title) {
+		if (findProjectsContainingTitle(title).size() > 0) {
+			return false;
+		}
+		
 		assert findProjectsContainingTitle(title).isEmpty();
 
 		boolean noProjectsFound = true;
